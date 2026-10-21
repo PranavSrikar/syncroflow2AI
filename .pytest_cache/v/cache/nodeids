@@ -1,0 +1,19 @@
+[
+  "backend/tests/integration/test_api_endpoints.py::test_benchmark_runner_endpoint",
+  "backend/tests/integration/test_api_endpoints.py::test_capabilities_endpoint",
+  "backend/tests/integration/test_api_endpoints.py::test_controllers_endpoints",
+  "backend/tests/integration/test_api_endpoints.py::test_emergency_preemption_endpoint",
+  "backend/tests/integration/test_api_endpoints.py::test_health_endpoint",
+  "backend/tests/integration/test_api_endpoints.py::test_scenarios_endpoints",
+  "backend/tests/integration/test_api_endpoints.py::test_simulation_state_and_lifecycle",
+  "backend/tests/integration/test_websocket.py::test_websocket_command_ack",
+  "backend/tests/integration/test_websocket.py::test_websocket_stream_and_heartbeat",
+  "backend/tests/unit/test_contracts.py::test_command_payload_ack",
+  "backend/tests/unit/test_contracts.py::test_health_response_schema",
+  "backend/tests/unit/test_contracts.py::test_safety_report_schema",
+  "backend/tests/unit/test_simulation_service.py::test_clearance_stages_traversal",
+  "backend/tests/unit/test_simulation_service.py::test_conflict_matrix_invariants",
+  "backend/tests/unit/test_simulation_service.py::test_emergency_preemption_handling",
+  "backend/tests/unit/test_simulation_service.py::test_prng_determinism",
+  "backend/tests/unit/test_simulation_service.py::test_simulation_service_determinism"
+]
