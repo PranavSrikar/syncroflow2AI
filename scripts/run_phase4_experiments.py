@@ -32,7 +32,8 @@ def main():
     reports = [OUT/f'train-{seed}/training.json' for seed in (21,31,41)]
     while not all(p.exists() and len(json.loads(p.read_text())['updates']) >= 16 for p in reports):
         time.sleep(5)
-    checkpoints = [json.loads(p.read_text())['latestCheckpoint'] for p in reports]
+    checkpoints = [str(Path('.checkpoints/phase4')/p.parent.name/Path(json.loads(p.read_text())['latestCheckpoint']).name)
+                   for p in reports]
     batch(['benchmark','--seconds','300','--scales','1','--modes','mpc',
            '--checkpoints',*checkpoints,'--split','selection'], [801,802,803], 'selection')
     scores = {}

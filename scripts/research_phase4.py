@@ -100,8 +100,13 @@ def trial(mode, seed, seconds, scale, checkpoint=None, split='test'):
     label = Path(checkpoint).parent.name if checkpoint else mode
     name = f'{split}-{label}-d{scale}-s{seed}-t{seconds}'
     result_path, trips_path = OUT/'trials'/f'{name}.json', OUT/'trips'/f'{name}.xml'
+    checkpoint_hash = hashlib.sha256(Path(checkpoint).read_bytes()).hexdigest() if checkpoint else None
     if result_path.exists():
-        return json.loads(result_path.read_text())
+        cached = json.loads(result_path.read_text())
+        if (cached.get('checkpointSha256') != checkpoint_hash or cached['mode'] != mode
+                or cached['provenance']['architectureFingerprint'] != qualification_fingerprint()):
+            raise ValueError('Cached trial has different weights/controller/architecture; use a new output directory')
+        return cached
     trips_path.parent.mkdir(parents=True, exist_ok=True)
     model = MAPPO.load(checkpoint) if checkpoint else None
     if mode == 'candidate' and model is None:
@@ -113,7 +118,7 @@ def trial(mode, seed, seconds, scale, checkpoint=None, split='test'):
     started = time.perf_counter()
     result = dict(mode=mode, model=label, seed=seed, seconds=seconds, demandScale=scale,
                   split=split, checkpoint=str(checkpoint) if checkpoint else None,
-                  operationalPolicyEnabled=False, provenance=provenance())
+                  operationalPolicyEnabled=False, provenance=provenance(), checkpointSha256=checkpoint_hash)
     try:
         obs = env.reset(seed)
         result['sumoVersion'] = traci.getVersion()
@@ -193,6 +198,11 @@ if __name__ == '__main__':
             training = json.loads((Path(checkpoint).parent/'training.json').read_text())
             if set(args.seeds) & {u['episodeSeed'] for u in training['updates']}:
                 parser.error('Evaluation overlaps training seeds')
+        selection_path = OUT/'selection.json'
+        if args.split == 'test' and selection_path.exists():
+            selection = json.loads(selection_path.read_text())
+            if set(args.seeds) & set(selection['selectionSeeds']):
+                parser.error('Final test overlaps model-selection seeds')
         for scale in args.scales:
             for seed in args.seeds:
                 for mode in args.modes:
