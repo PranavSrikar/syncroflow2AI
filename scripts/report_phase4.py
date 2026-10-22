@@ -9,12 +9,13 @@ RAW=ROOT/'.checkpoints/phase4-demand-corrected'
 
 
 def write(name,text):
-    (ROOT/name).write_text(text,encoding='utf-8')
+    (ROOT/name).write_bytes(text.encode('utf-8'))
 
 
 def main():
     training=json.loads((DATA/'training-summary.json').read_text(encoding='utf-8'))
     benchmark=json.loads((DATA/'benchmark-summary.json').read_text(encoding='utf-8'))
+    trial_rows=json.loads((DATA/'trials.json').read_text(encoding='utf-8'))
     qualification=json.loads((DATA/'policy-qualification.json').read_text(encoding='utf-8'))
     replay=json.loads((RAW/'reproducibility.json').read_text(encoding='utf-8'))
     resource=json.loads((RAW/'neural-update-resource-probe.json').read_text(encoding='utf-8'))
@@ -23,6 +24,10 @@ def main():
     test=ET.parse(RAW/'backend-final.xml').getroot().find('testsuite')
     tests=f"{test.get('tests')} tests, {test.get('failures')} failures, {test.get('errors')} errors, {test.get('skipped')} skipped, {float(test.get('time')):.2f} s"
     emergency=json.loads((RAW/'emergency-demo.json').read_text(encoding='utf-8'))['results'][0]['emergency']
+    demos=json.loads((RAW/'full-demo-results.json').read_text(encoding='utf-8'))['results']
+    demo_table='## Current verified external demonstrations\n\n| Case | Scenario | Simulated seconds | Arrivals | Result |\n|---|---|---:|---:|---|\n'
+    for r in demos:
+        demo_table+=f"| {r['id']} | {r['case']} | {r.get('simTime','video')} | {r.get('metrics',{}).get('arrivedVehicles','n/a')} | {r['status']} |\n"
     table='| Model seed | Episode seeds | Decisions | Wall seconds | First / last critic loss | Final checkpoint |\n|---|---|---:|---:|---|---|\n'
     for r in training:
         table+=f"| {r['modelSeed']} | {r['updates'][0]['episodeSeed']}-{r['updates'][-1]['episodeSeed']} | {r['trainedDecisionSteps']} | {r['elapsedSeconds']:.2f} | {r['updates'][0]['valueLoss']:.2f} / {r['updates'][-1]['valueLoss']:.2f} | update-0016.pt |\n"
@@ -73,6 +78,12 @@ Use new seeds/output directories for a new experiment; existing run folders are 
         m=g['metrics']
         fmt=lambda key:f"{m[key]['mean']:.2f} ±{m[key]['sampleSD']:.2f}"
         results+=f"| {g['demandScale']} | {g['mode']} | {fmt('meanCompletedTimeLossSeconds')} | {fmt('meanNetworkQueue')} /{fmt('maxNetworkQueue')} | {fmt('throughputVehiclesPerHour')} | {fmt('unfinishedTrips')} |\n"
+    detail='| Demand | Controller | Mean /p95 completed wait s | Worst observed wait s | Worst service age s | Spillback edge-s | Supervisor rejections | Mean /p95 control ms |\n|---|---|---|---:|---:|---|---:|---|\n'
+    for g in benchmark['groups']:
+        m=g['metrics']; members=[r for r in trial_rows if r['mode']==g['mode'] and r['demandScale']==g['demandScale']]
+        fmt=lambda k:f"{m[k]['mean']:.2f} ±{m[k]['sampleSD']:.2f}"
+        rejected=str(sum(r['supervisorRejections'] for r in members)) if g['mode']!='fixed_time' else 'n/a'
+        detail+=f"| {g['demandScale']} | {g['mode']} | {fmt('meanCompletedWaitingSeconds')} /{fmt('p95CompletedWaitingSeconds')} | {max(r['maxObservedWaitingIncludingUnfinished'] for r in members):.2f} | {max(r['maxServiceAgeSeconds'] for r in members):.2f} | {fmt('spillbackEdgeSeconds')} | {rejected} | {fmt('meanControlLatencyMs')} /{fmt('p95ControlLatencyMs')} |\n"
     paired='| Demand | Seed | Candidate −MPC timeLoss s | Throughput difference vehicles |\n|---|---|---:|---:|\n'
     for r in benchmark['pairedComparisons']:
         paired+=f"| {r['demandScale']} | {r['seed']} | {r['delayDifferenceSeconds']:.4f} | {r['throughputDifference']} |\n"
@@ -87,6 +98,11 @@ Native SUMO fixed-time uses42s green /3s yellow /42s green /3s yellow, without e
 
 {paired}
 Three seeds support descriptive variability, not a claim of statistical significance or general traffic superiority. Seed/demand partitions were recorded before testing; the selected checkpoint was frozen using separate selection seeds2801-2803 at demand1.0. Other candidates were not selected using final test data.
+
+{detail}
+Worst observed waiting includes partial waiting of unfinished inserted trips; virtual insertion backlog is separate. Worst service age is the largest observed green-group service age across all three trials,not a pedestrian waiting bound. Other detail entries show mean ±sampleSD across three trial metrics. Native fixed-time issues no adaptive supervisor writes,so its action-rejection counter is not applicable. Raw rows also include waiting Gini,mean/max/end pending demand,inference and total five-second decision-compute timings.
+
+Observed insertion demand matched across all five modes in{sum(c['matched'] for c in benchmark['demandMatchChecks'])}/{len(benchmark['demandMatchChecks'])} seed/load blocks. Hint-free MPC/hybrid traffic metrics were identical in{sum(c['trafficMetricsIdentical'] for c in benchmark['hintFreeEquivalenceChecks'])}/{len(benchmark['hintFreeEquivalenceChecks'])} blocks. These are measured integrity checks,not assumed properties of arbitrary future runs.
 
 No untrained-actor or constant-hold/release ablation was run. Any measured candidate benefit is therefore a property of this saved checkpoint/controller combination; it does not prove that learning, rather than initialization or a static timing preference, caused the benefit. Those controls are required before attributing gains specifically to MAPPO learning.
 
@@ -113,6 +129,8 @@ Corridor pedestrian constraints and emergency response are **not applicable/not 
 Reproduce cached matching experiments after training: `./backend/.venv/Scripts/python.exe scripts/run_phase4_experiments.py`. Rebuild plots/reports: `./backend/.venv/Scripts/python.exe scripts/summarize_phase4.py`, then `./backend/.venv/Scripts/python.exe scripts/report_phase4.py`. Use a new output location for a changed protocol; cache mismatches are rejected.
 ''')
     failed=[c for c in qualification['performanceValidation']['checks'] if not c['passed']]
+    reductions={c['name'].split('_d')[-1]:c['measuredReductionPercent'] for c in qualification['performanceValidation']['checks'] if 'measuredReductionPercent' in c}
+    worst_candidate_age=max(r['maxServiceAgeSeconds'] for r in trial_rows if r['mode']=='candidate')
     failures='\n'.join('- '+c['name']+(f": {c['measuredReductionPercent']:.3f}% mean delay reduction" if 'measuredReductionPercent' in c else ': '+c.get('reason','screening condition failed')) for c in failed)
     write('POLICY_QUALIFICATION_REPORT.md',f'''# Policy qualification report — Phase 4
 
@@ -121,6 +139,8 @@ Reproduce cached matching experiments after training: `./backend/.venv/Scripts/p
 Selected checkpoint `{selected}`; SHA-256 `{qualification['checkpointSha256']}`. Selection details and the pre-test freeze are recorded in [benchmark-summary.json](research/phase4/benchmark-summary.json).
 
 Numerical inference checks: {qualification['numericalChecksPassed']}. Trained joint decisions: {qualification['trainedDecisionSteps']}. Separate supervised safety checks: {qualification.get('safetyValidationPassed')}, seeds2951/2952/2953,240s each. A minimum step count and finite inference are prerequisites, not evidence of useful learning. Full [qualification evidence](research/phase4/policy-qualification.json).
+
+Mean delay reduction versus MPC was{reductions['0.75']:.2f}% at scale0.75 and{reductions['1.75']:.2f}% at1.75 (negative means regression). Neither met the required2% improvement. The candidate's worst measured service age was{worst_candidate_age:.0f}s,below the supervisor's120s bound. Increased service age relative to MPC fails the conservative fairness screen; it is not a recorded120s safety-bound violation. No benchmark or safety-validation fault,or adaptive supervisor rejection,was observed in the recorded trials.
 
 Failed or incomplete qualification conditions:
 
@@ -148,7 +168,7 @@ Regression evidence: {tests}; four real-browser tests passed in{browser_seconds:
 ''')
     summary=f'''# Phase 4 research update
 
-This section supersedes Stage3 research/Git status below; Stage3 demonstration results remain historical evidence. Fixed repeated postponement of an already-due signal expiry: the controlled release probe observed its first phase change at12s rather than46s, without weakening timing or clearance checks. Earlier research weights were invalidated and preserved separately. Three corrected-architecture MAPPO runs completed,1024 joint decisions each;30 matched final corridor trials and separate held-out safety trials are recorded. **MAPPO remains unqualified and operationally disabled.** Read [MAPPO_TRAINING_REPORT.md](MAPPO_TRAINING_REPORT.md), [CONTROLLER_BENCHMARK_REPORT.md](CONTROLLER_BENCHMARK_REPORT.md), [POLICY_QUALIFICATION_REPORT.md](POLICY_QUALIFICATION_REPORT.md) and [RESEARCH_NEXT_STEPS.md](RESEARCH_NEXT_STEPS.md).
+This section supersedes Stage3 research/Git status below; Stage3 demonstration results remain historical evidence. Fixed repeated postponement of an already-due signal expiry: the controlled release probe observed its first phase change at12s rather than46s, without weakening timing or clearance checks. Corrected Poisson rate/mean-gap units; exact legacy overload inputs and completed stress results remain preserved separately. Earlier research weights were invalidated by route/controller fingerprints. Three corrected-architecture/demand MAPPO runs completed,1024 joint decisions each;30 matched final corridor trials and separate held-out safety trials are recorded. **MAPPO remains unqualified and operationally disabled.** Read [MAPPO_TRAINING_REPORT.md](MAPPO_TRAINING_REPORT.md), [CONTROLLER_BENCHMARK_REPORT.md](CONTROLLER_BENCHMARK_REPORT.md), [POLICY_QUALIFICATION_REPORT.md](POLICY_QUALIFICATION_REPORT.md) and [RESEARCH_NEXT_STEPS.md](RESEARCH_NEXT_STEPS.md).
 
 Final backend: {tests}. Four Edge/browser tests passed in{browser_seconds:.1f}s; frontend build,TypeScript,eight frontend groups,pip check,startup smoke and all eight fresh A-H external demos passed. Git2.55.0.windows.5 is installed; exact Stage3 archive preserved as local tag `stage3-verified-demo`, with new local research history. No earlier Git history existed in this export; no remote or push. Recovery pointer: `.checkpoints/PHASE4_RECOVERY.json` (created after final reporting).
 
@@ -162,7 +182,8 @@ Startup remains `./backend/.venv/Scripts/python.exe scripts/run_dev.py`; operati
         old=p.read_text(encoding='utf-8')
         if old.startswith('# Phase 4 research update'):
             old=old.split('\n---\n\n',1)[1]
-        p.write_text(summary+old,encoding='utf-8')
+        current=summary.replace('\n---\n\n','\n'+demo_table+'\n---\n\n') if name=='FINAL_DEMO_REPORT.md' else summary
+        p.write_bytes((current+old).encode('utf-8'))
     recovery='''# Phase 4 recovery and Git update
 
 Git for Windows2.55.0.windows.5 is installed at `C:/Program Files/Git/cmd/git.exe`. New shells inherit its installed machine PATH; existing shells may need restarting or the absolute path. The original export had no Git history. Local tag `stage3-verified-demo` preserves all167 manifest files byte-for-byte in its initial commit; later commits preserve research changes. No force-push, remote or publication occurred.
@@ -171,12 +192,14 @@ Stage3 source/artifact archives, their separate copies, ZIP CRCs and every manif
 
 Restore source into a new empty folder; verify SHA-256 and CHECKPOINT_MANIFEST.json before extracting matching artifacts. Never extract over current work. For Git history use `git clone <bundle-path> <new-folder>`; do not initialize over another repository. Install dependencies and rerun checks using RUN_INSTRUCTIONS.md. Templates/Dockerfile/extensionless public assets are now included by the source archiver; personal.env credentials remain excluded. Never enable unqualified saved weights. Keep checkpoint/architecture hashes intact; Git line-ending conversion or controller edits can invalidate byte-based qualification fingerprints, requiring fresh validation.
 
+After relocating a restored run,update only the copied training.json `latestCheckpoint` path to the restored file before `--resume`; preserve original archived reports,weight bytes and source/configuration hashes. Recreate matching dependencies and use a new run if compatibility checks fail. Stage3 recovery notes below are historical; the current Git availability and Phase4 paths above supersede them.
+
 ---
 
 '''
     p=ROOT/'RECOVERY_GUIDE.md'; old=p.read_text(encoding='utf-8')
     if old.startswith('# Phase 4 recovery and Git update'): old=old.split('\n---\n\n',1)[1]
-    p.write_text(recovery+old,encoding='utf-8')
+    p.write_bytes((recovery+old).encode('utf-8'))
     p=ROOT/'RUN_INSTRUCTIONS.md'; old=p.read_text(encoding='utf-8')
     if not old.startswith('# Phase 4 research commands'):
         p.write_text('''# Phase 4 research commands

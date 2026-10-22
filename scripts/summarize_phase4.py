@@ -19,7 +19,14 @@ PUBLIC = ROOT/'research/phase4'
 
 def write(path, data):
     path.parent.mkdir(parents=True,exist_ok=True)
-    path.write_text(json.dumps(data,indent=2,allow_nan=False),encoding='utf-8')
+    path.write_bytes(json.dumps(data,indent=2,allow_nan=False).encode('utf-8'))
+
+
+def save_plot(fig, path):
+    fig.savefig(path,dpi=160)
+    if path.suffix=='.svg':
+        text=path.read_text(encoding='utf-8')
+        path.write_bytes(('\n'.join(line.rstrip() for line in text.splitlines())+'\n').encode('utf-8'))
 
 
 def main():
@@ -64,10 +71,19 @@ def main():
                                                sampleSD=statistics.stdev(r[k] for r in members)) for k in keys}))
     paired=[]
     checks=[]
+    demand_checks=[]
+    equivalence=[]
     for scale in (.75,1.75):
         ratios=[]
         for seed in (2901,2902,2903):
+            members=[r for r in rows if r['seed']==seed and r['demandScale']==scale]
+            demand={r['mode']:r['observedInsertionDemandVehicles'] for r in members}
+            demand_checks.append(dict(seed=seed,demandScale=scale,observedDemandByMode=demand,
+                                      matched=len(set(demand.values()))==1))
             base=next(r for r in rows if r['mode']=='mpc' and r['seed']==seed and r['demandScale']==scale)
+            hybrid=next(r for r in rows if r['mode']=='hybrid' and r['seed']==seed and r['demandScale']==scale)
+            equality=all(base[k]==hybrid[k] for k in ('arrivedVehicles','meanCompletedTimeLossSeconds','meanNetworkQueue','maxNetworkQueue'))
+            equivalence.append(dict(seed=seed,demandScale=scale,trafficMetricsIdentical=equality))
             candidate=next(r for r in rows if r['mode']=='candidate' and r['seed']==seed and r['demandScale']==scale)
             ratio=candidate['meanCompletedTimeLossSeconds']/base['meanCompletedTimeLossSeconds']
             ratios.append(ratio)
@@ -84,6 +100,7 @@ def main():
                            measuredReductionPercent=(b-c)/b*100))
     checks.append(dict(name='candidate_combined_pedestrian_emergency_validation',passed=False,
                        reason='Corridor has neither pedestrians nor emergency arrivals; baseline regressions are separate'))
+    checks.append(dict(name='matched_observed_insertion_demand',passed=all(c['matched'] for c in demand_checks)))
     qualification=dict(**safety)
     qualification.update(eligibleForEvaluation=False,usefulnessEstablished=False,
                          status='not_qualified_keep_operational_policy_disabled',
@@ -92,6 +109,7 @@ def main():
                          selection=selection, operationallyEnabled=False)
     write(PUBLIC/'policy-qualification.json',qualification)
     write(PUBLIC/'benchmark-summary.json',dict(groups=groups,pairedComparisons=paired,selection=selection,
+                                               demandMatchChecks=demand_checks,hintFreeEquivalenceChecks=equivalence,
                                                limitations='Three seeds; cold start; completed-trip delay censored; one topology; native fixed-time has no explicit all-red while adaptive modes add2s; candidate/MPC constraints match; no statistical superiority claim'))
     write(PUBLIC/'trials.json',rows)
     plot_dir=PUBLIC/'plots'; plot_dir.mkdir(exist_ok=True)
@@ -106,7 +124,7 @@ def main():
     axes[0].set_ylabel('Mean reward per agent decision'); axes[1].set_ylabel('Clipped critic loss')
     for ax in axes: ax.set_xlabel('Joint training decisions'); ax.legend(); ax.grid(alpha=.2)
     fig.suptitle('MAPPO training: changing episode seeds, no convergence claim'); fig.tight_layout()
-    for extension in ('png','svg'): fig.savefig(plot_dir/f'training.{extension}',dpi=160)
+    for extension in ('png','svg'): save_plot(fig,plot_dir/f'training.{extension}')
     plt.close(fig)
     labels=['fixed_time','max_pressure','mpc','hybrid','candidate']
     fig,axes=plt.subplots(2,3,figsize=(13,7))
@@ -120,7 +138,7 @@ def main():
             axes[i,j].set_title(f'Demand {scale}: {title}'); axes[i,j].grid(axis='y',alpha=.2)
     fig.suptitle('Held-out 300-second corridor trials: mean ± sample SD, n=3; candidate offline only')
     fig.tight_layout()
-    for extension in ('png','svg'): fig.savefig(plot_dir/f'benchmarks.{extension}',dpi=160)
+    for extension in ('png','svg'): save_plot(fig,plot_dir/f'benchmarks.{extension}')
     plt.close(fig)
     write(PUBLIC/'training-summary.json',training)
     print(json.dumps(dict(trials=len(rows),qualification=qualification['status'],

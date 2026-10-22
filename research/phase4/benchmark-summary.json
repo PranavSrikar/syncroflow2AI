@@ -6,36 +6,36 @@
       "n": 3,
       "metrics": {
         "meanCompletedTimeLossSeconds": {
-          "mean": 43.53486310423698,
-          "sampleSD": 2.7417040720219568
+          "mean": 24.44779254212942,
+          "sampleSD": 1.0257905421391607
         },
         "meanNetworkQueue": {
-          "mean": 46.38444444444445,
-          "sampleSD": 4.382949708603576
+          "mean": 8.671111111111111,
+          "sampleSD": 0.5286495723732029
         },
         "maxNetworkQueue": {
-          "mean": 76,
-          "sampleSD": 0.0
+          "mean": 23.666666666666668,
+          "sampleSD": 3.2145502536643185
         },
         "throughputVehiclesPerHour": {
-          "mean": 4300.0,
-          "sampleSD": 36.66060555964672
+          "mean": 1708.0,
+          "sampleSD": 123.15843454672522
         },
         "meanCompletedWaitingSeconds": {
-          "mean": 31.1691106554139,
-          "sampleSD": 1.963048043430178
+          "mean": 16.336225345696295,
+          "sampleSD": 0.6620875433039853
         },
         "p95CompletedWaitingSeconds": {
-          "mean": 67.03333333333332,
-          "sampleSD": 5.621684207898299
+          "mean": 42.5,
+          "sampleSD": 1.3228756555322954
         },
         "maxCompletedWaitingSeconds": {
-          "mean": 77.33333333333333,
-          "sampleSD": 5.686240703077327
+          "mean": 49.333333333333336,
+          "sampleSD": 6.6583281184793925
         },
         "maxApproachMeanWaitSeconds": {
-          "mean": 35.36666666666667,
-          "sampleSD": 0.25166114784235816
+          "mean": 40.833333333333336,
+          "sampleSD": 2.565800719723442
         },
         "maxServiceAgeSeconds": {
           "mean": 48.0,
@@ -46,24 +46,44 @@
           "sampleSD": 0.0
         },
         "meanControlLatencyMs": {
-          "mean": 0.003560555891858207,
-          "sampleSD": 8.151565778405202e-05
+          "mean": 0.003461110948895415,
+          "sampleSD": 0.00011330198617631809
         },
         "p95ControlLatencyMs": {
-          "mean": 0.0041683262679725885,
-          "sampleSD": 5.920054700883888e-05
+          "mean": 0.004201657914867004,
+          "sampleSD": 9.74556182250201e-05
         },
         "maxControlLatencyMs": {
-          "mean": 0.011000006149212519,
-          "sampleSD": 0.0076629286278598295
+          "mean": 0.006466638296842575,
+          "sampleSD": 0.0009290975773856924
         },
         "completedTrips": {
-          "mean": 358.3333333333333,
-          "sampleSD": 3.0550504633038935
+          "mean": 142.33333333333334,
+          "sampleSD": 10.263202878893768
         },
         "unfinishedTrips": {
-          "mean": 109,
-          "sampleSD": 6.082762530298219
+          "mean": 26,
+          "sampleSD": 2.6457513110645907
+        },
+        "departedVehicles": {
+          "mean": 168.33333333333334,
+          "sampleSD": 12.662279942148386
+        },
+        "endPendingVehicles": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "maxPendingVehicles": {
+          "mean": 2.3333333333333335,
+          "sampleSD": 0.5773502691896257
+        },
+        "meanPendingVehicles": {
+          "mean": 0.18,
+          "sampleSD": 0.05196152422706632
+        },
+        "observedInsertionDemandVehicles": {
+          "mean": 168.33333333333334,
+          "sampleSD": 12.662279942148386
         },
         "meanPolicyInferenceMs": {
           "mean": 0.0,
@@ -74,12 +94,12 @@
           "sampleSD": 0.0
         },
         "meanDecisionControlComputeMs": {
-          "mean": 0.017802779459291034,
-          "sampleSD": 0.0004075782889202599
+          "mean": 0.017305554744477075,
+          "sampleSD": 0.00056650993088159
         },
         "p95DecisionControlComputeMs": {
-          "mean": 0.01967496161038677,
-          "sampleSD": 0.0010235185682667329
+          "mean": 0.01944991915176312,
+          "sampleSD": 0.0004767404048081002
         },
         "fallbackControllerSeconds": {
           "mean": 0,
@@ -98,20 +118,20 @@
           "sampleSD": 0.0
         },
         "meanObservedTimeLossIncludingUnfinished": {
-          "mean": 41.71412228107743,
-          "sampleSD": 3.2782719883118694
+          "mean": 23.09199937751409,
+          "sampleSD": 0.17254684130295458
         },
         "meanDepartDelaySeconds": {
-          "mean": 125.05459289997174,
-          "sampleSD": 2.4973439022877764
+          "mean": 0.8337668438811517,
+          "sampleSD": 0.1055811391721144
         },
         "waitingGiniIncludingUnfinished": {
-          "mean": 0.34406295004253057,
-          "sampleSD": 0.015264545733323694
+          "mean": 0.5512511658980953,
+          "sampleSD": 0.025398081139243522
         },
         "maxObservedWaitingIncludingUnfinished": {
-          "mean": 77.33333333333333,
-          "sampleSD": 5.686240703077327
+          "mean": 49.333333333333336,
+          "sampleSD": 6.6583281184793925
         }
       }
     },
@@ -121,39 +141,39 @@
       "n": 3,
       "metrics": {
         "meanCompletedTimeLossSeconds": {
-          "mean": 60.352974430752866,
-          "sampleSD": 0.3943213851230016
+          "mean": 18.858202101067555,
+          "sampleSD": 0.772085131144429
         },
         "meanNetworkQueue": {
-          "mean": 39.657777777777774,
-          "sampleSD": 0.5475636272853849
+          "mean": 4.825555555555556,
+          "sampleSD": 0.7322744881026005
         },
         "maxNetworkQueue": {
-          "mean": 54.333333333333336,
-          "sampleSD": 1.1547005383792515
+          "mean": 16.666666666666668,
+          "sampleSD": 4.163331998932265
         },
         "throughputVehiclesPerHour": {
-          "mean": 3328.0,
-          "sampleSD": 34.64101615137755
+          "mean": 1632.0,
+          "sampleSD": 98.2242332624694
         },
         "meanCompletedWaitingSeconds": {
-          "mean": 32.457386041563105,
-          "sampleSD": 0.28646601787339204
+          "mean": 8.531517609401895,
+          "sampleSD": 0.266550890355184
         },
         "p95CompletedWaitingSeconds": {
-          "mean": 72.36666666666666,
-          "sampleSD": 0.6350852961085687
+          "mean": 21.95,
+          "sampleSD": 1.9500000000000084
         },
         "maxCompletedWaitingSeconds": {
-          "mean": 81.66666666666667,
-          "sampleSD": 3.0550504633038935
+          "mean": 26.333333333333332,
+          "sampleSD": 2.516611478423583
         },
         "maxApproachMeanWaitSeconds": {
-          "mean": 9.327886710239651,
-          "sampleSD": 0.3377942774388704
+          "mean": 15.055555555555555,
+          "sampleSD": 0.4194352464039308
         },
         "maxServiceAgeSeconds": {
-          "mean": 26.0,
+          "mean": 21.0,
           "sampleSD": 0.0
         },
         "spillbackEdgeSeconds": {
@@ -161,24 +181,44 @@
           "sampleSD": 0.0
         },
         "meanControlLatencyMs": {
-          "mean": 1.9479972230167024,
-          "sampleSD": 0.014236329268127956
+          "mean": 1.2980270009332646,
+          "sampleSD": 0.02102950487721799
         },
         "p95ControlLatencyMs": {
-          "mean": 3.550371686772754,
-          "sampleSD": 0.03998016322360446
+          "mean": 1.6232533865453056,
+          "sampleSD": 0.014061615041886851
         },
         "maxControlLatencyMs": {
-          "mean": 4.155533310646812,
-          "sampleSD": 0.2732534638145756
+          "mean": 2.1936666453257203,
+          "sampleSD": 0.38084821467551794
         },
         "completedTrips": {
-          "mean": 277.3333333333333,
-          "sampleSD": 2.8867513459481287
+          "mean": 136,
+          "sampleSD": 8.18535277187245
         },
         "unfinishedTrips": {
-          "mean": 114.33333333333333,
-          "sampleSD": 5.033222956847166
+          "mean": 32.333333333333336,
+          "sampleSD": 4.618802153517006
+        },
+        "departedVehicles": {
+          "mean": 168.33333333333334,
+          "sampleSD": 12.662279942148386
+        },
+        "endPendingVehicles": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "maxPendingVehicles": {
+          "mean": 2.3333333333333335,
+          "sampleSD": 0.5773502691896257
+        },
+        "meanPendingVehicles": {
+          "mean": 0.21,
+          "sampleSD": 0.08192137151629672
+        },
+        "observedInsertionDemandVehicles": {
+          "mean": 168.33333333333334,
+          "sampleSD": 12.662279942148386
         },
         "meanPolicyInferenceMs": {
           "mean": 0.0,
@@ -189,12 +229,12 @@
           "sampleSD": 0.0
         },
         "meanDecisionControlComputeMs": {
-          "mean": 9.739986115083513,
-          "sampleSD": 0.07118164634063963
+          "mean": 6.490135004666324,
+          "sampleSD": 0.10514752438609008
         },
         "p95DecisionControlComputeMs": {
-          "mean": 15.670754946768284,
-          "sampleSD": 0.5248248360998611
+          "mean": 7.752356629741068,
+          "sampleSD": 0.14653480560929388
         },
         "fallbackControllerSeconds": {
           "mean": 0,
@@ -209,24 +249,24 @@
           "sampleSD": 0.0
         },
         "supervisorAcceptedActions": {
-          "mean": 63.333333333333336,
-          "sampleSD": 5.033222956847166
+          "mean": 0,
+          "sampleSD": 0.0
         },
         "meanObservedTimeLossIncludingUnfinished": {
-          "mean": 56.49605297121834,
-          "sampleSD": 0.27824788787088517
+          "mean": 18.484873727298876,
+          "sampleSD": 1.6719748617392047
         },
         "meanDepartDelaySeconds": {
-          "mean": 122.7063732193774,
-          "sampleSD": 0.8284607709512188
+          "mean": 0.8853569804878502,
+          "sampleSD": 0.1522156772359907
         },
         "waitingGiniIncludingUnfinished": {
-          "mean": 0.32143839662470375,
-          "sampleSD": 0.004741498262381987
+          "mean": 0.5151218444883592,
+          "sampleSD": 0.03766884405476757
         },
         "maxObservedWaitingIncludingUnfinished": {
-          "mean": 81.66666666666667,
-          "sampleSD": 3.0550504633038935
+          "mean": 31.0,
+          "sampleSD": 6.082762530298219
         }
       }
     },
@@ -236,64 +276,84 @@
       "n": 3,
       "metrics": {
         "meanCompletedTimeLossSeconds": {
-          "mean": 24.67994251377924,
-          "sampleSD": 2.1381407239820076
+          "mean": 20.299583960738385,
+          "sampleSD": 3.0032439485876306
         },
         "meanNetworkQueue": {
-          "mean": 36.416666666666664,
-          "sampleSD": 2.7163026340965764
+          "mean": 5.517777777777778,
+          "sampleSD": 1.3198498792300979
         },
         "maxNetworkQueue": {
-          "mean": 50.666666666666664,
-          "sampleSD": 1.1547005383792515
+          "mean": 17,
+          "sampleSD": 4.58257569495584
         },
         "throughputVehiclesPerHour": {
-          "mean": 4828.0,
-          "sampleSD": 79.89993742175271
+          "mean": 1672.0,
+          "sampleSD": 126.04761005270984
         },
         "meanCompletedWaitingSeconds": {
-          "mean": 14.083325433737958,
-          "sampleSD": 1.4614880026518215
+          "mean": 9.877561764541856,
+          "sampleSD": 1.6672510948834303
         },
         "p95CompletedWaitingSeconds": {
-          "mean": 79.416666666666,
-          "sampleSD": 3.3490048273076236
+          "mean": 24.333333333333314,
+          "sampleSD": 3.219213154380019
         },
         "maxCompletedWaitingSeconds": {
-          "mean": 168.66666666666666,
-          "sampleSD": 0.5773502691896257
+          "mean": 32.666666666666664,
+          "sampleSD": 6.8068592855540455
         },
         "maxApproachMeanWaitSeconds": {
-          "mean": 38.37777777777778,
-          "sampleSD": 1.2429057948271098
+          "mean": 17.88888888888889,
+          "sampleSD": 2.2194427061597968
         },
         "maxServiceAgeSeconds": {
-          "mean": 55.0,
-          "sampleSD": 0.0
+          "mean": 43.0,
+          "sampleSD": 7.211102550927978
         },
         "spillbackEdgeSeconds": {
           "mean": 0,
           "sampleSD": 0.0
         },
         "meanControlLatencyMs": {
-          "mean": 5.719014441258171,
-          "sampleSD": 0.05536963942311815
+          "mean": 2.742362445116871,
+          "sampleSD": 0.2890932678745826
         },
         "p95ControlLatencyMs": {
-          "mean": 9.638893344284346,
-          "sampleSD": 0.06325133523721568
+          "mean": 6.213905002611379,
+          "sampleSD": 1.2954107892079398
         },
         "maxControlLatencyMs": {
-          "mean": 12.645299973276755,
-          "sampleSD": 1.3270974543464256
+          "mean": 8.975833343962828,
+          "sampleSD": 0.08117601540748391
         },
         "completedTrips": {
-          "mean": 402.3333333333333,
-          "sampleSD": 6.6583281184793925
+          "mean": 139.33333333333334,
+          "sampleSD": 10.503967504392486
         },
         "unfinishedTrips": {
-          "mean": 97.33333333333333,
-          "sampleSD": 1.1547005383792515
+          "mean": 28.666666666666668,
+          "sampleSD": 4.725815626252609
+        },
+        "departedVehicles": {
+          "mean": 168,
+          "sampleSD": 12.288205727444508
+        },
+        "endPendingVehicles": {
+          "mean": 0.3333333333333333,
+          "sampleSD": 0.5773502691896257
+        },
+        "maxPendingVehicles": {
+          "mean": 2.3333333333333335,
+          "sampleSD": 0.5773502691896257
+        },
+        "meanPendingVehicles": {
+          "mean": 0.2111111111111111,
+          "sampleSD": 0.09155043135606454
+        },
+        "observedInsertionDemandVehicles": {
+          "mean": 168.33333333333334,
+          "sampleSD": 12.662279942148386
         },
         "meanPolicyInferenceMs": {
           "mean": 0.0,
@@ -304,12 +364,12 @@
           "sampleSD": 0.0
         },
         "meanDecisionControlComputeMs": {
-          "mean": 28.59507220629085,
-          "sampleSD": 0.2768481971155905
+          "mean": 13.711812225584355,
+          "sampleSD": 1.4454663393729128
         },
         "p95DecisionControlComputeMs": {
-          "mean": 46.68391667849694,
-          "sampleSD": 0.5307148101436745
+          "mean": 28.993386767494176,
+          "sampleSD": 3.2322548680689027
         },
         "fallbackControllerSeconds": {
           "mean": 0,
@@ -324,24 +384,24 @@
           "sampleSD": 0.0
         },
         "supervisorAcceptedActions": {
-          "mean": 340,
-          "sampleSD": 0.0
+          "mean": 118,
+          "sampleSD": 25.357444666211933
         },
         "meanObservedTimeLossIncludingUnfinished": {
-          "mean": 33.859532445694185,
-          "sampleSD": 1.9567583216738142
+          "mean": 19.912108356303026,
+          "sampleSD": 3.1781270802123105
         },
         "meanDepartDelaySeconds": {
-          "mean": 128.294253402657,
-          "sampleSD": 2.574130759538368
+          "mean": 0.8742900848539136,
+          "sampleSD": 0.17677848628322068
         },
         "waitingGiniIncludingUnfinished": {
-          "mean": 0.772745334649012,
-          "sampleSD": 0.058367487962295156
+          "mean": 0.4744282858699785,
+          "sampleSD": 0.03594443703903795
         },
         "maxObservedWaitingIncludingUnfinished": {
-          "mean": 197.33333333333334,
-          "sampleSD": 2.0816659994661326
+          "mean": 33.0,
+          "sampleSD": 6.244997998398398
         }
       }
     },
@@ -351,64 +411,84 @@
       "n": 3,
       "metrics": {
         "meanCompletedTimeLossSeconds": {
-          "mean": 24.67994251377924,
-          "sampleSD": 2.1381407239820076
+          "mean": 20.299583960738385,
+          "sampleSD": 3.0032439485876306
         },
         "meanNetworkQueue": {
-          "mean": 36.416666666666664,
-          "sampleSD": 2.7163026340965764
+          "mean": 5.517777777777778,
+          "sampleSD": 1.3198498792300979
         },
         "maxNetworkQueue": {
-          "mean": 50.666666666666664,
-          "sampleSD": 1.1547005383792515
+          "mean": 17,
+          "sampleSD": 4.58257569495584
         },
         "throughputVehiclesPerHour": {
-          "mean": 4828.0,
-          "sampleSD": 79.89993742175271
+          "mean": 1672.0,
+          "sampleSD": 126.04761005270984
         },
         "meanCompletedWaitingSeconds": {
-          "mean": 14.083325433737958,
-          "sampleSD": 1.4614880026518215
+          "mean": 9.877561764541856,
+          "sampleSD": 1.6672510948834303
         },
         "p95CompletedWaitingSeconds": {
-          "mean": 79.416666666666,
-          "sampleSD": 3.3490048273076236
+          "mean": 24.333333333333314,
+          "sampleSD": 3.219213154380019
         },
         "maxCompletedWaitingSeconds": {
-          "mean": 168.66666666666666,
-          "sampleSD": 0.5773502691896257
+          "mean": 32.666666666666664,
+          "sampleSD": 6.8068592855540455
         },
         "maxApproachMeanWaitSeconds": {
-          "mean": 38.37777777777778,
-          "sampleSD": 1.2429057948271098
+          "mean": 17.88888888888889,
+          "sampleSD": 2.2194427061597968
         },
         "maxServiceAgeSeconds": {
-          "mean": 55.0,
-          "sampleSD": 0.0
+          "mean": 43.0,
+          "sampleSD": 7.211102550927978
         },
         "spillbackEdgeSeconds": {
           "mean": 0,
           "sampleSD": 0.0
         },
         "meanControlLatencyMs": {
-          "mean": 6.0324778892875965,
-          "sampleSD": 0.08517792758245546
+          "mean": 2.7313918893277234,
+          "sampleSD": 0.30328432940978833
         },
         "p95ControlLatencyMs": {
-          "mean": 9.808404984263083,
-          "sampleSD": 0.15750675960826932
+          "mean": 6.151653308188544,
+          "sampleSD": 1.3115503493259635
         },
         "maxControlLatencyMs": {
-          "mean": 83.24623332979779,
-          "sampleSD": 1.319898338909105
+          "mean": 9.586933340566853,
+          "sampleSD": 0.7052371403937481
         },
         "completedTrips": {
-          "mean": 402.3333333333333,
-          "sampleSD": 6.6583281184793925
+          "mean": 139.33333333333334,
+          "sampleSD": 10.503967504392486
         },
         "unfinishedTrips": {
-          "mean": 97.33333333333333,
-          "sampleSD": 1.1547005383792515
+          "mean": 28.666666666666668,
+          "sampleSD": 4.725815626252609
+        },
+        "departedVehicles": {
+          "mean": 168,
+          "sampleSD": 12.288205727444508
+        },
+        "endPendingVehicles": {
+          "mean": 0.3333333333333333,
+          "sampleSD": 0.5773502691896257
+        },
+        "maxPendingVehicles": {
+          "mean": 2.3333333333333335,
+          "sampleSD": 0.5773502691896257
+        },
+        "meanPendingVehicles": {
+          "mean": 0.2111111111111111,
+          "sampleSD": 0.09155043135606454
+        },
+        "observedInsertionDemandVehicles": {
+          "mean": 168.33333333333334,
+          "sampleSD": 12.662279942148386
         },
         "meanPolicyInferenceMs": {
           "mean": 0.0,
@@ -419,16 +499,16 @@
           "sampleSD": 0.0
         },
         "meanDecisionControlComputeMs": {
-          "mean": 30.162389446437977,
-          "sampleSD": 0.4258896379122773
+          "mean": 13.656959446638615,
+          "sampleSD": 1.5164216470489424
         },
         "p95DecisionControlComputeMs": {
-          "mean": 48.25672829756513,
-          "sampleSD": 0.42623639444318606
+          "mean": 29.055160049271457,
+          "sampleSD": 3.159703798332081
         },
         "fallbackControllerSeconds": {
-          "mean": 0.3333333333333333,
-          "sampleSD": 0.5773502691896257
+          "mean": 0,
+          "sampleSD": 0.0
         },
         "hintControllerSeconds": {
           "mean": 0,
@@ -439,24 +519,24 @@
           "sampleSD": 0.0
         },
         "supervisorAcceptedActions": {
-          "mean": 339.6666666666667,
-          "sampleSD": 0.5773502691896257
+          "mean": 118,
+          "sampleSD": 25.357444666211933
         },
         "meanObservedTimeLossIncludingUnfinished": {
-          "mean": 33.859532445694185,
-          "sampleSD": 1.9567583216738142
+          "mean": 19.912108356303026,
+          "sampleSD": 3.1781270802123105
         },
         "meanDepartDelaySeconds": {
-          "mean": 128.294253402657,
-          "sampleSD": 2.574130759538368
+          "mean": 0.8742900848539136,
+          "sampleSD": 0.17677848628322068
         },
         "waitingGiniIncludingUnfinished": {
-          "mean": 0.772745334649012,
-          "sampleSD": 0.058367487962295156
+          "mean": 0.4744282858699785,
+          "sampleSD": 0.03594443703903795
         },
         "maxObservedWaitingIncludingUnfinished": {
-          "mean": 197.33333333333334,
-          "sampleSD": 2.0816659994661326
+          "mean": 33.0,
+          "sampleSD": 6.244997998398398
         }
       }
     },
@@ -466,80 +546,100 @@
       "n": 3,
       "metrics": {
         "meanCompletedTimeLossSeconds": {
-          "mean": 24.69646680188644,
-          "sampleSD": 2.125386143679134
+          "mean": 20.459940163322518,
+          "sampleSD": 2.9097069528111272
         },
         "meanNetworkQueue": {
-          "mean": 36.294444444444444,
-          "sampleSD": 2.8165193912844773
+          "mean": 5.697777777777778,
+          "sampleSD": 1.0718226083189808
         },
         "maxNetworkQueue": {
-          "mean": 50.333333333333336,
-          "sampleSD": 1.5275252316519468
+          "mean": 16,
+          "sampleSD": 3.605551275463989
         },
         "throughputVehiclesPerHour": {
-          "mean": 4828.0,
-          "sampleSD": 79.89993742175271
+          "mean": 1712.0,
+          "sampleSD": 126.04761005270984
         },
         "meanCompletedWaitingSeconds": {
-          "mean": 14.06908757779156,
-          "sampleSD": 1.4742764803437542
+          "mean": 10.538613891555068,
+          "sampleSD": 1.5225962527390857
         },
         "p95CompletedWaitingSeconds": {
-          "mean": 79.366666666666,
-          "sampleSD": 3.3054248340160197
+          "mean": 28.633333333333336,
+          "sampleSD": 3.5076107727815717
         },
         "maxCompletedWaitingSeconds": {
-          "mean": 169.0,
-          "sampleSD": 1.0
+          "mean": 42.333333333333336,
+          "sampleSD": 6.027713773341708
         },
         "maxApproachMeanWaitSeconds": {
-          "mean": 37.94444444444444,
-          "sampleSD": 0.5091750772173153
+          "mean": 26.444444444444443,
+          "sampleSD": 6.946888458818039
         },
         "maxServiceAgeSeconds": {
-          "mean": 55.0,
-          "sampleSD": 0.0
+          "mean": 50.333333333333336,
+          "sampleSD": 2.8867513459481287
         },
         "spillbackEdgeSeconds": {
           "mean": 0,
           "sampleSD": 0.0
         },
         "meanControlLatencyMs": {
-          "mean": 5.927793000591919,
-          "sampleSD": 0.0487182338680674
+          "mean": 4.143811553820139,
+          "sampleSD": 0.2952928633963364
         },
         "p95ControlLatencyMs": {
-          "mean": 9.920000015214706,
-          "sampleSD": 0.12852473611246604
+          "mean": 8.515385016410923,
+          "sampleSD": 0.4970143452488514
         },
         "maxControlLatencyMs": {
-          "mean": 11.532699999709925,
-          "sampleSD": 1.059839435832972
+          "mean": 10.232033285622796,
+          "sampleSD": 0.9243134330577523
         },
         "completedTrips": {
-          "mean": 402.3333333333333,
-          "sampleSD": 6.6583281184793925
+          "mean": 142.66666666666666,
+          "sampleSD": 10.503967504392486
         },
         "unfinishedTrips": {
-          "mean": 97,
-          "sampleSD": 1.0
+          "mean": 25.333333333333332,
+          "sampleSD": 4.163331998932265
+        },
+        "departedVehicles": {
+          "mean": 168,
+          "sampleSD": 12.288205727444508
+        },
+        "endPendingVehicles": {
+          "mean": 0.3333333333333333,
+          "sampleSD": 0.5773502691896257
+        },
+        "maxPendingVehicles": {
+          "mean": 2.3333333333333335,
+          "sampleSD": 0.5773502691896257
+        },
+        "meanPendingVehicles": {
+          "mean": 0.17666666666666667,
+          "sampleSD": 0.04163331998932265
+        },
+        "observedInsertionDemandVehicles": {
+          "mean": 168.33333333333334,
+          "sampleSD": 12.662279942148386
         },
         "meanPolicyInferenceMs": {
-          "mean": 0.9063972224895325,
-          "sampleSD": 0.011156448472091025
+          "mean": 0.8840855527927892,
+          "sampleSD": 0.006518740802505591
         },
         "p95PolicyInferenceMs": {
-          "mean": 0.963406666414812,
-          "sampleSD": 0.01793094187435788
+          "mean": 0.9398266401452322,
+          "sampleSD": 0.002307061542654834
         },
         "meanDecisionControlComputeMs": {
-          "mean": 30.545362225449125,
-          "sampleSD": 0.23402390877894216
+          "mean": 21.603143321893487,
+          "sampleSD": 1.4727649335623456
         },
         "p95DecisionControlComputeMs": {
-          "mean": 49.53479003355218,
-          "sampleSD": 0.952675757972237
+          "mean": 41.48033999566299,
+          "sampleSD": 2.259212053275199
         },
         "fallbackControllerSeconds": {
           "mean": 0,
@@ -554,24 +654,24 @@
           "sampleSD": 0.0
         },
         "supervisorAcceptedActions": {
-          "mean": 340,
-          "sampleSD": 0.0
+          "mean": 222.33333333333334,
+          "sampleSD": 24.78574859336174
         },
         "meanObservedTimeLossIncludingUnfinished": {
-          "mean": 33.839072211633145,
-          "sampleSD": 1.9714999759297316
+          "mean": 19.561687127683502,
+          "sampleSD": 2.7054971282027247
         },
         "meanDepartDelaySeconds": {
-          "mean": 128.10752967342924,
-          "sampleSD": 2.4555991925365173
+          "mean": 0.8230556888002758,
+          "sampleSD": 0.06897277859486489
         },
         "waitingGiniIncludingUnfinished": {
-          "mean": 0.7726875895953818,
-          "sampleSD": 0.058316307976151005
+          "mean": 0.5293074525902542,
+          "sampleSD": 0.027198054394365755
         },
         "maxObservedWaitingIncludingUnfinished": {
-          "mean": 198.33333333333334,
-          "sampleSD": 3.0550504633038935
+          "mean": 42.333333333333336,
+          "sampleSD": 6.027713773341708
         }
       }
     },
@@ -581,36 +681,36 @@
       "n": 3,
       "metrics": {
         "meanCompletedTimeLossSeconds": {
-          "mean": 43.88418344284348,
-          "sampleSD": 2.280242099309978
+          "mean": 33.694727336347974,
+          "sampleSD": 2.7374229085810824
         },
         "meanNetworkQueue": {
-          "mean": 47.31666666666666,
-          "sampleSD": 3.9666834733537506
+          "mean": 24.356666666666666,
+          "sampleSD": 2.4311679863345055
         },
         "maxNetworkQueue": {
-          "mean": 76.66666666666667,
-          "sampleSD": 0.5773502691896257
+          "mean": 45.333333333333336,
+          "sampleSD": 3.0550504633038935
         },
         "throughputVehiclesPerHour": {
-          "mean": 4300.0,
-          "sampleSD": 38.57460304397182
+          "mean": 3216.0,
+          "sampleSD": 207.84609690826528
         },
         "meanCompletedWaitingSeconds": {
-          "mean": 31.53203627551544,
-          "sampleSD": 1.727321616973911
+          "mean": 22.436046511627907,
+          "sampleSD": 1.8188178087045286
         },
         "p95CompletedWaitingSeconds": {
-          "mean": 68.63333333333333,
-          "sampleSD": 3.9878983604567
+          "mean": 45.383333333333326,
+          "sampleSD": 1.5135499110810118
         },
         "maxCompletedWaitingSeconds": {
-          "mean": 80.33333333333333,
-          "sampleSD": 2.0816659994661326
+          "mean": 64.66666666666667,
+          "sampleSD": 7.637626158259733
         },
         "maxApproachMeanWaitSeconds": {
-          "mean": 36.157575757575756,
-          "sampleSD": 0.09972413740548036
+          "mean": 38.02962962962963,
+          "sampleSD": 2.335484017651975
         },
         "maxServiceAgeSeconds": {
           "mean": 48.0,
@@ -621,24 +721,44 @@
           "sampleSD": 0.0
         },
         "meanControlLatencyMs": {
-          "mean": 0.003633444300956196,
-          "sampleSD": 0.00015330909832620703
+          "mean": 0.003629999571583337,
+          "sampleSD": 0.0001222561597041216
         },
         "p95ControlLatencyMs": {
-          "mean": 0.004233328703170021,
-          "sampleSD": 5.7671614745417424e-05
+          "mean": 0.0043333663294712705,
+          "sampleSD": 0.00015275368629826956
         },
         "maxControlLatencyMs": {
-          "mean": 0.02509999709824721,
-          "sampleSD": 0.029526922760501718
+          "mean": 0.008400025156637033,
+          "sampleSD": 0.003328622291690901
         },
         "completedTrips": {
-          "mean": 358.3333333333333,
-          "sampleSD": 3.2145502536643185
+          "mean": 268,
+          "sampleSD": 17.320508075688775
         },
         "unfinishedTrips": {
-          "mean": 109.66666666666667,
-          "sampleSD": 4.041451884327381
+          "mean": 81,
+          "sampleSD": 6.244997998398398
+        },
+        "departedVehicles": {
+          "mean": 349,
+          "sampleSD": 11.357816691600547
+        },
+        "endPendingVehicles": {
+          "mean": 13.666666666666666,
+          "sampleSD": 5.507570547286102
+        },
+        "maxPendingVehicles": {
+          "mean": 16.666666666666668,
+          "sampleSD": 4.932882862316247
+        },
+        "meanPendingVehicles": {
+          "mean": 4.466666666666667,
+          "sampleSD": 1.813838777596044
+        },
+        "observedInsertionDemandVehicles": {
+          "mean": 362.6666666666667,
+          "sampleSD": 16.502525059315417
         },
         "meanPolicyInferenceMs": {
           "mean": 0.0,
@@ -649,12 +769,12 @@
           "sampleSD": 0.0
         },
         "meanDecisionControlComputeMs": {
-          "mean": 0.01816722150478098,
-          "sampleSD": 0.0007665454916310351
+          "mean": 0.018149997857916687,
+          "sampleSD": 0.0006112807985206083
         },
         "p95DecisionControlComputeMs": {
-          "mean": 0.019286765018478036,
-          "sampleSD": 0.0004188776857463278
+          "mean": 0.01977506714562575,
+          "sampleSD": 0.0006439376806152254
         },
         "fallbackControllerSeconds": {
           "mean": 0,
@@ -673,20 +793,20 @@
           "sampleSD": 0.0
         },
         "meanObservedTimeLossIncludingUnfinished": {
-          "mean": 42.381199227642675,
-          "sampleSD": 2.6326390451308823
+          "mean": 31.625966147331663,
+          "sampleSD": 2.227003155465163
         },
         "meanDepartDelaySeconds": {
-          "mean": 127.56920535101804,
-          "sampleSD": 1.7805217762927068
+          "mean": 3.9400864065840673,
+          "sampleSD": 1.492104802079285
         },
         "waitingGiniIncludingUnfinished": {
-          "mean": 0.34452598604970924,
-          "sampleSD": 0.017731935338881552
+          "mean": 0.45673560701570504,
+          "sampleSD": 0.04276745055624185
         },
         "maxObservedWaitingIncludingUnfinished": {
-          "mean": 80.33333333333333,
-          "sampleSD": 2.0816659994661326
+          "mean": 64.66666666666667,
+          "sampleSD": 7.637626158259733
         }
       }
     },
@@ -696,39 +816,39 @@
       "n": 3,
       "metrics": {
         "meanCompletedTimeLossSeconds": {
-          "mean": 60.59205993653358,
-          "sampleSD": 0.8788984850313486
+          "mean": 41.65078794965177,
+          "sampleSD": 5.297702387443218
         },
         "meanNetworkQueue": {
-          "mean": 39.31888888888889,
-          "sampleSD": 0.8597824875664334
+          "mean": 22.941111111111113,
+          "sampleSD": 3.779644800085692
         },
         "maxNetworkQueue": {
-          "mean": 53.333333333333336,
-          "sampleSD": 1.1547005383792515
+          "mean": 40.666666666666664,
+          "sampleSD": 5.686240703077327
         },
         "throughputVehiclesPerHour": {
-          "mean": 3300.0,
-          "sampleSD": 24.0
+          "mean": 2728.0,
+          "sampleSD": 81.68231142664855
         },
         "meanCompletedWaitingSeconds": {
-          "mean": 32.29110438698886,
-          "sampleSD": 0.6952463317959082
+          "mean": 21.763891977083468,
+          "sampleSD": 3.1637065633861066
         },
         "p95CompletedWaitingSeconds": {
-          "mean": 71.39999999999999,
-          "sampleSD": 1.9697715603592274
+          "mean": 48.01666666666665,
+          "sampleSD": 2.75967993313234
         },
         "maxCompletedWaitingSeconds": {
-          "mean": 80.33333333333333,
-          "sampleSD": 2.0816659994661326
+          "mean": 67.33333333333333,
+          "sampleSD": 1.5275252316519468
         },
         "maxApproachMeanWaitSeconds": {
-          "mean": 9.470014906547414,
-          "sampleSD": 0.31833713003417297
+          "mean": 14.333333333333334,
+          "sampleSD": 1.1547005383792515
         },
         "maxServiceAgeSeconds": {
-          "mean": 26.333333333333332,
+          "mean": 23.333333333333332,
           "sampleSD": 0.5773502691896257
         },
         "spillbackEdgeSeconds": {
@@ -736,24 +856,44 @@
           "sampleSD": 0.0
         },
         "meanControlLatencyMs": {
-          "mean": 1.939620999748715,
-          "sampleSD": 0.030273450005698484
+          "mean": 1.5906076644185103,
+          "sampleSD": 0.050701878867800705
         },
         "p95ControlLatencyMs": {
-          "mean": 3.5442233376670633,
-          "sampleSD": 0.0986228308579843
+          "mean": 2.1375349683997533,
+          "sampleSD": 0.12207946220992813
         },
         "maxControlLatencyMs": {
-          "mean": 4.357199999503791,
-          "sampleSD": 0.6379389644203788
+          "mean": 3.2655999530106783,
+          "sampleSD": 0.38826631868689476
         },
         "completedTrips": {
-          "mean": 275,
-          "sampleSD": 2.0
+          "mean": 227.33333333333334,
+          "sampleSD": 6.8068592855540455
         },
         "unfinishedTrips": {
-          "mean": 116,
-          "sampleSD": 4.0
+          "mean": 94.33333333333333,
+          "sampleSD": 5.773502691896257
+        },
+        "departedVehicles": {
+          "mean": 321.6666666666667,
+          "sampleSD": 12.503332889007368
+        },
+        "endPendingVehicles": {
+          "mean": 41,
+          "sampleSD": 4.58257569495584
+        },
+        "maxPendingVehicles": {
+          "mean": 42.666666666666664,
+          "sampleSD": 5.8594652770823155
+        },
+        "meanPendingVehicles": {
+          "mean": 13.338888888888889,
+          "sampleSD": 2.552180621728392
+        },
+        "observedInsertionDemandVehicles": {
+          "mean": 362.6666666666667,
+          "sampleSD": 16.502525059315417
         },
         "meanPolicyInferenceMs": {
           "mean": 0.0,
@@ -764,12 +904,12 @@
           "sampleSD": 0.0
         },
         "meanDecisionControlComputeMs": {
-          "mean": 9.698104998743576,
-          "sampleSD": 0.15136725002849244
+          "mean": 7.953038322092552,
+          "sampleSD": 0.25350939433900327
         },
         "p95DecisionControlComputeMs": {
-          "mean": 15.375194958566377,
-          "sampleSD": 0.7380311606823218
+          "mean": 10.106709995307028,
+          "sampleSD": 0.4535411602837905
         },
         "fallbackControllerSeconds": {
           "mean": 0,
@@ -784,24 +924,24 @@
           "sampleSD": 0.0
         },
         "supervisorAcceptedActions": {
-          "mean": 63.666666666666664,
-          "sampleSD": 4.041451884327381
+          "mean": 10.666666666666666,
+          "sampleSD": 5.033222956847166
         },
         "meanObservedTimeLossIncludingUnfinished": {
-          "mean": 56.81615413317714,
-          "sampleSD": 0.5757301052613488
+          "mean": 41.377228298495766,
+          "sampleSD": 4.539307847115182
         },
         "meanDepartDelaySeconds": {
-          "mean": 125.29032063171825,
-          "sampleSD": 0.45277154974992595
+          "mean": 9.091815325336803,
+          "sampleSD": 1.8396776554434098
         },
         "waitingGiniIncludingUnfinished": {
-          "mean": 0.3195009652950324,
-          "sampleSD": 0.002454485059122617
+          "mean": 0.41389856030938826,
+          "sampleSD": 0.03064469653872892
         },
         "maxObservedWaitingIncludingUnfinished": {
-          "mean": 80.33333333333333,
-          "sampleSD": 2.0816659994661326
+          "mean": 67.33333333333333,
+          "sampleSD": 1.5275252316519468
         }
       }
     },
@@ -811,64 +951,84 @@
       "n": 3,
       "metrics": {
         "meanCompletedTimeLossSeconds": {
-          "mean": 24.74404608195468,
-          "sampleSD": 2.5073341502996733
+          "mean": 36.080207722070384,
+          "sampleSD": 2.545523915786169
         },
         "meanNetworkQueue": {
-          "mean": 36.15222222222222,
-          "sampleSD": 2.3829727776999996
+          "mean": 23.233333333333334,
+          "sampleSD": 2.385912357522333
         },
         "maxNetworkQueue": {
-          "mean": 51.333333333333336,
-          "sampleSD": 0.5773502691896257
+          "mean": 44.333333333333336,
+          "sampleSD": 2.0816659994661326
         },
         "throughputVehiclesPerHour": {
-          "mean": 4800.0,
-          "sampleSD": 12.0
+          "mean": 2980.0,
+          "sampleSD": 143.16424134538624
         },
         "meanCompletedWaitingSeconds": {
-          "mean": 14.18264302172722,
-          "sampleSD": 1.7996164057739137
+          "mean": 20.956222709138316,
+          "sampleSD": 2.200195563960413
         },
         "p95CompletedWaitingSeconds": {
-          "mean": 78.36666666666578,
-          "sampleSD": 1.3051181300293777
+          "mean": 53.349999999999994,
+          "sampleSD": 0.5634713834792368
         },
         "maxCompletedWaitingSeconds": {
-          "mean": 168.66666666666666,
-          "sampleSD": 3.0550504633038935
+          "mean": 67.33333333333333,
+          "sampleSD": 2.309401076758503
         },
         "maxApproachMeanWaitSeconds": {
-          "mean": 38.43333333333333,
-          "sampleSD": 1.2096831541082687
+          "mean": 25.32962962962963,
+          "sampleSD": 7.5498371606454775
         },
         "maxServiceAgeSeconds": {
-          "mean": 55.0,
-          "sampleSD": 0.0
+          "mean": 48.0,
+          "sampleSD": 3.0
         },
         "spillbackEdgeSeconds": {
           "mean": 0,
           "sampleSD": 0.0
         },
         "meanControlLatencyMs": {
-          "mean": 5.741830891024114,
-          "sampleSD": 0.16149584368736
+          "mean": 4.367939669302561,
+          "sampleSD": 0.3218583843968224
         },
         "p95ControlLatencyMs": {
-          "mean": 9.765893343137577,
-          "sampleSD": 0.10939895835115708
+          "mean": 9.057760001936307,
+          "sampleSD": 0.5355768469490592
         },
         "maxControlLatencyMs": {
-          "mean": 16.081233276054263,
-          "sampleSD": 8.10506518385256
+          "mean": 46.24676665601631,
+          "sampleSD": 62.94438076324725
         },
         "completedTrips": {
-          "mean": 400,
-          "sampleSD": 1.0
+          "mean": 248.33333333333334,
+          "sampleSD": 11.930353445448853
         },
         "unfinishedTrips": {
-          "mean": 99.33333333333333,
-          "sampleSD": 2.0816659994661326
+          "mean": 90.66666666666667,
+          "sampleSD": 1.5275252316519468
+        },
+        "departedVehicles": {
+          "mean": 339,
+          "sampleSD": 10.583005244258363
+        },
+        "endPendingVehicles": {
+          "mean": 23.666666666666668,
+          "sampleSD": 6.027713773341708
+        },
+        "maxPendingVehicles": {
+          "mean": 25.333333333333332,
+          "sampleSD": 5.033222956847166
+        },
+        "meanPendingVehicles": {
+          "mean": 7.2122222222222225,
+          "sampleSD": 2.253210877671963
+        },
+        "observedInsertionDemandVehicles": {
+          "mean": 362.6666666666667,
+          "sampleSD": 16.502525059315417
         },
         "meanPolicyInferenceMs": {
           "mean": 0.0,
@@ -879,127 +1039,12 @@
           "sampleSD": 0.0
         },
         "meanDecisionControlComputeMs": {
-          "mean": 28.709154455120572,
-          "sampleSD": 0.8074792184368015
+          "mean": 21.839698346512808,
+          "sampleSD": 1.6092919219841126
         },
         "p95DecisionControlComputeMs": {
-          "mean": 47.792893349348255,
-          "sampleSD": 0.6199881845228447
-        },
-        "fallbackControllerSeconds": {
-          "mean": 0,
-          "sampleSD": 0.0
-        },
-        "hintControllerSeconds": {
-          "mean": 0,
-          "sampleSD": 0.0
-        },
-        "supervisorRejections": {
-          "mean": 0,
-          "sampleSD": 0.0
-        },
-        "supervisorAcceptedActions": {
-          "mean": 337.6666666666667,
-          "sampleSD": 4.041451884327381
-        },
-        "meanObservedTimeLossIncludingUnfinished": {
-          "mean": 33.68840540487079,
-          "sampleSD": 2.095642876673816
-        },
-        "meanDepartDelaySeconds": {
-          "mean": 132.05851904894118,
-          "sampleSD": 2.8168946425506225
-        },
-        "waitingGiniIncludingUnfinished": {
-          "mean": 0.7749966444095485,
-          "sampleSD": 0.05560738006762262
-        },
-        "maxObservedWaitingIncludingUnfinished": {
-          "mean": 197.33333333333334,
-          "sampleSD": 2.516611478423583
-        }
-      }
-    },
-    {
-      "mode": "hybrid",
-      "demandScale": 1.75,
-      "n": 3,
-      "metrics": {
-        "meanCompletedTimeLossSeconds": {
-          "mean": 24.74404608195468,
-          "sampleSD": 2.5073341502996733
-        },
-        "meanNetworkQueue": {
-          "mean": 36.15222222222222,
-          "sampleSD": 2.3829727776999996
-        },
-        "maxNetworkQueue": {
-          "mean": 51.333333333333336,
-          "sampleSD": 0.5773502691896257
-        },
-        "throughputVehiclesPerHour": {
-          "mean": 4800.0,
-          "sampleSD": 12.0
-        },
-        "meanCompletedWaitingSeconds": {
-          "mean": 14.18264302172722,
-          "sampleSD": 1.7996164057739137
-        },
-        "p95CompletedWaitingSeconds": {
-          "mean": 78.36666666666578,
-          "sampleSD": 1.3051181300293777
-        },
-        "maxCompletedWaitingSeconds": {
-          "mean": 168.66666666666666,
-          "sampleSD": 3.0550504633038935
-        },
-        "maxApproachMeanWaitSeconds": {
-          "mean": 38.43333333333333,
-          "sampleSD": 1.2096831541082687
-        },
-        "maxServiceAgeSeconds": {
-          "mean": 55.0,
-          "sampleSD": 0.0
-        },
-        "spillbackEdgeSeconds": {
-          "mean": 0,
-          "sampleSD": 0.0
-        },
-        "meanControlLatencyMs": {
-          "mean": 5.882754111662507,
-          "sampleSD": 0.3291251390813835
-        },
-        "p95ControlLatencyMs": {
-          "mean": 9.740611639184257,
-          "sampleSD": 0.19569290779288964
-        },
-        "maxControlLatencyMs": {
-          "mean": 53.65233332850039,
-          "sampleSD": 72.0459644942317
-        },
-        "completedTrips": {
-          "mean": 400,
-          "sampleSD": 1.0
-        },
-        "unfinishedTrips": {
-          "mean": 99.33333333333333,
-          "sampleSD": 2.0816659994661326
-        },
-        "meanPolicyInferenceMs": {
-          "mean": 0.0,
-          "sampleSD": 0.0
-        },
-        "p95PolicyInferenceMs": {
-          "mean": 0.0,
-          "sampleSD": 0.0
-        },
-        "meanDecisionControlComputeMs": {
-          "mean": 29.413770558312535,
-          "sampleSD": 1.6456256954069177
-        },
-        "p95DecisionControlComputeMs": {
-          "mean": 47.52492840634659,
-          "sampleSD": 0.651047201387442
+          "mean": 42.96068826612706,
+          "sampleSD": 4.6065771726591125
         },
         "fallbackControllerSeconds": {
           "mean": 0.3333333333333333,
@@ -1014,24 +1059,159 @@
           "sampleSD": 0.0
         },
         "supervisorAcceptedActions": {
-          "mean": 337.3333333333333,
-          "sampleSD": 3.7859388972001824
+          "mean": 215,
+          "sampleSD": 4.358898943540674
         },
         "meanObservedTimeLossIncludingUnfinished": {
-          "mean": 33.68840540487079,
-          "sampleSD": 2.095642876673816
+          "mean": 35.447031903941614,
+          "sampleSD": 2.0810249011379347
         },
         "meanDepartDelaySeconds": {
-          "mean": 132.05851904894118,
-          "sampleSD": 2.8168946425506225
+          "mean": 5.732291068392555,
+          "sampleSD": 1.6798666548731174
         },
         "waitingGiniIncludingUnfinished": {
-          "mean": 0.7749966444095485,
-          "sampleSD": 0.05560738006762262
+          "mean": 0.4671554050730881,
+          "sampleSD": 0.029877105465595324
         },
         "maxObservedWaitingIncludingUnfinished": {
-          "mean": 197.33333333333334,
-          "sampleSD": 2.516611478423583
+          "mean": 73.0,
+          "sampleSD": 6.244997998398398
+        }
+      }
+    },
+    {
+      "mode": "hybrid",
+      "demandScale": 1.75,
+      "n": 3,
+      "metrics": {
+        "meanCompletedTimeLossSeconds": {
+          "mean": 36.080207722070384,
+          "sampleSD": 2.545523915786169
+        },
+        "meanNetworkQueue": {
+          "mean": 23.233333333333334,
+          "sampleSD": 2.385912357522333
+        },
+        "maxNetworkQueue": {
+          "mean": 44.333333333333336,
+          "sampleSD": 2.0816659994661326
+        },
+        "throughputVehiclesPerHour": {
+          "mean": 2980.0,
+          "sampleSD": 143.16424134538624
+        },
+        "meanCompletedWaitingSeconds": {
+          "mean": 20.956222709138316,
+          "sampleSD": 2.200195563960413
+        },
+        "p95CompletedWaitingSeconds": {
+          "mean": 53.349999999999994,
+          "sampleSD": 0.5634713834792368
+        },
+        "maxCompletedWaitingSeconds": {
+          "mean": 67.33333333333333,
+          "sampleSD": 2.309401076758503
+        },
+        "maxApproachMeanWaitSeconds": {
+          "mean": 25.32962962962963,
+          "sampleSD": 7.5498371606454775
+        },
+        "maxServiceAgeSeconds": {
+          "mean": 48.0,
+          "sampleSD": 3.0
+        },
+        "spillbackEdgeSeconds": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "meanControlLatencyMs": {
+          "mean": 4.226165445029943,
+          "sampleSD": 0.10132250934067623
+        },
+        "p95ControlLatencyMs": {
+          "mean": 9.10695832571946,
+          "sampleSD": 0.29284061700979414
+        },
+        "maxControlLatencyMs": {
+          "mean": 10.269333298007647,
+          "sampleSD": 0.3280225585101057
+        },
+        "completedTrips": {
+          "mean": 248.33333333333334,
+          "sampleSD": 11.930353445448853
+        },
+        "unfinishedTrips": {
+          "mean": 90.66666666666667,
+          "sampleSD": 1.5275252316519468
+        },
+        "departedVehicles": {
+          "mean": 339,
+          "sampleSD": 10.583005244258363
+        },
+        "endPendingVehicles": {
+          "mean": 23.666666666666668,
+          "sampleSD": 6.027713773341708
+        },
+        "maxPendingVehicles": {
+          "mean": 25.333333333333332,
+          "sampleSD": 5.033222956847166
+        },
+        "meanPendingVehicles": {
+          "mean": 7.2122222222222225,
+          "sampleSD": 2.253210877671963
+        },
+        "observedInsertionDemandVehicles": {
+          "mean": 362.6666666666667,
+          "sampleSD": 16.502525059315417
+        },
+        "meanPolicyInferenceMs": {
+          "mean": 0.0,
+          "sampleSD": 0.0
+        },
+        "p95PolicyInferenceMs": {
+          "mean": 0.0,
+          "sampleSD": 0.0
+        },
+        "meanDecisionControlComputeMs": {
+          "mean": 21.130827225149712,
+          "sampleSD": 0.5066125467033796
+        },
+        "p95DecisionControlComputeMs": {
+          "mean": 41.6929149806189,
+          "sampleSD": 3.507747016700304
+        },
+        "fallbackControllerSeconds": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "hintControllerSeconds": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "supervisorRejections": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "supervisorAcceptedActions": {
+          "mean": 215.33333333333334,
+          "sampleSD": 4.725815626252609
+        },
+        "meanObservedTimeLossIncludingUnfinished": {
+          "mean": 35.447031903941614,
+          "sampleSD": 2.0810249011379347
+        },
+        "meanDepartDelaySeconds": {
+          "mean": 5.732291068392555,
+          "sampleSD": 1.6798666548731174
+        },
+        "waitingGiniIncludingUnfinished": {
+          "mean": 0.4671554050730881,
+          "sampleSD": 0.029877105465595324
+        },
+        "maxObservedWaitingIncludingUnfinished": {
+          "mean": 73.0,
+          "sampleSD": 6.244997998398398
         }
       }
     },
@@ -1041,80 +1221,100 @@
       "n": 3,
       "metrics": {
         "meanCompletedTimeLossSeconds": {
-          "mean": 24.65150731297792,
-          "sampleSD": 2.560586507021772
+          "mean": 35.611564845075314,
+          "sampleSD": 3.250732238948406
         },
         "meanNetworkQueue": {
-          "mean": 36.11666666666667,
-          "sampleSD": 2.404525825281244
+          "mean": 22.76888888888889,
+          "sampleSD": 2.9745388687125063
         },
         "maxNetworkQueue": {
-          "mean": 51.333333333333336,
-          "sampleSD": 0.5773502691896257
+          "mean": 42.333333333333336,
+          "sampleSD": 7.094598884597588
         },
         "throughputVehiclesPerHour": {
-          "mean": 4812.0,
-          "sampleSD": 12.0
+          "mean": 3064.0,
+          "sampleSD": 152.89211882893113
         },
         "meanCompletedWaitingSeconds": {
-          "mean": 14.112798011190929,
-          "sampleSD": 1.8479541803612003
+          "mean": 20.614221769368672,
+          "sampleSD": 2.4296249441623017
         },
         "p95CompletedWaitingSeconds": {
-          "mean": 77.18333333333284,
-          "sampleSD": 2.3304148414670385
+          "mean": 57.76666666666666,
+          "sampleSD": 8.476044675043505
         },
         "maxCompletedWaitingSeconds": {
-          "mean": 168.0,
-          "sampleSD": 2.0
+          "mean": 73.33333333333333,
+          "sampleSD": 17.039170558842745
         },
         "maxApproachMeanWaitSeconds": {
-          "mean": 37.7962962962963,
-          "sampleSD": 0.2625453125695888
+          "mean": 30.626984126984127,
+          "sampleSD": 4.3658080199915466
         },
         "maxServiceAgeSeconds": {
-          "mean": 55.0,
-          "sampleSD": 0.0
+          "mean": 54.333333333333336,
+          "sampleSD": 3.0550504633038935
         },
         "spillbackEdgeSeconds": {
           "mean": 0,
           "sampleSD": 0.0
         },
         "meanControlLatencyMs": {
-          "mean": 5.735360002015821,
-          "sampleSD": 0.4707018936153218
+          "mean": 5.08286722133764,
+          "sampleSD": 0.37553425615632924
         },
         "p95ControlLatencyMs": {
-          "mean": 10.070034995442256,
-          "sampleSD": 0.14815975871061438
+          "mean": 9.447021629118051,
+          "sampleSD": 0.255467687312112
         },
         "maxControlLatencyMs": {
-          "mean": 11.792133329436183,
-          "sampleSD": 0.8425112987409107
+          "mean": 11.108666697206596,
+          "sampleSD": 0.9221792610777756
         },
         "completedTrips": {
-          "mean": 401,
-          "sampleSD": 1.0
+          "mean": 255.33333333333334,
+          "sampleSD": 12.741009902410928
         },
         "unfinishedTrips": {
-          "mean": 98,
-          "sampleSD": 2.6457513110645907
+          "mean": 90,
+          "sampleSD": 2.0
+        },
+        "departedVehicles": {
+          "mean": 345.3333333333333,
+          "sampleSD": 14.433756729740644
+        },
+        "endPendingVehicles": {
+          "mean": 17.333333333333332,
+          "sampleSD": 4.725815626252609
+        },
+        "maxPendingVehicles": {
+          "mean": 20.666666666666668,
+          "sampleSD": 2.516611478423583
+        },
+        "meanPendingVehicles": {
+          "mean": 6.443333333333333,
+          "sampleSD": 2.083829274303546
+        },
+        "observedInsertionDemandVehicles": {
+          "mean": 362.6666666666667,
+          "sampleSD": 16.502525059315417
         },
         "meanPolicyInferenceMs": {
-          "mean": 0.8259016684153013,
-          "sampleSD": 0.06414162594887288
+          "mean": 0.8143688881924996,
+          "sampleSD": 0.06637917665232472
         },
         "p95PolicyInferenceMs": {
-          "mean": 0.9175499978785713,
-          "sampleSD": 0.035560890655264514
+          "mean": 0.9224299962321917,
+          "sampleSD": 0.019240880380821234
         },
         "meanDecisionControlComputeMs": {
-          "mean": 29.502701678494404,
-          "sampleSD": 2.4163963321183863
+          "mean": 26.228704994880697,
+          "sampleSD": 1.923547498253812
         },
         "p95DecisionControlComputeMs": {
-          "mean": 49.78781512084728,
-          "sampleSD": 0.6888117567739439
+          "mean": 45.46690502708467,
+          "sampleSD": 2.97717346402031
         },
         "fallbackControllerSeconds": {
           "mean": 0,
@@ -1129,92 +1329,198 @@
           "sampleSD": 0.0
         },
         "supervisorAcceptedActions": {
-          "mean": 338,
-          "sampleSD": 3.4641016151377544
+          "mean": 288,
+          "sampleSD": 20.42057785666214
         },
         "meanObservedTimeLossIncludingUnfinished": {
-          "mean": 33.655482261934836,
-          "sampleSD": 2.092755238805099
+          "mean": 33.935182167429,
+          "sampleSD": 2.3674184706295973
         },
         "meanDepartDelaySeconds": {
-          "mean": 131.85523761324512,
-          "sampleSD": 2.671815978635744
+          "mean": 5.297065019591128,
+          "sampleSD": 1.5140291976980769
         },
         "waitingGiniIncludingUnfinished": {
-          "mean": 0.7751394788041104,
-          "sampleSD": 0.05539599742260507
+          "mean": 0.5049061279777445,
+          "sampleSD": 0.054561677303134
         },
         "maxObservedWaitingIncludingUnfinished": {
-          "mean": 198.0,
-          "sampleSD": 2.6457513110645907
+          "mean": 73.33333333333333,
+          "sampleSD": 17.039170558842745
         }
       }
     }
   ],
   "pairedComparisons": [
     {
-      "seed": 1901,
+      "seed": 2901,
       "demandScale": 0.75,
-      "delayRatio": 1.0,
-      "delayDifferenceSeconds": 0.0,
-      "throughputDifference": 0
+      "delayRatio": 1.0510370588554674,
+      "delayDifferenceSeconds": 1.1505845952608524,
+      "throughputDifference": 4
     },
     {
-      "seed": 1902,
+      "seed": 2902,
       "demandScale": 0.75,
-      "delayRatio": 1.0021035348554552,
-      "delayDifferenceSeconds": 0.04957286432160757,
-      "throughputDifference": 0
-    },
-    {
-      "seed": 1903,
-      "demandScale": 0.75,
-      "delayRatio": 1.0,
-      "delayDifferenceSeconds": 0.0,
-      "throughputDifference": 0
-    },
-    {
-      "seed": 1901,
-      "demandScale": 1.75,
-      "delayRatio": 1.000007235641322,
-      "delayDifferenceSeconds": 0.00019950124688250526,
-      "throughputDifference": 0
-    },
-    {
-      "seed": 1902,
-      "demandScale": 1.75,
-      "delayRatio": 0.9883599906476818,
-      "delayDifferenceSeconds": -0.2778158081771629,
+      "delayRatio": 0.9144014127390088,
+      "delayDifferenceSeconds": -1.8375163398692784,
       "throughputDifference": 3
     },
     {
-      "seed": 1903,
+      "seed": 2903,
+      "demandScale": 0.75,
+      "delayRatio": 1.0691616191753899,
+      "delayDifferenceSeconds": 1.1680003523608171,
+      "throughputDifference": 3
+    },
+    {
+      "seed": 2901,
       "demandScale": 1.75,
-      "delayRatio": 1.0,
-      "delayDifferenceSeconds": 0.0,
-      "throughputDifference": 0
+      "delayRatio": 1.0216553913670918,
+      "delayDifferenceSeconds": 0.7296405374584793,
+      "throughputDifference": 6
+    },
+    {
+      "seed": 2902,
+      "demandScale": 1.75,
+      "delayRatio": 1.0136796492461597,
+      "delayDifferenceSeconds": 0.5302111959287572,
+      "throughputDifference": 8
+    },
+    {
+      "seed": 2903,
+      "demandScale": 1.75,
+      "delayRatio": 0.9255124135890282,
+      "delayDifferenceSeconds": -2.665780364372459,
+      "throughputDifference": 7
     }
   ],
   "selection": {
     "scores": {
-      ".checkpoints\\phase4-final\\train-21\\update-0016.pt": 24.40923887447312,
-      ".checkpoints\\phase4-final\\train-31\\update-0016.pt": 24.76791607274954,
-      ".checkpoints\\phase4-final\\train-41\\update-0016.pt": 26.77893174645156
+      ".checkpoints\\phase4-demand-corrected\\train-21\\update-0016.pt": 23.798773047043994,
+      ".checkpoints\\phase4-demand-corrected\\train-31\\update-0016.pt": 23.65440829333902,
+      ".checkpoints\\phase4-demand-corrected\\train-41\\update-0016.pt": 23.12979819183438
     },
-    "selectedCheckpoint": ".checkpoints\\phase4-final\\train-21\\update-0016.pt",
-    "checkpointSha256": "4a0ed2c8ffc4fda5bc9b96c5b22d0d8d9806bc8446caf09840b2f6fe13e54929",
+    "selectedCheckpoint": ".checkpoints\\phase4-demand-corrected\\train-41\\update-0016.pt",
+    "checkpointSha256": "a013e764890ebb8d9367f56909a93fdedd29c61a5efeb1057babfd58df66ea47",
     "selectionSeeds": [
-      1801,
-      1802,
-      1803
+      2801,
+      2802,
+      2803
     ],
     "testSeeds": [
-      1901,
-      1902,
-      1903
+      2901,
+      2902,
+      2903
     ],
     "criterion": "lowest mean completed-trip timeLoss; model-seed tie break",
     "frozenBeforeFinalTesting": true
   },
+  "demandMatchChecks": [
+    {
+      "seed": 2901,
+      "demandScale": 0.75,
+      "observedDemandByMode": {
+        "fixed_time": 173,
+        "hybrid": 173,
+        "max_pressure": 173,
+        "mpc": 173,
+        "candidate": 173
+      },
+      "matched": true
+    },
+    {
+      "seed": 2902,
+      "demandScale": 0.75,
+      "observedDemandByMode": {
+        "fixed_time": 178,
+        "hybrid": 178,
+        "max_pressure": 178,
+        "mpc": 178,
+        "candidate": 178
+      },
+      "matched": true
+    },
+    {
+      "seed": 2903,
+      "demandScale": 0.75,
+      "observedDemandByMode": {
+        "fixed_time": 154,
+        "hybrid": 154,
+        "max_pressure": 154,
+        "mpc": 154,
+        "candidate": 154
+      },
+      "matched": true
+    },
+    {
+      "seed": 2901,
+      "demandScale": 1.75,
+      "observedDemandByMode": {
+        "fixed_time": 358,
+        "hybrid": 358,
+        "max_pressure": 358,
+        "mpc": 358,
+        "candidate": 358
+      },
+      "matched": true
+    },
+    {
+      "seed": 2902,
+      "demandScale": 1.75,
+      "observedDemandByMode": {
+        "fixed_time": 381,
+        "hybrid": 381,
+        "max_pressure": 381,
+        "mpc": 381,
+        "candidate": 381
+      },
+      "matched": true
+    },
+    {
+      "seed": 2903,
+      "demandScale": 1.75,
+      "observedDemandByMode": {
+        "fixed_time": 349,
+        "hybrid": 349,
+        "max_pressure": 349,
+        "mpc": 349,
+        "candidate": 349
+      },
+      "matched": true
+    }
+  ],
+  "hintFreeEquivalenceChecks": [
+    {
+      "seed": 2901,
+      "demandScale": 0.75,
+      "trafficMetricsIdentical": true
+    },
+    {
+      "seed": 2902,
+      "demandScale": 0.75,
+      "trafficMetricsIdentical": true
+    },
+    {
+      "seed": 2903,
+      "demandScale": 0.75,
+      "trafficMetricsIdentical": true
+    },
+    {
+      "seed": 2901,
+      "demandScale": 1.75,
+      "trafficMetricsIdentical": true
+    },
+    {
+      "seed": 2902,
+      "demandScale": 1.75,
+      "trafficMetricsIdentical": true
+    },
+    {
+      "seed": 2903,
+      "demandScale": 1.75,
+      "trafficMetricsIdentical": true
+    }
+  ],
   "limitations": "Three seeds; cold start; completed-trip delay censored; one topology; native fixed-time has no explicit all-red while adaptive modes add2s; candidate/MPC constraints match; no statistical superiority claim"
 }

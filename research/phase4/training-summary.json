@@ -16,277 +16,277 @@
       "numpy": "1.26.4",
       "cuda": false,
       "logicalCPUs": 12,
-      "architectureFingerprint": "30951bfc017ad222d26c7b3457d3e46b1d9fc834ea9bc1e8d565b921f75edaff",
+      "architectureFingerprint": "282bde4934a3e5eaa61e7758f956aad190b28dfd7a16b12cb486e0bfdf3f2492",
       "sourceHashes": {
-        "scripts\\research_phase4.py": "d93c2ec4eaeb3a9e79530c7279cc1481d4575772b41a2888efb7a2559b37deac",
+        "scripts\\research_phase4.py": "d2def599317dc96210beda0618f21d099b5a860817f453a23cef04beeea63b29",
         "backend\\app\\rl\\sumo_env.py": "db391854dbe3a65a4d151881561a4c27e035e798a8f2bacaef670b5c60e2323e",
-        "backend\\sumo_scenarios\\two_junction\\corridor.rou.xml": "31f2d3962541e3ea11f9ac6d9025a6df0ce196299b2d8f848ae2fcd410bb5da2"
+        "backend\\sumo_scenarios\\two_junction\\corridor.rou.xml": "e9cb0f3cf5f15523f38792f7da1a225ff87eb91d0de42f4215123e598055345f"
       }
     },
-    "startedUtc": "2026-10-22T19:01:27.163373+00:00",
+    "startedUtc": "2026-10-22T20:09:42.602225+00:00",
     "updates": [
       {
         "update": 1,
         "episodeSeed": 21000,
         "trainedDecisionSteps": 64,
         "reward": [
-          -1504.3634033203125,
-          -1467.693603515625
+          -210.06167602539062,
+          -199.02503967285156
         ],
         "simTime": 320.0,
-        "wallSeconds": 116.59730350004975,
-        "arrivedVehicles": 439,
-        "actorLoss": -0.0010616909712553024,
-        "valueLoss": 116384.28125,
-        "entropy": 0.6663923263549805,
-        "gradientNorm": 376.590087890625
+        "wallSeconds": 44.332907299976796,
+        "arrivedVehicles": 199,
+        "actorLoss": -0.0004405863583087921,
+        "valueLoss": 2295.158447265625,
+        "entropy": 0.6695360541343689,
+        "gradientNorm": 48.76892852783203
       },
       {
         "update": 2,
         "episodeSeed": 21001,
         "trainedDecisionSteps": 128,
         "reward": [
-          -1595.6331787109375,
-          -1509.8116455078125
+          -151.57667541503906,
+          -99.69999694824219
         ],
         "simTime": 320.0,
-        "wallSeconds": 123.65249420003965,
-        "arrivedVehicles": 429,
-        "actorLoss": -0.000458763912320137,
-        "valueLoss": 128166.5859375,
-        "entropy": 0.6646777391433716,
-        "gradientNorm": 397.177734375
+        "wallSeconds": 41.57761899998877,
+        "arrivedVehicles": 194,
+        "actorLoss": -0.0012366101145744324,
+        "valueLoss": 804.716796875,
+        "entropy": 0.6694706082344055,
+        "gradientNorm": 29.173969268798828
       },
       {
         "update": 3,
         "episodeSeed": 21002,
         "trainedDecisionSteps": 192,
         "reward": [
-          -1518.1134033203125,
-          -1529.7635498046875
+          -119.71832275390625,
+          -362.7366027832031
         ],
         "simTime": 320.0,
-        "wallSeconds": 125.1161134999711,
-        "arrivedVehicles": 437,
-        "actorLoss": -0.0025159642100334167,
-        "valueLoss": 122899.7421875,
-        "entropy": 0.6679807305335999,
-        "gradientNorm": 388.9593505859375
+        "wallSeconds": 47.28956810000818,
+        "arrivedVehicles": 198,
+        "actorLoss": -0.00020407140254974365,
+        "valueLoss": 4028.508544921875,
+        "entropy": 0.6708276867866516,
+        "gradientNorm": 68.22282409667969
       },
       {
         "update": 4,
         "episodeSeed": 21003,
         "trainedDecisionSteps": 256,
         "reward": [
-          -1598.335205078125,
-          -1602.743408203125
+          -92.30500030517578,
+          -153.67333984375
         ],
         "simTime": 320.0,
-        "wallSeconds": 125.62140689999796,
-        "arrivedVehicles": 442,
-        "actorLoss": -0.00206625834107399,
-        "valueLoss": 136279.1875,
-        "entropy": 0.6726387143135071,
-        "gradientNorm": 413.86956787109375
+        "wallSeconds": 39.40474179992452,
+        "arrivedVehicles": 182,
+        "actorLoss": -0.000935286283493042,
+        "valueLoss": 833.528564453125,
+        "entropy": 0.6731756329536438,
+        "gradientNorm": 30.432832717895508
       },
       {
         "update": 5,
         "episodeSeed": 21004,
         "trainedDecisionSteps": 320,
         "reward": [
-          -1542.943603515625,
-          -1557.27490234375
+          -199.88333129882812,
+          -136.3733367919922
         ],
         "simTime": 320.0,
-        "wallSeconds": 117.7873668000102,
-        "arrivedVehicles": 434,
-        "actorLoss": -0.00041482970118522644,
-        "valueLoss": 125638.671875,
-        "entropy": 0.6766140460968018,
-        "gradientNorm": 399.7544860839844
+        "wallSeconds": 40.348539100028574,
+        "arrivedVehicles": 184,
+        "actorLoss": -5.381926894187927e-05,
+        "valueLoss": 1498.533447265625,
+        "entropy": 0.6770438551902771,
+        "gradientNorm": 40.126644134521484
       },
       {
         "update": 6,
         "episodeSeed": 21005,
         "trainedDecisionSteps": 384,
         "reward": [
-          -1480.94482421875,
-          -1539.103271484375
+          -135.61334228515625,
+          -185.07998657226562
         ],
         "simTime": 320.0,
-        "wallSeconds": 117.27693960000761,
-        "arrivedVehicles": 442,
-        "actorLoss": -0.0011356575414538383,
-        "valueLoss": 121645.875,
-        "entropy": 0.6792040467262268,
-        "gradientNorm": 397.7510681152344
+        "wallSeconds": 39.951744799967855,
+        "arrivedVehicles": 192,
+        "actorLoss": -0.0009686760604381561,
+        "valueLoss": 1497.499267578125,
+        "entropy": 0.6799062490463257,
+        "gradientNorm": 40.92179489135742
       },
       {
         "update": 7,
         "episodeSeed": 21006,
         "trainedDecisionSteps": 448,
         "reward": [
-          -1505.99365234375,
-          -1494.2235107421875
+          -170.44329833984375,
+          -314.7449645996094
         ],
         "simTime": 320.0,
-        "wallSeconds": 114.23311900009867,
-        "arrivedVehicles": 433,
-        "actorLoss": -0.0005297483876347542,
-        "valueLoss": 118849.140625,
-        "entropy": 0.6816375255584717,
-        "gradientNorm": 398.3733215332031
+        "wallSeconds": 49.41108610003721,
+        "arrivedVehicles": 213,
+        "actorLoss": -0.0009751841425895691,
+        "valueLoss": 3597.266357421875,
+        "entropy": 0.6821891069412231,
+        "gradientNorm": 65.44010925292969
       },
       {
         "update": 8,
         "episodeSeed": 21007,
         "trainedDecisionSteps": 512,
         "reward": [
-          -1550.9151611328125,
-          -1550.3333740234375
+          -135.1500244140625,
+          -187.63330078125
         ],
         "simTime": 320.0,
-        "wallSeconds": 116.56286930001806,
-        "arrivedVehicles": 428,
-        "actorLoss": 0.0002327198162674904,
-        "valueLoss": 126703.75,
-        "entropy": 0.6828956604003906,
-        "gradientNorm": 420.8167724609375
+        "wallSeconds": 40.17659619997721,
+        "arrivedVehicles": 181,
+        "actorLoss": 0.00031709298491477966,
+        "valueLoss": 1408.5928955078125,
+        "entropy": 0.6830528974533081,
+        "gradientNorm": 41.1870231628418
       },
       {
         "update": 9,
         "episodeSeed": 21008,
         "trainedDecisionSteps": 576,
         "reward": [
-          -1538.9033203125,
-          -1585.6234130859375
+          -241.8099822998047,
+          -424.146728515625
         ],
         "simTime": 320.0,
-        "wallSeconds": 121.96311530005187,
-        "arrivedVehicles": 445,
-        "actorLoss": -0.0002469089813530445,
-        "valueLoss": 129021.2421875,
-        "entropy": 0.6827279329299927,
-        "gradientNorm": 433.5418701171875
+        "wallSeconds": 57.81872450001538,
+        "arrivedVehicles": 195,
+        "actorLoss": -0.0006864964962005615,
+        "valueLoss": 7444.69873046875,
+        "entropy": 0.6844952702522278,
+        "gradientNorm": 95.91433715820312
       },
       {
         "update": 10,
         "episodeSeed": 21009,
         "trainedDecisionSteps": 640,
         "reward": [
-          -1652.86328125,
-          -1578.68017578125
+          -97.1983413696289,
+          -156.00833129882812
         ],
         "simTime": 320.0,
-        "wallSeconds": 118.14589869999327,
-        "arrivedVehicles": 434,
-        "actorLoss": -0.0005564652383327484,
-        "valueLoss": 137508.625,
-        "entropy": 0.6827901601791382,
-        "gradientNorm": 457.4028015136719
+        "wallSeconds": 37.57364149997011,
+        "arrivedVehicles": 171,
+        "actorLoss": 1.55717134475708e-05,
+        "valueLoss": 845.7951049804688,
+        "entropy": 0.6852573156356812,
+        "gradientNorm": 33.204219818115234
       },
       {
         "update": 11,
         "episodeSeed": 21010,
         "trainedDecisionSteps": 704,
         "reward": [
-          -1535.7034912109375,
-          -1514.3631591796875
+          -164.42835998535156,
+          -267.4366455078125
         ],
         "simTime": 320.0,
-        "wallSeconds": 107.53858649998438,
-        "arrivedVehicles": 437,
-        "actorLoss": -0.00039146095514297485,
-        "valueLoss": 122636.09375,
-        "entropy": 0.6819822788238525,
-        "gradientNorm": 440.5538635253906
+        "wallSeconds": 44.51617170008831,
+        "arrivedVehicles": 189,
+        "actorLoss": -9.109824895858765e-05,
+        "valueLoss": 2518.50244140625,
+        "entropy": 0.6853559613227844,
+        "gradientNorm": 55.96161651611328
       },
       {
         "update": 12,
         "episodeSeed": 21011,
         "trainedDecisionSteps": 768,
         "reward": [
-          -1487.7333984375,
-          -1518.5849609375
+          -138.1266632080078,
+          -86.72834777832031
         ],
         "simTime": 320.0,
-        "wallSeconds": 108.1078467000043,
-        "arrivedVehicles": 442,
-        "actorLoss": -0.0025300299748778343,
-        "valueLoss": 119177.015625,
-        "entropy": 0.6832422018051147,
-        "gradientNorm": 446.8749694824219
+        "wallSeconds": 35.590494800009765,
+        "arrivedVehicles": 182,
+        "actorLoss": -0.0008005648851394653,
+        "valueLoss": 675.1635131835938,
+        "entropy": 0.6860848665237427,
+        "gradientNorm": 30.381507873535156
       },
       {
         "update": 13,
         "episodeSeed": 21012,
         "trainedDecisionSteps": 832,
         "reward": [
-          -1519.383544921875,
-          -1506.5736083984375
+          -212.96499633789062,
+          -167.27166748046875
         ],
         "simTime": 320.0,
-        "wallSeconds": 108.51571030006744,
-        "arrivedVehicles": 434,
-        "actorLoss": -0.0007067006081342697,
-        "valueLoss": 120806.6171875,
-        "entropy": 0.6852664351463318,
-        "gradientNorm": 462.2032470703125
+        "wallSeconds": 41.724442600039765,
+        "arrivedVehicles": 182,
+        "actorLoss": -0.0002931542694568634,
+        "valueLoss": 1948.34326171875,
+        "entropy": 0.6880823373794556,
+        "gradientNorm": 52.061981201171875
       },
       {
         "update": 14,
         "episodeSeed": 21013,
         "trainedDecisionSteps": 896,
         "reward": [
-          -1517.7884521484375,
-          -1582.42333984375
+          -111.32333374023438,
+          -219.92169189453125
         ],
         "simTime": 320.0,
-        "wallSeconds": 110.58523470000364,
-        "arrivedVehicles": 432,
-        "actorLoss": -6.431993097066879e-05,
-        "valueLoss": 126871.625,
-        "entropy": 0.6866141557693481,
-        "gradientNorm": 489.2012023925781
+        "wallSeconds": 40.733244200004265,
+        "arrivedVehicles": 187,
+        "actorLoss": -0.0010697618126869202,
+        "valueLoss": 1727.4248046875,
+        "entropy": 0.6891329884529114,
+        "gradientNorm": 48.49708557128906
       },
       {
         "update": 15,
         "episodeSeed": 21014,
         "trainedDecisionSteps": 960,
         "reward": [
-          -1546.34326171875,
-          -1522.4532470703125
+          -184.72665405273438,
+          -231.88502502441406
         ],
         "simTime": 320.0,
-        "wallSeconds": 106.5461625000462,
-        "arrivedVehicles": 435,
-        "actorLoss": 0.00014429818838834763,
-        "valueLoss": 124076.46875,
-        "entropy": 0.6872197389602661,
-        "gradientNorm": 498.05657958984375
+        "wallSeconds": 43.72985999996308,
+        "arrivedVehicles": 199,
+        "actorLoss": -0.001550082117319107,
+        "valueLoss": 2548.56982421875,
+        "entropy": 0.6905303001403809,
+        "gradientNorm": 61.22719192504883
       },
       {
         "update": 16,
         "episodeSeed": 21015,
         "trainedDecisionSteps": 1024,
         "reward": [
-          -1510.2532958984375,
-          -1505.5333251953125
+          -69.29499053955078,
+          -100.19166564941406
         ],
         "simTime": 320.0,
-        "wallSeconds": 106.04723060003016,
-        "arrivedVehicles": 440,
-        "actorLoss": -0.00044674985110759735,
-        "valueLoss": 120236.4296875,
-        "entropy": 0.6868451833724976,
-        "gradientNorm": 504.2624206542969
+        "wallSeconds": 31.014542800025083,
+        "arrivedVehicles": 169,
+        "actorLoss": 0.0002423599362373352,
+        "valueLoss": 446.03594970703125,
+        "entropy": 0.6910527348518372,
+        "gradientNorm": 25.774885177612305
       }
     ],
     "status": "unvalidated_research_candidate",
     "operationallyEnabled": false,
-    "latestCheckpoint": "C:\\Users\\prana\\Documents\\TrafficRegulationResearch\\syncroflow2AI-main\\.checkpoints\\phase4-final\\train-21\\update-0016.pt",
+    "latestCheckpoint": "C:\\Users\\prana\\Documents\\TrafficRegulationResearch\\syncroflow2AI-main\\.checkpoints\\phase4-demand-corrected\\train-21\\update-0016.pt",
     "trainedDecisionSteps": 1024,
-    "elapsedSeconds": 1844.2973981003743
+    "elapsedSeconds": 675.1939245000249
   },
   {
     "modelSeed": 31,
@@ -305,277 +305,277 @@
       "numpy": "1.26.4",
       "cuda": false,
       "logicalCPUs": 12,
-      "architectureFingerprint": "30951bfc017ad222d26c7b3457d3e46b1d9fc834ea9bc1e8d565b921f75edaff",
+      "architectureFingerprint": "282bde4934a3e5eaa61e7758f956aad190b28dfd7a16b12cb486e0bfdf3f2492",
       "sourceHashes": {
-        "scripts\\research_phase4.py": "d93c2ec4eaeb3a9e79530c7279cc1481d4575772b41a2888efb7a2559b37deac",
+        "scripts\\research_phase4.py": "d2def599317dc96210beda0618f21d099b5a860817f453a23cef04beeea63b29",
         "backend\\app\\rl\\sumo_env.py": "db391854dbe3a65a4d151881561a4c27e035e798a8f2bacaef670b5c60e2323e",
-        "backend\\sumo_scenarios\\two_junction\\corridor.rou.xml": "31f2d3962541e3ea11f9ac6d9025a6df0ce196299b2d8f848ae2fcd410bb5da2"
+        "backend\\sumo_scenarios\\two_junction\\corridor.rou.xml": "e9cb0f3cf5f15523f38792f7da1a225ff87eb91d0de42f4215123e598055345f"
       }
     },
-    "startedUtc": "2026-10-22T19:01:37.444629+00:00",
+    "startedUtc": "2026-10-22T20:09:52.822502+00:00",
     "updates": [
       {
         "update": 1,
         "episodeSeed": 31000,
         "trainedDecisionSteps": 64,
         "reward": [
-          -1482.33349609375,
-          -1508.4033203125
+          -182.49331665039062,
+          -269.8366394042969
         ],
         "simTime": 320.0,
-        "wallSeconds": 118.33938999997918,
-        "arrivedVehicles": 443,
-        "actorLoss": -0.0023580649867653847,
-        "valueLoss": 117990.2109375,
-        "entropy": 0.6919342875480652,
-        "gradientNorm": 397.97113037109375
+        "wallSeconds": 45.33836579998024,
+        "arrivedVehicles": 187,
+        "actorLoss": -0.00030803680419921875,
+        "valueLoss": 2981.11669921875,
+        "entropy": 0.6919976472854614,
+        "gradientNorm": 58.3293571472168
       },
       {
         "update": 2,
         "episodeSeed": 31001,
         "trainedDecisionSteps": 128,
         "reward": [
-          -1579.54833984375,
-          -1539.9766845703125
+          -260.4066467285156,
+          -175.78997802734375
         ],
         "simTime": 320.0,
-        "wallSeconds": 133.52195379999466,
-        "arrivedVehicles": 417,
-        "actorLoss": 4.5632943511009216e-05,
-        "valueLoss": 132179.0,
-        "entropy": 0.6920775771141052,
-        "gradientNorm": 405.1615905761719
+        "wallSeconds": 45.99999529996421,
+        "arrivedVehicles": 190,
+        "actorLoss": -0.00024027377367019653,
+        "valueLoss": 2646.253173828125,
+        "entropy": 0.6921823024749756,
+        "gradientNorm": 54.466041564941406
       },
       {
         "update": 3,
         "episodeSeed": 31002,
         "trainedDecisionSteps": 192,
         "reward": [
-          -1520.3033447265625,
-          -1529.983642578125
+          -203.461669921875,
+          -303.25
         ],
         "simTime": 320.0,
-        "wallSeconds": 122.83816090004984,
-        "arrivedVehicles": 435,
-        "actorLoss": 2.7485191822052002e-05,
-        "valueLoss": 123108.46875,
-        "entropy": 0.6920154094696045,
-        "gradientNorm": 407.2261962890625
+        "wallSeconds": 46.98588229995221,
+        "arrivedVehicles": 181,
+        "actorLoss": -0.00036839768290519714,
+        "valueLoss": 3922.152587890625,
+        "entropy": 0.6921149492263794,
+        "gradientNorm": 65.39794158935547
       },
       {
         "update": 4,
         "episodeSeed": 31003,
         "trainedDecisionSteps": 256,
         "reward": [
-          -1520.4732666015625,
-          -1531.4132080078125
+          -135.7716522216797,
+          -216.00668334960938
         ],
         "simTime": 320.0,
-        "wallSeconds": 118.73297580005601,
-        "arrivedVehicles": 438,
-        "actorLoss": -0.00047209765762090683,
-        "valueLoss": 123734.484375,
-        "entropy": 0.6919949054718018,
-        "gradientNorm": 410.37835693359375
+        "wallSeconds": 44.805286600021645,
+        "arrivedVehicles": 200,
+        "actorLoss": 5.5849552154541016e-05,
+        "valueLoss": 1635.14892578125,
+        "entropy": 0.6920899748802185,
+        "gradientNorm": 43.61989974975586
       },
       {
         "update": 5,
         "episodeSeed": 31004,
         "trainedDecisionSteps": 320,
         "reward": [
-          -1481.693603515625,
-          -1534.473388671875
+          -182.3400115966797,
+          -246.25332641601562
         ],
         "simTime": 320.0,
-        "wallSeconds": 116.26642780005932,
-        "arrivedVehicles": 435,
-        "actorLoss": -0.0006029633805155754,
-        "valueLoss": 120448.625,
-        "entropy": 0.6919053792953491,
-        "gradientNorm": 406.3945007324219
+        "wallSeconds": 41.38501199998427,
+        "arrivedVehicles": 180,
+        "actorLoss": -0.0009246952831745148,
+        "valueLoss": 2974.410888671875,
+        "entropy": 0.6916316747665405,
+        "gradientNorm": 56.91413879394531
       },
       {
         "update": 6,
         "episodeSeed": 31005,
         "trainedDecisionSteps": 384,
         "reward": [
-          -1463.4833984375,
-          -1526.4732666015625
+          -87.25833129882812,
+          -188.33499145507812
         ],
         "simTime": 320.0,
-        "wallSeconds": 115.60751979995985,
-        "arrivedVehicles": 438,
-        "actorLoss": -0.00025540683418512344,
-        "valueLoss": 118161.3359375,
-        "entropy": 0.6917220950126648,
-        "gradientNorm": 405.1679992675781
+        "wallSeconds": 39.334440500009805,
+        "arrivedVehicles": 189,
+        "actorLoss": -0.0012680590152740479,
+        "valueLoss": 1066.74267578125,
+        "entropy": 0.6917058825492859,
+        "gradientNorm": 35.146724700927734
       },
       {
         "update": 7,
         "episodeSeed": 31006,
         "trainedDecisionSteps": 448,
         "reward": [
-          -1607.453369140625,
-          -1568.9183349609375
+          -189.123291015625,
+          -178.02999877929688
         ],
         "simTime": 320.0,
-        "wallSeconds": 118.72565859998576,
-        "arrivedVehicles": 440,
-        "actorLoss": -0.000337027944624424,
-        "valueLoss": 132924.28125,
-        "entropy": 0.6917040348052979,
-        "gradientNorm": 431.1979675292969
+        "wallSeconds": 38.470321199973114,
+        "arrivedVehicles": 168,
+        "actorLoss": 0.0003280993551015854,
+        "valueLoss": 1878.686767578125,
+        "entropy": 0.6920081973075867,
+        "gradientNorm": 43.279029846191406
       },
       {
         "update": 8,
         "episodeSeed": 31007,
         "trainedDecisionSteps": 512,
         "reward": [
-          -1551.3333740234375,
-          -1516.3133544921875
+          -106.73335266113281,
+          -187.13333129882812
         ],
         "simTime": 320.0,
-        "wallSeconds": 116.3430296999868,
-        "arrivedVehicles": 434,
-        "actorLoss": -0.0004893317818641663,
-        "valueLoss": 125013.6640625,
-        "entropy": 0.6912555694580078,
-        "gradientNorm": 423.6470642089844
+        "wallSeconds": 42.396760100033134,
+        "arrivedVehicles": 191,
+        "actorLoss": -0.00042003393173217773,
+        "valueLoss": 1354.1009521484375,
+        "entropy": 0.6922962069511414,
+        "gradientNorm": 39.82393264770508
       },
       {
         "update": 9,
         "episodeSeed": 31008,
         "trainedDecisionSteps": 576,
         "reward": [
-          -1510.7332763671875,
-          -1486.9833984375
+          -254.25497436523438,
+          -238.85166931152344
         ],
         "simTime": 320.0,
-        "wallSeconds": 114.7556220999686,
-        "arrivedVehicles": 439,
-        "actorLoss": -5.910173058509827e-06,
-        "valueLoss": 118657.1171875,
-        "entropy": 0.6910487413406372,
-        "gradientNorm": 420.7169189453125
+        "wallSeconds": 53.22400299995206,
+        "arrivedVehicles": 218,
+        "actorLoss": -0.0005324268713593483,
+        "valueLoss": 3442.47607421875,
+        "entropy": 0.6922941207885742,
+        "gradientNorm": 61.376644134521484
       },
       {
         "update": 10,
         "episodeSeed": 31009,
         "trainedDecisionSteps": 640,
         "reward": [
-          -1528.2349853515625,
-          -1500.38330078125
+          -145.663330078125,
+          -167.6116943359375
         ],
         "simTime": 320.0,
-        "wallSeconds": 114.30643160000909,
-        "arrivedVehicles": 436,
-        "actorLoss": -0.001113911159336567,
-        "valueLoss": 121769.7109375,
-        "entropy": 0.6911243200302124,
-        "gradientNorm": 433.8265686035156
+        "wallSeconds": 41.44579939998221,
+        "arrivedVehicles": 186,
+        "actorLoss": -0.001835513859987259,
+        "valueLoss": 1228.5887451171875,
+        "entropy": 0.6923677921295166,
+        "gradientNorm": 38.242557525634766
       },
       {
         "update": 11,
         "episodeSeed": 31010,
         "trainedDecisionSteps": 704,
         "reward": [
-          -1531.8333740234375,
-          -1494.9833984375
+          -118.60999298095703,
+          -176.52835083007812
         ],
         "simTime": 320.0,
-        "wallSeconds": 107.19392800005153,
-        "arrivedVehicles": 436,
-        "actorLoss": 0.00042293500155210495,
-        "valueLoss": 121217.2109375,
-        "entropy": 0.6909510493278503,
-        "gradientNorm": 439.24267578125
+        "wallSeconds": 40.60842689999845,
+        "arrivedVehicles": 190,
+        "actorLoss": 3.748387098312378e-05,
+        "valueLoss": 1227.0072021484375,
+        "entropy": 0.6924188733100891,
+        "gradientNorm": 40.03993225097656
       },
       {
         "update": 12,
         "episodeSeed": 31011,
         "trainedDecisionSteps": 768,
         "reward": [
-          -1518.543212890625,
-          -1517.08349609375
+          -119.00169372558594,
+          -206.7150115966797
         ],
         "simTime": 320.0,
-        "wallSeconds": 107.87943029997405,
-        "arrivedVehicles": 433,
-        "actorLoss": -0.0002889372408390045,
-        "valueLoss": 121479.921875,
-        "entropy": 0.6908969879150391,
-        "gradientNorm": 447.9707336425781
+        "wallSeconds": 39.93182110006455,
+        "arrivedVehicles": 199,
+        "actorLoss": 0.0001600012183189392,
+        "valueLoss": 1512.765869140625,
+        "entropy": 0.6922385692596436,
+        "gradientNorm": 40.12396240234375
       },
       {
         "update": 13,
         "episodeSeed": 31012,
         "trainedDecisionSteps": 832,
         "reward": [
-          -1607.7430419921875,
-          -1559.8631591796875
+          -149.20999145507812,
+          -62.64167022705078
         ],
         "simTime": 320.0,
-        "wallSeconds": 112.83064080006443,
-        "arrivedVehicles": 440,
-        "actorLoss": -9.805522859096527e-05,
-        "valueLoss": 131744.671875,
-        "entropy": 0.6909046769142151,
-        "gradientNorm": 475.72406005859375
+        "wallSeconds": 35.91204550000839,
+        "arrivedVehicles": 172,
+        "actorLoss": -0.0006938502192497253,
+        "valueLoss": 705.5304565429688,
+        "entropy": 0.6919707655906677,
+        "gradientNorm": 29.84844970703125
       },
       {
         "update": 14,
         "episodeSeed": 31013,
         "trainedDecisionSteps": 896,
         "reward": [
-          -1652.8951416015625,
-          -1597.9901123046875
+          -93.94001007080078,
+          -139.1383056640625
         ],
         "simTime": 320.0,
-        "wallSeconds": 115.00859010010026,
-        "arrivedVehicles": 441,
-        "actorLoss": 2.203322947025299e-05,
-        "valueLoss": 139157.625,
-        "entropy": 0.6909867525100708,
-        "gradientNorm": 499.9524230957031
+        "wallSeconds": 36.19375079998281,
+        "arrivedVehicles": 188,
+        "actorLoss": 0.00022202357649803162,
+        "valueLoss": 673.1686401367188,
+        "entropy": 0.6917385458946228,
+        "gradientNorm": 31.187732696533203
       },
       {
         "update": 15,
         "episodeSeed": 31014,
         "trainedDecisionSteps": 960,
         "reward": [
-          -1662.373291015625,
-          -1608.9200439453125
+          -116.28166961669922,
+          -123.17333221435547
         ],
         "simTime": 320.0,
-        "wallSeconds": 110.30832900002133,
-        "arrivedVehicles": 431,
-        "actorLoss": -0.0005259821191430092,
-        "valueLoss": 140585.46875,
-        "entropy": 0.6909876465797424,
-        "gradientNorm": 517.6572265625
+        "wallSeconds": 36.10507109994069,
+        "arrivedVehicles": 163,
+        "actorLoss": -0.000851532444357872,
+        "valueLoss": 710.3783569335938,
+        "entropy": 0.6917709112167358,
+        "gradientNorm": 32.97840118408203
       },
       {
         "update": 16,
         "episodeSeed": 31015,
         "trainedDecisionSteps": 1024,
         "reward": [
-          -1320.2381591796875,
-          -1581.2781982421875
+          -154.1966552734375,
+          -81.31498718261719
         ],
         "simTime": 320.0,
-        "wallSeconds": 110.74494570004754,
-        "arrivedVehicles": 412,
-        "actorLoss": -0.0009469203650951385,
-        "valueLoss": 111412.078125,
-        "entropy": 0.6910579800605774,
-        "gradientNorm": 464.4737243652344
+        "wallSeconds": 39.1028436999768,
+        "arrivedVehicles": 189,
+        "actorLoss": 0.0003867149353027344,
+        "valueLoss": 787.239501953125,
+        "entropy": 0.6921922564506531,
+        "gradientNorm": 33.462440490722656
       }
     ],
     "status": "unvalidated_research_candidate",
     "operationallyEnabled": false,
-    "latestCheckpoint": "C:\\Users\\prana\\Documents\\TrafficRegulationResearch\\syncroflow2AI-main\\.checkpoints\\phase4-final\\train-31\\update-0016.pt",
+    "latestCheckpoint": "C:\\Users\\prana\\Documents\\TrafficRegulationResearch\\syncroflow2AI-main\\.checkpoints\\phase4-demand-corrected\\train-31\\update-0016.pt",
     "trainedDecisionSteps": 1024,
-    "elapsedSeconds": 1853.4030340003083
+    "elapsedSeconds": 667.2398252998246
   },
   {
     "modelSeed": 41,
@@ -594,276 +594,276 @@
       "numpy": "1.26.4",
       "cuda": false,
       "logicalCPUs": 12,
-      "architectureFingerprint": "30951bfc017ad222d26c7b3457d3e46b1d9fc834ea9bc1e8d565b921f75edaff",
+      "architectureFingerprint": "282bde4934a3e5eaa61e7758f956aad190b28dfd7a16b12cb486e0bfdf3f2492",
       "sourceHashes": {
-        "scripts\\research_phase4.py": "d93c2ec4eaeb3a9e79530c7279cc1481d4575772b41a2888efb7a2559b37deac",
+        "scripts\\research_phase4.py": "d2def599317dc96210beda0618f21d099b5a860817f453a23cef04beeea63b29",
         "backend\\app\\rl\\sumo_env.py": "db391854dbe3a65a4d151881561a4c27e035e798a8f2bacaef670b5c60e2323e",
-        "backend\\sumo_scenarios\\two_junction\\corridor.rou.xml": "31f2d3962541e3ea11f9ac6d9025a6df0ce196299b2d8f848ae2fcd410bb5da2"
+        "backend\\sumo_scenarios\\two_junction\\corridor.rou.xml": "e9cb0f3cf5f15523f38792f7da1a225ff87eb91d0de42f4215123e598055345f"
       }
     },
-    "startedUtc": "2026-10-22T19:01:47.820437+00:00",
+    "startedUtc": "2026-10-22T20:10:02.989236+00:00",
     "updates": [
       {
         "update": 1,
         "episodeSeed": 41000,
         "trainedDecisionSteps": 64,
         "reward": [
-          -1570.2432861328125,
-          -1650.5833740234375
+          -184.99166870117188,
+          -384.47833251953125
         ],
         "simTime": 320.0,
-        "wallSeconds": 122.69746140006464,
-        "arrivedVehicles": 433,
-        "actorLoss": -0.0009350189939141273,
-        "valueLoss": 137831.40625,
-        "entropy": 0.6871188879013062,
-        "gradientNorm": 474.1449279785156
+        "wallSeconds": 49.89905810006894,
+        "arrivedVehicles": 190,
+        "actorLoss": -0.0016286596655845642,
+        "valueLoss": 5396.44140625,
+        "entropy": 0.6815018653869629,
+        "gradientNorm": 79.41829681396484
       },
       {
         "update": 2,
         "episodeSeed": 41001,
         "trainedDecisionSteps": 128,
         "reward": [
-          -1531.705078125,
-          -1542.643310546875
+          -145.05332946777344,
+          -116.24166107177734
         ],
         "simTime": 320.0,
-        "wallSeconds": 124.46131330006756,
-        "arrivedVehicles": 435,
-        "actorLoss": -0.0005576061084866524,
-        "valueLoss": 124459.9296875,
-        "entropy": 0.6860021948814392,
-        "gradientNorm": 455.0451354980469
+        "wallSeconds": 41.55992070003413,
+        "arrivedVehicles": 190,
+        "actorLoss": -0.0001130811870098114,
+        "valueLoss": 941.504150390625,
+        "entropy": 0.681109607219696,
+        "gradientNorm": 32.641197204589844
       },
       {
         "update": 3,
         "episodeSeed": 41002,
         "trainedDecisionSteps": 192,
         "reward": [
-          -1623.603515625,
-          -1618.3516845703125
+          -161.91671752929688,
+          -164.64334106445312
         ],
         "simTime": 320.0,
-        "wallSeconds": 127.94024480006192,
-        "arrivedVehicles": 421,
-        "actorLoss": -3.254041075706482e-06,
-        "valueLoss": 138840.515625,
-        "entropy": 0.6858311295509338,
-        "gradientNorm": 479.8000183105469
+        "wallSeconds": 39.75761610001791,
+        "arrivedVehicles": 169,
+        "actorLoss": -0.001238260418176651,
+        "valueLoss": 1448.6181640625,
+        "entropy": 0.6823394298553467,
+        "gradientNorm": 41.8601188659668
       },
       {
         "update": 4,
         "episodeSeed": 41003,
         "trainedDecisionSteps": 256,
         "reward": [
-          -1519.7431640625,
-          -1461.02490234375
+          -112.14500427246094,
+          -150.56497192382812
         ],
         "simTime": 320.0,
-        "wallSeconds": 117.2107308000559,
-        "arrivedVehicles": 442,
-        "actorLoss": -8.840486407279968e-05,
-        "valueLoss": 117011.984375,
-        "entropy": 0.6858781576156616,
-        "gradientNorm": 446.915283203125
+        "wallSeconds": 41.12581669993233,
+        "arrivedVehicles": 195,
+        "actorLoss": 0.0002887547016143799,
+        "valueLoss": 848.863525390625,
+        "entropy": 0.6843885183334351,
+        "gradientNorm": 32.46517562866211
       },
       {
         "update": 5,
         "episodeSeed": 41004,
         "trainedDecisionSteps": 320,
         "reward": [
-          -1467.7833251953125,
-          -1513.983642578125
+          -183.70501708984375,
+          -226.80665588378906
         ],
         "simTime": 320.0,
-        "wallSeconds": 115.48019949998707,
-        "arrivedVehicles": 438,
-        "actorLoss": -0.00025809742510318756,
-        "valueLoss": 117273.515625,
-        "entropy": 0.6853092908859253,
-        "gradientNorm": 453.3330993652344
+        "wallSeconds": 42.74865680001676,
+        "arrivedVehicles": 190,
+        "actorLoss": -0.00031501613557338715,
+        "valueLoss": 2436.512939453125,
+        "entropy": 0.6840947866439819,
+        "gradientNorm": 54.64726257324219
       },
       {
         "update": 6,
         "episodeSeed": 41005,
         "trainedDecisionSteps": 384,
         "reward": [
-          -1520.5430908203125,
-          -1515.193115234375
+          -100.1500015258789,
+          -188.00331115722656
         ],
         "simTime": 320.0,
-        "wallSeconds": 115.75659709994216,
-        "arrivedVehicles": 438,
-        "actorLoss": -0.0002471907064318657,
-        "valueLoss": 122434.65625,
-        "entropy": 0.6847690343856812,
-        "gradientNorm": 469.8654479980469
+        "wallSeconds": 39.95198909996543,
+        "arrivedVehicles": 194,
+        "actorLoss": -0.00016967952251434326,
+        "valueLoss": 1087.74267578125,
+        "entropy": 0.6847395300865173,
+        "gradientNorm": 36.67930603027344
       },
       {
         "update": 7,
         "episodeSeed": 41006,
         "trainedDecisionSteps": 448,
         "reward": [
-          -1500.3533935546875,
-          -1535.7633056640625
+          -114.38331604003906,
+          -215.40667724609375
         ],
         "simTime": 320.0,
-        "wallSeconds": 115.54883790004533,
-        "arrivedVehicles": 437,
-        "actorLoss": -0.00013481918722391129,
-        "valueLoss": 121589.3125,
-        "entropy": 0.6851183772087097,
-        "gradientNorm": 476.6630554199219
+        "wallSeconds": 39.589775100001134,
+        "arrivedVehicles": 187,
+        "actorLoss": -0.000415019690990448,
+        "valueLoss": 1572.550537109375,
+        "entropy": 0.684870183467865,
+        "gradientNorm": 45.455780029296875
       },
       {
         "update": 8,
         "episodeSeed": 41007,
         "trainedDecisionSteps": 512,
         "reward": [
-          -1491.71337890625,
-          -1535.7734375
+          -254.31166076660156,
+          -194.6616668701172
         ],
         "simTime": 320.0,
-        "wallSeconds": 116.30075350007974,
-        "arrivedVehicles": 437,
-        "actorLoss": -6.493274122476578e-05,
-        "valueLoss": 121524.5390625,
-        "entropy": 0.6856898069381714,
-        "gradientNorm": 484.1775817871094
+        "wallSeconds": 48.48206760000903,
+        "arrivedVehicles": 195,
+        "actorLoss": 0.00031450018286705017,
+        "valueLoss": 2691.130615234375,
+        "entropy": 0.6841273903846741,
+        "gradientNorm": 60.73740005493164
       },
       {
         "update": 9,
         "episodeSeed": 41008,
         "trainedDecisionSteps": 576,
         "reward": [
-          -1549.5380859375,
-          -1561.0098876953125
+          -118.06499481201172,
+          -170.41998291015625
         ],
         "simTime": 320.0,
-        "wallSeconds": 123.54734479996841,
-        "arrivedVehicles": 425,
-        "actorLoss": -5.1130540668964386e-05,
-        "valueLoss": 130281.2109375,
-        "entropy": 0.6863117814064026,
-        "gradientNorm": 497.6223449707031
+        "wallSeconds": 42.775029900018126,
+        "arrivedVehicles": 189,
+        "actorLoss": -0.0003918111324310303,
+        "valueLoss": 1082.8828125,
+        "entropy": 0.6845962405204773,
+        "gradientNorm": 39.14362335205078
       },
       {
         "update": 10,
         "episodeSeed": 41009,
         "trainedDecisionSteps": 640,
         "reward": [
-          -1517.4033203125,
-          -1475.134765625
+          -258.6600036621094,
+          -261.82000732421875
         ],
         "simTime": 320.0,
-        "wallSeconds": 112.93896509998012,
-        "arrivedVehicles": 434,
-        "actorLoss": -1.3027340173721313e-05,
-        "valueLoss": 118062.4609375,
-        "entropy": 0.6863691210746765,
-        "gradientNorm": 495.2156982421875
+        "wallSeconds": 49.132037200033665,
+        "arrivedVehicles": 184,
+        "actorLoss": 0.00015184096992015839,
+        "valueLoss": 4138.984375,
+        "entropy": 0.6850878000259399,
+        "gradientNorm": 75.29863739013672
       },
       {
         "update": 11,
         "episodeSeed": 41010,
         "trainedDecisionSteps": 704,
         "reward": [
-          -1535.80322265625,
-          -1511.9332275390625
+          -272.375,
+          -196.8216552734375
         ],
         "simTime": 320.0,
-        "wallSeconds": 106.78127959999256,
-        "arrivedVehicles": 439,
-        "actorLoss": -0.0001998748630285263,
-        "valueLoss": 122396.2109375,
-        "entropy": 0.686301589012146,
-        "gradientNorm": 518.1296997070312
+        "wallSeconds": 48.4738151000347,
+        "arrivedVehicles": 204,
+        "actorLoss": 8.541345596313477e-05,
+        "valueLoss": 2962.49951171875,
+        "entropy": 0.685439944267273,
+        "gradientNorm": 63.72252655029297
       },
       {
         "update": 12,
         "episodeSeed": 41011,
         "trainedDecisionSteps": 768,
         "reward": [
-          -1519.1136474609375,
-          -1551.043212890625
+          -80.68500518798828,
+          -218.32334899902344
         ],
         "simTime": 320.0,
-        "wallSeconds": 107.97521679999772,
-        "arrivedVehicles": 439,
-        "actorLoss": -0.001079578883945942,
-        "valueLoss": 123879.9375,
-        "entropy": 0.6866618394851685,
-        "gradientNorm": 533.1595458984375
+        "wallSeconds": 36.91191299993079,
+        "arrivedVehicles": 173,
+        "actorLoss": -0.00029134005308151245,
+        "valueLoss": 1466.1025390625,
+        "entropy": 0.6856606602668762,
+        "gradientNorm": 46.697574615478516
       },
       {
         "update": 13,
         "episodeSeed": 41012,
         "trainedDecisionSteps": 832,
         "reward": [
-          -1670.843505859375,
-          -1626.9034423828125
+          -116.9383316040039,
+          -198.9599609375
         ],
         "simTime": 320.0,
-        "wallSeconds": 118.31253220001236,
-        "arrivedVehicles": 446,
-        "actorLoss": 0.0001115826889872551,
-        "valueLoss": 144489.21875,
-        "entropy": 0.6883242130279541,
-        "gradientNorm": 589.3121948242188
+        "wallSeconds": 39.23566150001716,
+        "arrivedVehicles": 175,
+        "actorLoss": -0.0009338334202766418,
+        "valueLoss": 1357.3160400390625,
+        "entropy": 0.6866768002510071,
+        "gradientNorm": 43.96084213256836
       },
       {
         "update": 14,
         "episodeSeed": 41013,
         "trainedDecisionSteps": 896,
         "reward": [
-          -1498.928466796875,
-          -1566.3035888671875
+          -221.45999145507812,
+          -177.8616485595703
         ],
         "simTime": 320.0,
-        "wallSeconds": 111.17499019997194,
-        "arrivedVehicles": 436,
-        "actorLoss": 0.00018709711730480194,
-        "valueLoss": 123776.4921875,
-        "entropy": 0.6885568499565125,
-        "gradientNorm": 559.1455688476562
+        "wallSeconds": 43.94517239998095,
+        "arrivedVehicles": 186,
+        "actorLoss": 0.00035696104168891907,
+        "valueLoss": 2009.2318115234375,
+        "entropy": 0.6879626512527466,
+        "gradientNorm": 56.62214660644531
       },
       {
         "update": 15,
         "episodeSeed": 41014,
         "trainedDecisionSteps": 960,
         "reward": [
-          -1479.323486328125,
-          -1494.5836181640625
+          -116.00833892822266,
+          -183.99166870117188
         ],
         "simTime": 320.0,
-        "wallSeconds": 106.11018439999316,
-        "arrivedVehicles": 447,
-        "actorLoss": -0.0011836821213364601,
-        "valueLoss": 116158.109375,
-        "entropy": 0.6889402270317078,
-        "gradientNorm": 554.1603393554688
+        "wallSeconds": 40.60580810008105,
+        "arrivedVehicles": 193,
+        "actorLoss": -0.001948617398738861,
+        "valueLoss": 1229.5648193359375,
+        "entropy": 0.6886218190193176,
+        "gradientNorm": 44.71315002441406
       },
       {
         "update": 16,
         "episodeSeed": 41015,
         "trainedDecisionSteps": 1024,
         "reward": [
-          -1605.2633056640625,
-          -1666.3232421875
+          -103.00167083740234,
+          -187.76666259765625
         ],
         "simTime": 320.0,
-        "wallSeconds": 107.36851340008434,
-        "arrivedVehicles": 433,
-        "actorLoss": 4.326784983277321e-05,
-        "valueLoss": 143736.875,
-        "entropy": 0.6900005340576172,
-        "gradientNorm": 634.4396362304688
+        "wallSeconds": 37.917902300017886,
+        "arrivedVehicles": 191,
+        "actorLoss": -0.0012251883745193481,
+        "valueLoss": 1254.7149658203125,
+        "entropy": 0.6901893615722656,
+        "gradientNorm": 46.235198974609375
       }
     ],
     "status": "unvalidated_research_candidate",
     "operationallyEnabled": false,
-    "latestCheckpoint": "C:\\Users\\prana\\Documents\\TrafficRegulationResearch\\syncroflow2AI-main\\.checkpoints\\phase4-final\\train-41\\update-0016.pt",
+    "latestCheckpoint": "C:\\Users\\prana\\Documents\\TrafficRegulationResearch\\syncroflow2AI-main\\.checkpoints\\phase4-demand-corrected\\train-41\\update-0016.pt",
     "trainedDecisionSteps": 1024,
-    "elapsedSeconds": 1849.605164800305
+    "elapsedSeconds": 682.11223970016
   }
 ]

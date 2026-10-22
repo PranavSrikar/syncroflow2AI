@@ -1,3 +1,13 @@
+# Phase 4 research commands
+
+Set `$env:DEBUG='false'` before research commands in PowerShell. The existing demo startup is unchanged: `./backend/.venv/Scripts/python.exe scripts/run_dev.py`. MAPPO remains disabled; do not configure unqualified candidate weights. Git is installed; restart older terminals to refresh PATH, or use `C:/Program Files/Git/cmd/git.exe`.
+
+Read PHASE4_EXPERIMENT_PLAN.md and the four research reports before new experiments. Training: `./backend/.venv/Scripts/python.exe scripts/research_phase4.py train --seeds 51 61 71 --updates 16 --rollout 64`. Use fresh model seeds/directories; existing checkpoints are protected. Resume only with matching original code/configuration. Offline trials accept `benchmark --seconds 300 --seeds 1001 1002 1003 --scales .75 1.75 --modes fixed_time max_pressure mpc hybrid --split test`; candidate weights require `--checkpoints <path>`, matching training provenance and disjoint seeds. These research trials retain all existing supervisor checks.
+
+Rebuild this completed experiment's charts and reports with `scripts/summarize_phase4.py` followed by `scripts/report_phase4.py`, using the project Python. Artifacts are restored from the Phase4 recovery archive. Do not overwrite frozen selection/test evidence for a new experiment. Install optional training/plotting dependencies with `./backend/.venv/Scripts/python.exe -m pip install -r backend/requirements-research.txt`; the run's environment-freeze.txt records exact installed versions. Use `--output-dir <new-folder>` before the training/benchmark subcommand for separate research data. The three-seed protocol driver `scripts/run_phase4_experiments.py` waits for the recorded21/31/41 runs and reuses matching cached trials; it is not a generic experiment partition generator.
+
+---
+
 # Launch and demonstrate SYNCHROFLOW AI
 
 Run PowerShell from the project folder. Verified environment: Python 3.11.9, Node 24.21.0, SUMO 1.28.0; dependency versions are preserved in the artifact freeze. Use one backend worker.
@@ -5,7 +15,7 @@ Run PowerShell from the project folder. Verified environment: Python 3.11.9, Nod
 ## Start the existing installed prototype
 
 ```powershell
-.ackend.venvScriptspython.exe scripts/run_dev.py
+./backend/.venv/Scripts/python.exe scripts/run_dev.py
 ```
 
 Open http://127.0.0.1:3001; backend docs http://127.0.0.1:8001/docs. Startup reports detected dependencies, SUMO version, actual backend/frontend readiness, controller and simulation status. Default startup is stopped fixed-time. Choose Hybrid and a Network, then Start. Pause before stepping; Stop before changing network/controller.
@@ -13,8 +23,8 @@ Open http://127.0.0.1:3001; backend docs http://127.0.0.1:8001/docs. Startup rep
 Ctrl+C cleans up this launcher's own SUMO/cameras and child servers. Occupied ports are preserved and reported; use different ports if needed:
 
 ```powershell
-.ackend.venvScriptspython.exe scripts/run_dev.py --backend-port 8020 --frontend-port 3020
-.ackend.venvScriptspython.exe scripts/run_dev.py --backend-port 8020 --frontend-port 3020 --smoke-test
+./backend/.venv/Scripts/python.exe scripts/run_dev.py --backend-port 8020 --frontend-port 3020
+./backend/.venv/Scripts/python.exe scripts/run_dev.py --backend-port 8020 --frontend-port 3020 --smoke-test
 ```
 
 The agent verified and left the final services on 8001/3001, with SUMO/cameras stopped. If still running, open the existing URL instead of launching duplicates. Processes need restarting after session/process shutdown.
@@ -25,22 +35,22 @@ If no environment exists:
 
 ```powershell
 py -3.11 -m venv backend/.venv
-.ackend.venvScriptspython.exe -m pip install -r backend/requirements.txt
+./backend/.venv/Scripts/python.exe -m pip install -r backend/requirements.txt
 npm.cmd ci
 ```
 
 Install SUMO 1.28 and place its bin directory on PATH. Camera libraries and torch are optional for SUMO-only operation. To use video/research training:
 
 ```powershell
-.ackend.venvScriptspython.exe -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
-.ackend.venvScriptspython.exe -m pip install -r backend/requirements-perception.txt
+./backend/.venv/Scripts/python.exe -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+./backend/.venv/Scripts/python.exe -m pip install -r backend/requirements-perception.txt
 ```
 
 Verified torch/torchvision: 2.14.1+cpu / 0.29.1. Use the preserved environment freeze for exact reconstruction. Never enable archived unqualified research weights.
 
 ## Camera demo configuration
 
-Restore video/weights from the Stage 3 artifact archive, or use the source URLs in STAGE1_IMPLEMENTATION.md. From the project root, regenerate an API camera array with this workspace's absolute paths:
+Restore video/weights from the Phase 4 artifact archive (the original Stage 3 copy also remains available), or use the source URLs in STAGE1_IMPLEMENTATION.md. From the project root, regenerate an API camera array with this workspace's absolute paths:
 
 ```powershell
 $camera=Get-Content backend/examples/camera-road.example.json -Raw | ConvertFrom-Json
@@ -49,7 +59,7 @@ $camera.weights=(Resolve-Path '.checkpoints/perception/yolo11n.pt').Path
 $json=ConvertTo-Json -InputObject @($camera) -Depth 12
 [IO.File]::WriteAllText((Join-Path (Get-Location) '.checkpoints/perception/cameras-api.json'),$json,(New-Object Text.UTF8Encoding($false)))
 $env:SYNCHROFLOW_CAMERA_CONFIG=(Resolve-Path '.checkpoints/perception/cameras-api.json').Path
-.ackend.venvScriptspython.exe scripts/run_dev.py
+./backend/.venv/Scripts/python.exe scripts/run_dev.py
 ```
 
 Set the variable before backend startup. The command writes BOM-free UTF-8 and works in Windows PowerShell 5.
@@ -57,7 +67,7 @@ Set the variable before backend startup. The command writes BOM-free UTF-8 and w
 Choose Configured cameras and Start cameras in the dashboard. Camera mode supplies observations only. No physical calibration, live-hardware accuracy or road-signal actuation is established. Offline CLI:
 
 ```powershell
-.ackend.venvScriptspython.exe scripts/perceive_video.py --config backend/examples/camera-road.example.json --output .checkpoints/perception/demo-inference.jsonl --max-frames 60
+./backend/.venv/Scripts/python.exe scripts/perceive_video.py --config backend/examples/camera-road.example.json --output .checkpoints/perception/demo-inference.jsonl --max-frames 60
 ```
 
 ## A-H repeatable release demos
@@ -65,7 +75,7 @@ Choose Configured cameras and Start cameras in the dashboard. Camera mode suppli
 Use a stopped disposable simulation/camera session. The runner refuses active sessions and saves actual results after each completed case:
 
 ```powershell
-.ackend.venvScriptspython.exe scripts/demo_release.py --base-url http://127.0.0.1:8001/api/v1 --with-example-forecast --output .checkpoints/my-demo-results.json
+./backend/.venv/Scripts/python.exe scripts/demo_release.py --base-url http://127.0.0.1:8001/api/v1 --with-example-forecast --output .checkpoints/my-demo-results.json
 ```
 
 The example-forecast flag explicitly feeds labeled artificial history/weather into MPC for A only, then disables forecasting. It does not establish real forecast accuracy. Omit the flag for measured-arrival fallback. `--scenario A` through `H` runs one case. H explicitly skips when no camera config exists; invalid configured sources fail visibly.
