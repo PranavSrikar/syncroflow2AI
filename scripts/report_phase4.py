@@ -127,13 +127,13 @@ Operationally retain supervised Max-Pressure +constrained MPC and the existing d
 6. Calibrate arrival/saturation/receiving models, PCU weights and forecast uncertainty with genuine data. Camera field accuracy, metric calibration, live hardware, historical forecast accuracy and adverse-weather generalization remain outside this experiment.
 7. Maintain local Git checkpoints, verified archives and independent copies. Current separate recovery copies are on the same machine, not off-device backup. Review credentials before any publication; no push or remote was configured.
 
-Regression evidence: {tests}; four real-browser tests passed in41.2s; build,TypeScript,eight frontend groups,pip check,startup smoke,protected pedestrian and emergency API demos passed. Existing one Starlette warning and Vite warnings remain. Read the training,benchmark and qualification reports for actual numbers and limitations. No production safety certification, real-road superiority or guaranteed camera accuracy is claimed.
+Regression evidence: {tests}; four real-browser tests passed in41.2s; build,TypeScript,eight frontend groups,pip check,startup smoke and all eight fresh A-H external demos passed. Existing one Starlette warning and Vite warnings remain. Read the training,benchmark and qualification reports for actual numbers and limitations. No production safety certification, real-road superiority or guaranteed camera accuracy is claimed.
 ''')
     summary=f'''# Phase 4 research update
 
 This section supersedes Stage3 research/Git status below; Stage3 demonstration results remain historical evidence. Three corrected-occupancy MAPPO runs completed,1024 joint decisions each;30 matched final corridor trials and separate held-out safety trials are recorded. **MAPPO remains unqualified and operationally disabled.** Read [MAPPO_TRAINING_REPORT.md](MAPPO_TRAINING_REPORT.md), [CONTROLLER_BENCHMARK_REPORT.md](CONTROLLER_BENCHMARK_REPORT.md), [POLICY_QUALIFICATION_REPORT.md](POLICY_QUALIFICATION_REPORT.md) and [RESEARCH_NEXT_STEPS.md](RESEARCH_NEXT_STEPS.md).
 
-Final backend: {tests}. Four Edge/browser tests passed in41.2s; frontend build,TypeScript,eight frontend groups,pip check,startup smoke and protected pedestrian/emergency API demos passed. Git2.55.0.windows.5 is installed; exact Stage3 archive preserved as local tag `stage3-verified-demo`, with new local research history. No earlier Git history existed in this export; no remote or push. Recovery pointer: `.checkpoints/PHASE4_RECOVERY.json` (created after final reporting).
+Final backend: {tests}. Four Edge/browser tests passed in41.2s; frontend build,TypeScript,eight frontend groups,pip check,startup smoke and all eight fresh A-H external demos passed. Git2.55.0.windows.5 is installed; exact Stage3 archive preserved as local tag `stage3-verified-demo`, with new local research history. No earlier Git history existed in this export; no remote or push. Recovery pointer: `.checkpoints/PHASE4_RECOVERY.json` (created after final reporting).
 
 Startup remains `./backend/.venv/Scripts/python.exe scripts/run_dev.py`; operational fallback and original network files are preserved. Research evidence/plots: `research/phase4`; raw data/checkpoints `.checkpoints/phase4`. Current limitations include limited training, no qualified learned policy, one benchmark topology, short cold-start/censored experiments, and no candidate pedestrian/emergency qualification.
 
@@ -164,7 +164,7 @@ Restore source into a new empty folder; verify SHA-256 and CHECKPOINT_MANIFEST.j
     if not old.startswith('# Phase 4 research commands'):
         p.write_text('''# Phase 4 research commands
 
-The existing demo startup is unchanged: `./backend/.venv/Scripts/python.exe scripts/run_dev.py`. MAPPO remains disabled; do not configure unqualified candidate weights. Git is installed; restart older terminals to refresh PATH, or use `C:/Program Files/Git/cmd/git.exe`.
+Set `$env:DEBUG='false'` before research commands in PowerShell. The existing demo startup is unchanged: `./backend/.venv/Scripts/python.exe scripts/run_dev.py`. MAPPO remains disabled; do not configure unqualified candidate weights. Git is installed; restart older terminals to refresh PATH, or use `C:/Program Files/Git/cmd/git.exe`.
 
 Read PHASE4_EXPERIMENT_PLAN.md and the four research reports before new experiments. Training: `./backend/.venv/Scripts/python.exe scripts/research_phase4.py train --seeds 51 61 71 --updates 16 --rollout 64`. Use fresh model seeds/directories; existing checkpoints are protected. Resume only with matching original code/configuration. Offline trials accept `benchmark --seconds 300 --seeds 1001 1002 1003 --scales .75 1.75 --modes fixed_time max_pressure mpc hybrid --split test`; candidate weights require `--checkpoints <path>`, matching training provenance and disjoint seeds. These research trials retain all existing supervisor checks.
 

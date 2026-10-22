@@ -120,6 +120,8 @@ def trial(mode, seed, seconds, scale, checkpoint=None, split='test'):
     queues, waits, latencies, spillbacks, red_ages = [], [], [], [], []
     inference_latencies, decision_latencies = [], []
     fallback_controller_seconds = 0
+    hint_controller_seconds = 0
+    joint_action_counts = {}
     started = time.perf_counter()
     result = dict(mode=mode, model=label, seed=seed, seconds=seconds, demandScale=scale,
                   split=split, checkpoint=str(checkpoint) if checkpoint else None,
@@ -133,6 +135,9 @@ def trial(mode, seed, seconds, scale, checkpoint=None, split='test'):
             inference_ms = (time.perf_counter()-tick)*1000 if model else 0.0
             inference_latencies.append(inference_ms)
             decision_ms = inference_ms
+            if action is not None:
+                key = ','.join(str(int(a)) for a in action)
+                joint_action_counts[key] = joint_action_counts.get(key,0)+1
             # Sample every simulator second, retaining the same recommendation for five seconds.
             for _ in range(min(5, seconds-int(traci.simulation.getTime()))):
                 control_started = time.perf_counter()
@@ -142,6 +147,10 @@ def trial(mode, seed, seconds, scale, checkpoint=None, split='test'):
                 decision_ms += control_ms
                 fallback_controller_seconds += sum(c.diagnostics.get('policy') == 'max_pressure_fallback'
                                                    for c in env.controllers.values())
+                if action is not None:
+                    if any(c.coordination_hint != int(action[i]) for i,c in enumerate(env.controllers.values())):
+                        raise RuntimeError('Candidate recommendation did not reach MPC')
+                    hint_controller_seconds += len(env.controllers)
                 traci.simulationStep()
                 env.network.after_step()
                 now = traci.simulation.getTime()
@@ -164,6 +173,7 @@ def trial(mode, seed, seconds, scale, checkpoint=None, split='test'):
                       meanDecisionControlComputeMs=float(np.mean(decision_latencies)),
                       p95DecisionControlComputeMs=float(np.percentile(decision_latencies,95)),
                       fallbackControllerSeconds=fallback_controller_seconds,
+                      hintControllerSeconds=hint_controller_seconds, jointActionCounts=joint_action_counts,
                       supervisors={a:c.supervisor.report() for a,c in env.controllers.items()},
                       pedestrianConstraints='not_applicable_no_crossings_in_corridor',
                       emergencyResponse='not_measured_no_emergency_in_corridor',

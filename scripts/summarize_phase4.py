@@ -34,7 +34,7 @@ def main():
             'maxCompletedWaitingSeconds','maxApproachMeanWaitSeconds','maxServiceAgeSeconds',
             'spillbackEdgeSeconds','meanControlLatencyMs','p95ControlLatencyMs','maxControlLatencyMs',
             'completedTrips','unfinishedTrips','meanPolicyInferenceMs','p95PolicyInferenceMs',
-            'meanDecisionControlComputeMs','p95DecisionControlComputeMs','fallbackControllerSeconds']
+            'meanDecisionControlComputeMs','p95DecisionControlComputeMs','fallbackControllerSeconds','hintControllerSeconds']
     for row in rows:
         row['supervisorRejections'] = sum(s['rejectedActions'] for s in row['supervisors'].values())
         row['supervisorAcceptedActions'] = sum(s['acceptedActions'] for s in row['supervisors'].values())
@@ -44,11 +44,12 @@ def main():
         losses = [float(t.get('timeLoss','0')) for t in trips]
         # Include right-censored unfinished trips as observed partial timeLoss only.
         row['meanObservedTimeLossIncludingUnfinished'] = float(np.mean(losses))
+        row['maxObservedWaitingIncludingUnfinished'] = float(np.max(waits))
         row['meanDepartDelaySeconds'] = float(np.mean([float(t.get('departDelay','0')) for t in trips]))
         row['waitingGiniIncludingUnfinished'] = (float(np.abs(waits[:,None]-waits[None,:]).sum()/(2*len(waits)*waits.sum()))
                                                  if waits.sum() else 0.0)
     keys += ['supervisorRejections','supervisorAcceptedActions','meanObservedTimeLossIncludingUnfinished',
-             'meanDepartDelaySeconds','waitingGiniIncludingUnfinished']
+             'meanDepartDelaySeconds','waitingGiniIncludingUnfinished','maxObservedWaitingIncludingUnfinished']
     fields = ['mode','model','seed','seconds','demandScale',*keys,'wallSeconds','safetyFaults']
     with (PUBLIC/'trials.csv').open('w',newline='',encoding='utf-8') as f:
         writer = csv.DictWriter(f,fieldnames=fields,extrasaction='ignore')
