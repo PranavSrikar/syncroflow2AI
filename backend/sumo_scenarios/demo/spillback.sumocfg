@@ -1,0 +1,14 @@
+<configuration>
+  <input>
+    <net-file value="../four_way_basic/junction.net.xml" />
+    <route-files value="../four_way_basic/junction.rou.xml,spillback.rou.xml" />
+  </input>
+  <time>
+    <begin value="0" />
+    <end value="900" />
+    <step-length value="1" />
+  </time>
+  <processing>
+    <time-to-teleport value="-1" />
+  </processing>
+</configuration>

@@ -1,0 +1,12 @@
+<nodes>
+    <node id="center" x="0" y="0" type="traffic_light">
+    <crossing edges="N_in N_out" width="3.0"/>
+    <crossing edges="S_in S_out" width="3.0"/>
+    <crossing edges="E_in E_out" width="3.0"/>
+    <crossing edges="W_in W_out" width="3.0"/>
+</node>
+    <node id="north" x="0" y="250" type="priority"/>
+    <node id="south" x="0" y="-250" type="priority"/>
+    <node id="east" x="250" y="0" type="priority"/>
+    <node id="west" x="-250" y="0" type="priority"/>
+</nodes>

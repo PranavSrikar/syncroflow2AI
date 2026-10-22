@@ -1,0 +1,15 @@
+<routes>
+    <vType id="walker" vClass="pedestrian" maxSpeed="1.0"/>
+    <personFlow id="walk_north_south" type="walker" begin="0" end="180" period="15" departPos="200">
+        <walk edges="N_in S_out" arrivalPos="40"/>
+    </personFlow>
+    <personFlow id="walk_east_west" type="walker" begin="0" end="180" period="15" departPos="200">
+        <walk edges="E_in W_out" arrivalPos="40"/>
+    </personFlow>
+    <personFlow id="walk_south_north" type="walker" begin="0" end="180" period="15" departPos="200">
+        <walk edges="S_in N_out" arrivalPos="40"/>
+    </personFlow>
+    <personFlow id="walk_west_east" type="walker" begin="0" end="180" period="15" departPos="200">
+        <walk edges="W_in E_out" arrivalPos="40"/>
+    </personFlow>
+</routes>

@@ -1,0 +1,14 @@
+{
+  "id": "road-demo",
+  "source": ".checkpoints/perception/road.mp4",
+  "live": false,
+  "weights": ".checkpoints/perception/yolo11n.pt",
+  "regions": [
+    {
+      "approach": "north",
+      "polygon": [[0, 0], [3840, 0], [3840, 2160], [0, 2160]],
+      "line": [[0, 600], [3840, 600]],
+      "line_direction": 0
+    }
+  ]
+}

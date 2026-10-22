@@ -1,0 +1,136 @@
+<routes>
+  <vType id="demo_blocker" vClass="passenger" length="5" minGap="0.1" maxSpeed="13.89" color="255,120,0" />
+  <route id="demo_south_receiving" edges="S_out" />
+  <vehicle id="demo_receiving_0" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="6.00" departSpeed="0">
+    <stop lane="S_out_0" endPos="6.10" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_1" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="11.30" departSpeed="0">
+    <stop lane="S_out_0" endPos="11.40" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_2" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="16.60" departSpeed="0">
+    <stop lane="S_out_0" endPos="16.70" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_3" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="21.90" departSpeed="0">
+    <stop lane="S_out_0" endPos="22.00" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_4" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="27.20" departSpeed="0">
+    <stop lane="S_out_0" endPos="27.30" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_5" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="32.50" departSpeed="0">
+    <stop lane="S_out_0" endPos="32.60" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_6" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="37.80" departSpeed="0">
+    <stop lane="S_out_0" endPos="37.90" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_7" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="43.10" departSpeed="0">
+    <stop lane="S_out_0" endPos="43.20" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_8" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="48.40" departSpeed="0">
+    <stop lane="S_out_0" endPos="48.50" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_9" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="53.70" departSpeed="0">
+    <stop lane="S_out_0" endPos="53.80" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_10" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="59.00" departSpeed="0">
+    <stop lane="S_out_0" endPos="59.10" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_11" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="64.30" departSpeed="0">
+    <stop lane="S_out_0" endPos="64.40" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_12" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="69.60" departSpeed="0">
+    <stop lane="S_out_0" endPos="69.70" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_13" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="74.90" departSpeed="0">
+    <stop lane="S_out_0" endPos="75.00" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_14" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="80.20" departSpeed="0">
+    <stop lane="S_out_0" endPos="80.30" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_15" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="85.50" departSpeed="0">
+    <stop lane="S_out_0" endPos="85.60" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_16" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="90.80" departSpeed="0">
+    <stop lane="S_out_0" endPos="90.90" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_17" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="96.10" departSpeed="0">
+    <stop lane="S_out_0" endPos="96.20" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_18" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="101.40" departSpeed="0">
+    <stop lane="S_out_0" endPos="101.50" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_19" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="106.70" departSpeed="0">
+    <stop lane="S_out_0" endPos="106.80" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_20" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="112.00" departSpeed="0">
+    <stop lane="S_out_0" endPos="112.10" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_21" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="117.30" departSpeed="0">
+    <stop lane="S_out_0" endPos="117.40" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_22" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="122.60" departSpeed="0">
+    <stop lane="S_out_0" endPos="122.70" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_23" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="127.90" departSpeed="0">
+    <stop lane="S_out_0" endPos="128.00" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_24" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="133.20" departSpeed="0">
+    <stop lane="S_out_0" endPos="133.30" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_25" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="138.50" departSpeed="0">
+    <stop lane="S_out_0" endPos="138.60" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_26" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="143.80" departSpeed="0">
+    <stop lane="S_out_0" endPos="143.90" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_27" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="149.10" departSpeed="0">
+    <stop lane="S_out_0" endPos="149.20" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_28" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="154.40" departSpeed="0">
+    <stop lane="S_out_0" endPos="154.50" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_29" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="159.70" departSpeed="0">
+    <stop lane="S_out_0" endPos="159.80" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_30" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="165.00" departSpeed="0">
+    <stop lane="S_out_0" endPos="165.10" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_31" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="170.30" departSpeed="0">
+    <stop lane="S_out_0" endPos="170.40" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_32" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="175.60" departSpeed="0">
+    <stop lane="S_out_0" endPos="175.70" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_33" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="180.90" departSpeed="0">
+    <stop lane="S_out_0" endPos="181.00" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_34" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="186.20" departSpeed="0">
+    <stop lane="S_out_0" endPos="186.30" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_35" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="191.50" departSpeed="0">
+    <stop lane="S_out_0" endPos="191.60" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_36" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="196.80" departSpeed="0">
+    <stop lane="S_out_0" endPos="196.90" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_37" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="202.10" departSpeed="0">
+    <stop lane="S_out_0" endPos="202.20" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_38" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="207.40" departSpeed="0">
+    <stop lane="S_out_0" endPos="207.50" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_39" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="212.70" departSpeed="0">
+    <stop lane="S_out_0" endPos="212.80" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_40" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="218.00" departSpeed="0">
+    <stop lane="S_out_0" endPos="218.10" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_41" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="223.30" departSpeed="0">
+    <stop lane="S_out_0" endPos="223.40" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_42" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="228.60" departSpeed="0">
+    <stop lane="S_out_0" endPos="228.70" duration="600" />
+  </vehicle>
+  <vehicle id="demo_receiving_43" type="demo_blocker" route="demo_south_receiving" depart="0" departLane="0" departPos="233.90" departSpeed="0">
+    <stop lane="S_out_0" endPos="234.00" duration="600" />
+  </vehicle>
+</routes>

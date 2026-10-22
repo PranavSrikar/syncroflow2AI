@@ -1,0 +1,14 @@
+node_modules/
+build/
+dist/
+coverage/
+playwright-report/
+test-results/
+backend/.venv/
+__pycache__/
+.pytest_cache/
+.checkpoints/
+.DS_Store
+*.log
+.env*
+!.env.example

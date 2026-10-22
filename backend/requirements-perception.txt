@@ -1,0 +1,5 @@
+# Optional CPU perception. Install torch/torchvision compatible with your host.
+-r requirements.txt
+opencv-python==4.11.0.86
+ultralytics==8.3.221
+lap==0.5.12

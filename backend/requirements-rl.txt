@@ -1,0 +1,3 @@
+# CPU smoke training; install torch from the official CPU wheel index if desired.
+-r requirements.txt
+torch>=2.6,<3.0

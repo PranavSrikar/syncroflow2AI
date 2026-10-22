@@ -1,0 +1,50 @@
+
+<routes>
+    <!-- Basic passenger car -->
+    <vType id="car"
+           vClass="passenger"
+           accel="2.6"
+           decel="4.5"
+           sigma="0.5"
+           length="5"
+           minGap="2.5"
+           maxSpeed="13.89"/>
+
+    <!-- Straight routes through the junction -->
+    <route id="north_to_south" edges="N_in S_out"/>
+    <route id="south_to_north" edges="S_in N_out"/>
+    <route id="east_to_west" edges="E_in W_out"/>
+    <route id="west_to_east" edges="W_in E_out"/>
+
+    <!-- Traffic entering from the north -->
+    <flow id="north_flow"
+          type="car"
+          route="north_to_south"
+          begin="0"
+          end="600"
+          vehsPerHour="600"/>
+
+    <!-- Traffic entering from the south -->
+    <flow id="south_flow"
+          type="car"
+          route="south_to_north"
+          begin="0"
+          end="600"
+          vehsPerHour="450"/>
+
+    <!-- Traffic entering from the east -->
+    <flow id="east_flow"
+          type="car"
+          route="east_to_west"
+          begin="0"
+          end="600"
+          vehsPerHour="350"/>
+
+    <!-- Traffic entering from the west -->
+    <flow id="west_flow"
+          type="car"
+          route="west_to_east"
+          begin="0"
+          end="600"
+          vehsPerHour="500"/>
+</routes>

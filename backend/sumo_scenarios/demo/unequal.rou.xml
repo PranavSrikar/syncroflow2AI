@@ -1,0 +1,11 @@
+<routes>
+  <vType id="car" vClass="passenger" accel="2.6" decel="4.5" sigma="0.5" length="5" minGap="2.5" maxSpeed="13.89" />
+  <route id="north_to_south" edges="N_in S_out" />
+  <flow id="unequal_north" type="car" route="north_to_south" begin="0" end="600" vehsPerHour="1500" />
+  <route id="south_to_north" edges="S_in N_out" />
+  <flow id="unequal_south" type="car" route="south_to_north" begin="0" end="600" vehsPerHour="150" />
+  <route id="east_to_west" edges="E_in W_out" />
+  <flow id="unequal_east" type="car" route="east_to_west" begin="0" end="600" vehsPerHour="120" />
+  <route id="west_to_east" edges="W_in E_out" />
+  <flow id="unequal_west" type="car" route="west_to_east" begin="0" end="600" vehsPerHour="120" />
+</routes>
