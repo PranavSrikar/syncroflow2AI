@@ -13,6 +13,7 @@ from app.services.mappo_coordination import qualification_fingerprint
 
 def main():
     records=[]
+    changes=[]
     for seed in (21,31,41):
         folder=ROOT/f'.checkpoints/phase4/train-{seed}'
         training=json.loads((folder/'training.json').read_text())
@@ -35,13 +36,15 @@ def main():
             records.append(dict(modelSeed=seed,update=update,jointDecisions=model.trained_steps,
                                 checkpoint=str(p.relative_to(ROOT)),sha256=hashlib.sha256(p.read_bytes()).hexdigest()))
             last=model
-        actor_delta=sum(float((a-b).square().sum()) for a,b in zip(initial.actor.parameters(),last.actor.parameters()))**.5
-        critic_delta=sum(float((a-b).square().sum()) for a,b in zip(initial.critic.parameters(),last.critic.parameters()))**.5
+        actor_delta=sum(float((a.detach()-b.detach()).square().sum()) for a,b in zip(initial.actor.parameters(),last.actor.parameters()))**.5
+        critic_delta=sum(float((a.detach()-b.detach()).square().sum()) for a,b in zip(initial.critic.parameters(),last.critic.parameters()))**.5
         if not actor_delta or not critic_delta:
             raise ValueError('Actor or critic did not update')
-        print(json.dumps(dict(seed=seed,actorParameterL2Change=actor_delta,criticParameterL2Change=critic_delta)),flush=True)
+        change=dict(seed=seed,actorParameterL2Change=actor_delta,criticParameterL2Change=critic_delta)
+        changes.append(change)
+        print(json.dumps(change),flush=True)
     report=dict(checkpointsVerified=len(records),finiteParametersAndOptimizer=True,
-                architectureFingerprint=qualification_fingerprint(),records=records,
+                architectureFingerprint=qualification_fingerprint(),records=records,parameterChanges=changes,
                 usefulnessEstablished=False)
     (ROOT/'.checkpoints/phase4/checkpoint-audit.json').write_text(json.dumps(report,indent=2),encoding='utf-8')
     print('Verified all48 main-run checkpoints; no operational qualification implied')
