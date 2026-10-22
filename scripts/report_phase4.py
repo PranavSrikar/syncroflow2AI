@@ -25,7 +25,7 @@ def main():
         table+=f"| {r['modelSeed']} | {r['updates'][0]['episodeSeed']}-{r['updates'][-1]['episodeSeed']} | {r['trainedDecisionSteps']} | {r['elapsedSeconds']:.2f} | {r['updates'][0]['valueLoss']:.2f} / {r['updates'][-1]['valueLoss']:.2f} | update-0016.pt |\n"
     total=sum(r['elapsedSeconds'] for r in training)
     selected=benchmark['selection']['selectedCheckpoint']
-    write('MAPPO_TRAINING_REPORT.md',f'''# MAPPO training report — Phase 4
+    write('MAPPO_TRAINING_REPORT.md',f'''# MAPPO training report â€” Phase 4
 
 Three independent CPU training runs completed using corrected SUMO occupancy observations. They are **unvalidated candidate policies**, not evidence of convergence or a useful operational controller. Operational MAPPO remains disabled.
 
@@ -34,7 +34,7 @@ Total training process wall durations: {total:.2f} seconds; processes ran concur
 
 ## Architecture and update audit
 
-Shared actor: 8 local inputs →32 tanh →32 tanh →2 categorical actions. Central critic: 16 joint inputs →32 tanh →32 tanh →2 values. Local observations are four queues /20, two green indicators, remaining signal time /45, and mean downstream occupancy fraction. Actions are release/hold preferences; MPC may override and the independent supervisor checks timing writes. There is no actor-to-TraCI actuation.
+Shared actor: 8 local inputs â†’32 tanh â†’32 tanh â†’2 categorical actions. Central critic: 16 joint inputs â†’32 tanh â†’32 tanh â†’2 values. Local observations are four queues /20, two green indicators, remaining signal time /45, and mean downstream occupancy fraction. Actions are release/hold preferences; MPC may override and the independent supervisor checks timing writes. There is no actor-to-TraCI actuation.
 
 PPO: Adam 0.0003, four full-batch epochs/update, clip 0.2, clipped value loss coefficient 0.5, entropy 0.01, gradient norm clip 0.5, gamma 0.99, GAE lambda 0.95. GAE true-terminal masking and time-limit bootstrapping match hand calculations. Actor and critic both change in real SUMO integration tests. Checkpoint restoration covers weights, optimizer, training count and Torch RNG; a separate test verifies sampled-action replay. No minibatch shuffling, value normalization, learning-rate decay or convergence claim. Large critic losses and shared gradient clipping remain a learning-quality concern.
 
@@ -62,17 +62,17 @@ Use new seeds/output directories for a new experiment; existing run folders are 
     results='| Demand | Controller | Completed timeLoss s | Mean / max queue | Throughput veh/h | Unfinished trips |\n|---|---|---|---|---|---|\n'
     for g in benchmark['groups']:
         m=g['metrics']
-        fmt=lambda key:f"{m[key]['mean']:.2f} ±{m[key]['sampleSD']:.2f}"
+        fmt=lambda key:f"{m[key]['mean']:.2f} Â±{m[key]['sampleSD']:.2f}"
         results+=f"| {g['demandScale']} | {g['mode']} | {fmt('meanCompletedTimeLossSeconds')} | {fmt('meanNetworkQueue')} /{fmt('maxNetworkQueue')} | {fmt('throughputVehiclesPerHour')} | {fmt('unfinishedTrips')} |\n"
-    paired='| Demand | Seed | Candidate −MPC timeLoss s | Throughput difference vehicles |\n|---|---|---:|---:|\n'
+    paired='| Demand | Seed | Candidate âˆ’MPC timeLoss s | Throughput difference vehicles |\n|---|---|---:|---:|\n'
     for r in benchmark['pairedComparisons']:
         paired+=f"| {r['demandScale']} | {r['seed']} | {r['delayDifferenceSeconds']:.4f} | {r['throughputDifference']} |\n"
-    write('CONTROLLER_BENCHMARK_REPORT.md',f'''# Controller benchmark report — Phase 4
+    write('CONTROLLER_BENCHMARK_REPORT.md',f'''# Controller benchmark report â€” Phase 4
 
-Thirty matched final trials completed: five modes ×two demand scales ×three held-out seeds. The learned candidate ran **offline through MPC and the independent supervisors**; it was never installed in the operational coordinator. There is no qualified-policy operational result.
+Thirty matched final trials completed: five modes Ã—two demand scales Ã—three held-out seeds. The learned candidate ran **offline through MPC and the independent supervisors**; it was never installed in the operational coordinator. There is no qualified-policy operational result.
 
 {results}
-Entries are mean ±sample standard deviation across seeds901,902,903. Horizon300 simulated seconds, one-second simulation step, five-second candidate recommendations, demand scales0.75 and1.75. Same network/route inputs, SUMO1.28.0, seeds and horizon in each mode. No warm-up exclusion. Hint-free hybrid is the existing MPC executable path with no learned recommendation; equivalent outcomes are expected. Baselines are native fixed-time, supervised Max-Pressure and constrained MPC. Actual control timing is not tuned after seeing final results.
+Entries are mean Â±sample standard deviation across seeds901,902,903. Horizon300 simulated seconds, one-second simulation step, five-second candidate recommendations, demand scales0.75 and1.75. Same network/route inputs, SUMO1.28.0, seeds and horizon in each mode. No warm-up exclusion. Hint-free hybrid is the existing MPC executable path with no learned recommendation; equivalent outcomes are expected. Baselines are native fixed-time, supervised Max-Pressure and constrained MPC. Actual control timing is not tuned after seeing final results.
 
 {paired}
 Three seeds support descriptive variability, not a claim of statistical significance or general traffic superiority. Seed/demand partitions were recorded before testing; the selected checkpoint was frozen using separate selection seeds801-803 at demand1.0. Other candidates were not selected using final test data.
@@ -83,9 +83,9 @@ Three seeds support descriptive variability, not a claim of statistical signific
 
 Vehicle delay is completed-trip SUMO `timeLoss`, distinct from waiting time and insertion delay. Unfinished trips are right-censored and listed separately. `meanObservedTimeLossIncludingUnfinished` records partial observed timeLoss, not eventual full-trip delay. `meanDepartDelaySeconds` reports insertion delay for recorded trips; vehicles still waiting to depart may be absent. Different controllers can change insertion capacity even with matched configured demand. No demand-normalized superiority inference is made.
 
-Queues are halted approach vehicles summed over both junctions, sampled every second; report time mean and maximum. Throughput is actual arrivals ×3600/300. Waiting fairness is reported as completed-trip mean/p95/max waiting, maximum approach mean wait, maximum service age, and descriptive waiting Gini including unfinished recorded trips. Spillback is downstream-edge indicator seconds. These proxies are not proof of fairness or network stability.
+Queues are halted approach vehicles summed over both junctions, sampled every second; report time mean and maximum. Throughput is actual arrivals Ã—3600/300. Waiting fairness is reported as completed-trip mean/p95/max waiting, maximum approach mean wait, maximum service age, and descriptive waiting Gini including unfinished recorded trips. Spillback is downstream-edge indicator seconds. These proxies are not proof of fairness or network stability.
 
-Control latency is `HybridNetwork.before_step` for both junctions, excluding simulator stepping, telemetry reads and policy inference. Mean/p95/max are available per trial; they are not full end-to-end latency. Up to three experiment processes shared the machine; CPU timings reflect that environment, not isolated real-time guarantees. Solver timeouts and supervisor rejections retain safe behavior. Detailed supervisor accepted/rejected counts and safety faults are preserved.
+Control latency is `HybridNetwork.before_step` for both junctions, excluding simulator stepping, telemetry reads and policy inference. Mean/p95/max are available per trial; they are not full end-to-end latency. Separate policy-inference mean/p95 and total control-compute mean/p95 per five-second decision are also recorded. The latter sums inference and five before_step calls, excluding simulation and telemetry. Fallback controller-seconds measure time showing fallback diagnostics, not a count of solver timeout events. Up to three experiment processes shared the machine; CPU timings reflect that environment, not isolated real-time guarantees. Solver timeouts and supervisor rejections retain safe behavior. Detailed supervisor accepted/rejected counts and safety faults are preserved.
 
 Corridor pedestrian constraints and emergency response are **not applicable/not measured** because these demand files contain neither. Separate baseline pedestrian/emergency API demonstrations passed; emergency request-to-approach-completion was {emergency['approachResponseSec']:.1f}s at seed95. This is not a candidate-policy emergency comparison. Protected slow-walker, clearance, emergency-stage and fault fallback regressions are included in the backend suite.
 
@@ -97,7 +97,7 @@ Reproduce cached matching experiments after training: `./backend/.venv/Scripts/p
 ''')
     failed=[c for c in qualification['performanceValidation']['checks'] if not c['passed']]
     failures='\n'.join('- '+c['name']+(f": {c['measuredReductionPercent']:.3f}% mean delay reduction" if 'measuredReductionPercent' in c else ': '+c.get('reason','screening condition failed')) for c in failed)
-    write('POLICY_QUALIFICATION_REPORT.md',f'''# Policy qualification report — Phase 4
+    write('POLICY_QUALIFICATION_REPORT.md',f'''# Policy qualification report â€” Phase 4
 
 **Not qualified. Keep operational MAPPO disabled.** The functioning Max-Pressure +constrained MPC fallback is preserved. No environment variables were set to activate a candidate, and no candidate controlled signals directly.
 
@@ -115,7 +115,7 @@ The runtime gate now requires positive performance/usefulness evidence in additi
 
 Future qualification requires new, independently held-out data after any training or model selection changes. Do not reuse the present final-test seeds for model selection and then describe them as unseen. A future qualified configuration must explicitly set both `SYNCHROFLOW_MAPPO_CHECKPOINT` and `SYNCHROFLOW_MAPPO_VALIDATION`; removing both reverses activation. This phase leaves both unset. Positive qualified-policy API/browser inference remains unverified.
 ''')
-    write('RESEARCH_NEXT_STEPS.md',f'''# Research next steps — Phase 4
+    write('RESEARCH_NEXT_STEPS.md',f'''# Research next steps â€” Phase 4
 
 Operationally retain supervised Max-Pressure +constrained MPC and the existing demo. The completed experiment is a bounded reproducible CPU pilot, not a converged MAPPO result or proof of controller superiority.
 

@@ -104,17 +104,22 @@ def trial(mode, seed, seconds, scale, checkpoint=None, split='test'):
     if result_path.exists():
         cached = json.loads(result_path.read_text())
         if (cached.get('checkpointSha256') != checkpoint_hash or cached['mode'] != mode
-                or cached['provenance']['architectureFingerprint'] != qualification_fingerprint()):
+                or cached['provenance'] != provenance()):
             raise ValueError('Cached trial has different weights/controller/architecture; use a new output directory')
         return cached
     trips_path.parent.mkdir(parents=True, exist_ok=True)
     model = MAPPO.load(checkpoint) if checkpoint else None
     if mode == 'candidate' and model is None:
         raise ValueError('Candidate weights required')
+    if model and (model.agents != 2 or model.observation_size != 8
+                  or not all(torch.isfinite(p).all().item() for p in model.parameters())):
+        raise ValueError('Candidate architecture/numerical checks failed')
     # The hint-free hybrid's executable controller is MPC; the runtime interface remains disabled.
     env = MultiJunctionEnv(seconds, mode='mpc' if mode in {'candidate', 'hybrid'} else mode,
                            demand_scale=scale, tripinfo=trips_path)
     queues, waits, latencies, spillbacks, red_ages = [], [], [], [], []
+    inference_latencies, decision_latencies = [], []
+    fallback_controller_seconds = 0
     started = time.perf_counter()
     result = dict(mode=mode, model=label, seed=seed, seconds=seconds, demandScale=scale,
                   split=split, checkpoint=str(checkpoint) if checkpoint else None,
@@ -125,11 +130,18 @@ def trial(mode, seed, seconds, scale, checkpoint=None, split='test'):
         while traci.simulation.getTime() < seconds:
             tick = time.perf_counter()
             action = model.act(obs, deterministic=True)[0] if model else None
+            inference_ms = (time.perf_counter()-tick)*1000 if model else 0.0
+            inference_latencies.append(inference_ms)
+            decision_ms = inference_ms
             # Sample every simulator second, retaining the same recommendation for five seconds.
             for _ in range(min(5, seconds-int(traci.simulation.getTime()))):
                 control_started = time.perf_counter()
                 env.network.before_step(training_actions=action)
-                latencies.append((time.perf_counter()-control_started)*1000)
+                control_ms = (time.perf_counter()-control_started)*1000
+                latencies.append(control_ms)
+                decision_ms += control_ms
+                fallback_controller_seconds += sum(c.diagnostics.get('policy') == 'max_pressure_fallback'
+                                                   for c in env.controllers.values())
                 traci.simulationStep()
                 env.network.after_step()
                 now = traci.simulation.getTime()
@@ -138,6 +150,7 @@ def trial(mode, seed, seconds, scale, checkpoint=None, split='test'):
                 waits.append(max((a['avgWaitTimeSec'] for a in approaches), default=0))
                 spillbacks.append(sum(d['spillbackIndicator'] for raw in env.network.raw.values() for d in raw['downstream'].values()))
                 red_ages.append(max(now-t for services in env.network.last_service.values() for t in services.values()))
+            decision_latencies.append(decision_ms)
             obs = env.observations()
         result.update(status='completed', arrivedVehicles=env.network.total_arrived,
                       throughputVehiclesPerHour=env.network.total_arrived*3600/seconds,
@@ -146,6 +159,11 @@ def trial(mode, seed, seconds, scale, checkpoint=None, split='test'):
                       spillbackEdgeSeconds=int(sum(spillbacks)),
                       meanControlLatencyMs=float(np.mean(latencies)), p95ControlLatencyMs=float(np.percentile(latencies,95)),
                       maxControlLatencyMs=max(latencies),
+                      meanPolicyInferenceMs=float(np.mean(inference_latencies)),
+                      p95PolicyInferenceMs=float(np.percentile(inference_latencies,95)),
+                      meanDecisionControlComputeMs=float(np.mean(decision_latencies)),
+                      p95DecisionControlComputeMs=float(np.percentile(decision_latencies,95)),
+                      fallbackControllerSeconds=fallback_controller_seconds,
                       supervisors={a:c.supervisor.report() for a,c in env.controllers.items()},
                       pedestrianConstraints='not_applicable_no_crossings_in_corridor',
                       emergencyResponse='not_measured_no_emergency_in_corridor',
@@ -196,6 +214,8 @@ if __name__ == '__main__':
             parser.error('Positive horizon and unique seeds required')
         for checkpoint in args.checkpoints:
             training = json.loads((Path(checkpoint).parent/'training.json').read_text())
+            if training['provenance']['architectureFingerprint'] != qualification_fingerprint():
+                parser.error('Candidate was trained against a different architecture')
             if set(args.seeds) & {u['episodeSeed'] for u in training['updates']}:
                 parser.error('Evaluation overlaps training seeds')
         selection_path = OUT/'selection.json'

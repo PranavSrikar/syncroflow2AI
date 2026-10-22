@@ -33,7 +33,8 @@ def main():
             'throughputVehiclesPerHour','meanCompletedWaitingSeconds','p95CompletedWaitingSeconds',
             'maxCompletedWaitingSeconds','maxApproachMeanWaitSeconds','maxServiceAgeSeconds',
             'spillbackEdgeSeconds','meanControlLatencyMs','p95ControlLatencyMs','maxControlLatencyMs',
-            'completedTrips','unfinishedTrips']
+            'completedTrips','unfinishedTrips','meanPolicyInferenceMs','p95PolicyInferenceMs',
+            'meanDecisionControlComputeMs','p95DecisionControlComputeMs','fallbackControllerSeconds']
     for row in rows:
         row['supervisorRejections'] = sum(s['rejectedActions'] for s in row['supervisors'].values())
         row['supervisorAcceptedActions'] = sum(s['acceptedActions'] for s in row['supervisors'].values())
