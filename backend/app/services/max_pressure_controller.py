@@ -110,6 +110,13 @@ class MaxPressureController:
             self.diagnostics = {"phasePressurePcu": scores, "elapsedGreenSec": spent,
                                 "movementPressure": self.movement_diagnostics,
                                 "policy": "Extend incumbent when its pressure dominates; retain legal cyclic service"}
+            # SUMO switches a due phase at the beginning of its next step.
+            # Rewriting remaining=1 when nextSwitch==now postpones that switch
+            # again and can turn every MPC release into a maximum-green hold.
+            # Let the approved program execute an already-due transition.
+            if light['nextSwitch'] <= now + 1e-9:
+                self.diagnostics.update(policy='phase_expiry_pending', phaseExpiry=light['nextSwitch'])
+                return
             if self.emergencies is not None and self.emergencies.selected is not None:
                 remaining = self.emergencies.recommend(raw, self.supervisor, phase, spent)
                 self.diagnostics.update({"policy": "emergency_priority", "vehicleId": self.emergencies.selected,

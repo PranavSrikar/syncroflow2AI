@@ -4,7 +4,7 @@ from pathlib import Path
 import xml.etree.ElementTree as ET
 
 ROOT=Path(__file__).resolve().parents[1]
-OUT=ROOT/'.checkpoints/phase4'
+OUT=ROOT/'.checkpoints/phase4-final'
 
 
 def trips(row):

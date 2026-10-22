@@ -34,11 +34,12 @@ def recover(label='final'):
     source=json.loads(subprocess.check_output([sys.executable,str(ROOT/'scripts/checkpoint.py')],cwd=ROOT,text=True))
     source_path=Path(source['archive'])
     git=shutil.which('git') or 'C:/Program Files/Git/cmd/git.exe'
-    bundle=ROOT/f'.checkpoints/phase4-history-{stamp}.bundle'
+    bundle=ROOT/f'.checkpoints/phase4-final-history-{stamp}.bundle'
     subprocess.run([git,'bundle','create',str(bundle),'--all'],cwd=ROOT,check=True,capture_output=True)
     subprocess.run([git,'bundle','verify',str(bundle)],cwd=ROOT,check=True,capture_output=True)
-    artifacts=ROOT/f'.checkpoints/phase4-artifacts-{stamp}.zip'
-    paths=[p for p in (ROOT/'.checkpoints/phase4').rglob('*') if p.is_file() and p.suffix!='.tmp']
+    artifacts=ROOT/f'.checkpoints/phase4-final-artifacts-{stamp}.zip'
+    paths=[p for folder in (ROOT/'.checkpoints/phase4-final',ROOT/'.checkpoints/phase4')
+           for p in folder.rglob('*') if p.is_file() and p.suffix!='.tmp']
     paths += [ROOT/f'.checkpoints/{n}' for n in ('STAGE1_RECOVERY.json','STAGE2_RECOVERY.json','STAGE3_RECOVERY.json','phase4-recovery-audit.json')]
     manifest={}
     with zipfile.ZipFile(artifacts,'x',compression=zipfile.ZIP_DEFLATED) as z:

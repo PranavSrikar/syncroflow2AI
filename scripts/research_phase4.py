@@ -18,14 +18,16 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'backend'))
-os.environ.setdefault('DEBUG', 'false')
+os.environ['DEBUG'] = 'false'
+for name in ('SYNCHROFLOW_MAPPO_CHECKPOINT','SYNCHROFLOW_MAPPO_VALIDATION'):
+    os.environ.pop(name,None)  # isolated research never inherits operational policy activation
 from app.rl.mappo import MAPPO
 from app.rl.sumo_env import MultiJunctionEnv
 from app.services.mappo_coordination import qualification_fingerprint
 import torch
 import traci
 
-OUT = ROOT / '.checkpoints/phase4'
+OUT = ROOT / '.checkpoints/phase4-final'
 
 
 def write(path, value):
@@ -200,6 +202,7 @@ def trial(mode, seed, seconds, scale, checkpoint=None, split='test'):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+    parser.add_argument('--output-dir',default=str(OUT))
     sub = parser.add_subparsers(dest='command', required=True)
     p = sub.add_parser('train')
     p.add_argument('--seeds', type=int, nargs='+', default=[11,22,33])
@@ -207,13 +210,14 @@ if __name__ == '__main__':
     p.add_argument('--rollout', type=int, default=64)
     p.add_argument('--resume', action='store_true')
     p = sub.add_parser('benchmark')
-    p.add_argument('--seeds', type=int, nargs='+', default=[901,902,903])
+    p.add_argument('--seeds', type=int, nargs='+', default=[1901,1902,1903])
     p.add_argument('--seconds', type=int, default=300)
     p.add_argument('--scales', type=float, nargs='+', default=[1.0,1.75])
     p.add_argument('--modes', nargs='+', default=['fixed_time','max_pressure','mpc','hybrid'])
     p.add_argument('--checkpoints', nargs='*', default=[])
     p.add_argument('--split', choices=['selection','test'], default='test')
     args = parser.parse_args()
+    OUT = Path(args.output_dir).resolve()
     if args.command == 'train':
         if args.updates < 1 or args.rollout < 1 or len(set(args.seeds)) != len(args.seeds):
             parser.error('Positive sizes and unique seeds required')

@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 
 ROOT=Path(__file__).resolve().parents[1]
 DATA=ROOT/'research/phase4'
-RAW=ROOT/'.checkpoints/phase4'
+RAW=ROOT/'.checkpoints/phase4-final'
 
 
 def write(name,text):
@@ -25,16 +25,16 @@ def main():
         table+=f"| {r['modelSeed']} | {r['updates'][0]['episodeSeed']}-{r['updates'][-1]['episodeSeed']} | {r['trainedDecisionSteps']} | {r['elapsedSeconds']:.2f} | {r['updates'][0]['valueLoss']:.2f} / {r['updates'][-1]['valueLoss']:.2f} | update-0016.pt |\n"
     total=sum(r['elapsedSeconds'] for r in training)
     selected=benchmark['selection']['selectedCheckpoint']
-    write('MAPPO_TRAINING_REPORT.md',f'''# MAPPO training report â€” Phase 4
+    write('MAPPO_TRAINING_REPORT.md',f'''# MAPPO training report — Phase 4
 
-Three independent CPU training runs completed using corrected SUMO occupancy observations. They are **unvalidated candidate policies**, not evidence of convergence or a useful operational controller. Operational MAPPO remains disabled.
+Three independent CPU training runs completed using corrected SUMO occupancy observations and corrected phase-expiry execution. They are **unvalidated candidate policies**, not evidence of convergence or a useful operational controller. Operational MAPPO remains disabled.
 
 {table}
 Total training process wall durations: {total:.2f} seconds; processes ran concurrently, so this sum is not elapsed calendar time. Each run has 16 episodes of 320 simulated seconds, 64 five-second decisions per episode: 1024 joint decisions /2048 agent samples per model. The 64-decision seed-11 pilot is excluded from selection. No earlier pre-correction weights were resumed.
 
 ## Architecture and update audit
 
-Shared actor: 8 local inputs â†’32 tanh â†’32 tanh â†’2 categorical actions. Central critic: 16 joint inputs â†’32 tanh â†’32 tanh â†’2 values. Local observations are four queues /20, two green indicators, remaining signal time /45, and mean downstream occupancy fraction. Actions are release/hold preferences; MPC may override and the independent supervisor checks timing writes. There is no actor-to-TraCI actuation.
+Shared actor: 8 local inputs →32 tanh →32 tanh →2 categorical actions. Central critic: 16 joint inputs →32 tanh →32 tanh →2 values. Local observations are four queues /20, two green indicators, remaining signal time /45, and mean downstream occupancy fraction. Actions are release/hold preferences; MPC may override and the independent supervisor checks timing writes. There is no actor-to-TraCI actuation.
 
 PPO: Adam 0.0003, four full-batch epochs/update, clip 0.2, clipped value loss coefficient 0.5, entropy 0.01, gradient norm clip 0.5, gamma 0.99, GAE lambda 0.95. GAE true-terminal masking and time-limit bootstrapping match hand calculations. Actor and critic both change in real SUMO integration tests. Checkpoint restoration covers weights, optimizer, training count and Torch RNG; a separate test verifies sampled-action replay. No minibatch shuffling, value normalization, learning-rate decay or convergence claim. Large critic losses and shared gradient clipping remain a learning-quality concern.
 
@@ -42,13 +42,15 @@ Reward is unchanged: per-second -(0.1 queue +0.01 sum current waiting time +2 sp
 
 ## Reproducibility and evidence
 
-Replay model seed 21 /episode 21000 for64 joint decisions: bit-identical parameters = **{replay['bitIdenticalParameters']}**; maximum parameter difference {replay['maxParameterDifference']}. This single replay does not establish determinism across hardware or timing-dependent solver timeouts. Per-update checkpoints and progress/configuration logs: `.checkpoints/phase4/train-21`, `train-31`, `train-41`. Each update is preserved without overwriting older weights. Training source hashes are recorded at process start; the offline evaluator later gained stricter cache/partition checks, without changing the loaded training algorithm or controller. Resume requires the exact recorded source configuration; otherwise start a new run.
+Replay model seed 21 /episode 21000 for64 joint decisions: bit-identical parameters = **{replay['bitIdenticalParameters']}**; maximum parameter difference {replay['maxParameterDifference']}. This single replay does not establish determinism across hardware or timing-dependent solver timeouts. Per-update checkpoints and progress/configuration logs: `.checkpoints/phase4-final/train-21`, `train-31`, `train-41`. Each update is preserved without overwriting older weights. Training source hashes are recorded at process start. Corrected runs used a frozen controller/training driver. Resume requires the exact recorded source configuration; otherwise start a new run.
 
-Hardware: AMD Ryzen 7 7445HS, 6 cores/12 logical CPUs, about16GB RAM; CPU-only Torch. Exact Python/Torch/NumPy versions and source hashes: [training-summary.json](research/phase4/training-summary.json); complete installed freeze `.checkpoints/phase4/environment-freeze.txt`. SUMO1.28.0; Python3.11.9. Process duration includes SUMO initialization, TraCI, control, telemetry and PPO update, not only neural-network computation.
+An earlier three-seed1024-decision cohort is preserved under `.checkpoints/phase4`. Development evaluation exposed a phase-expiry defect: resetting remaining=1 at an already-due phase postponed release. The controlled seed701 probe observed the first phase change at46s before correction and12s afterward. The fix lets the independently approved cyclic program execute an already-due transition, with timing bounds and clearance unchanged. Its regression covers all six stages. Earlier final benchmarking was interrupted; those weights were invalidated by the changed controller fingerprint. No pre-fix policy was activated or qualified. Current reports use only fresh corrected runs and fresh development/final seeds; pre-fix evidence remains separate.
+
+Hardware: AMD Ryzen 7 7445HS, 6 cores/12 logical CPUs, about16GB RAM; CPU-only Torch. Exact Python/Torch/NumPy versions and source hashes: [training-summary.json](research/phase4/training-summary.json); complete installed freeze `.checkpoints/phase4-final/environment-freeze.txt`. SUMO1.28.0; Python3.11.9. Process duration includes SUMO initialization, TraCI, control, telemetry and PPO update, not only neural-network computation.
 
 ![Training curves](research/phase4/plots/training.png)
 
-Changing episode seeds make the reward curve unsuitable as a controlled performance comparison. Selection used seeds801-803, demand1.0,300s; final held-out tests used901-903, demand0.75/1.75,300s. Safety qualification used951-953,240s. Selected checkpoint: `{selected}`. Selection was frozen before final testing. All seeds, parameters, metrics and checkpoint SHA-256 are preserved in machine evidence.
+Changing episode seeds make the reward curve unsuitable as a controlled performance comparison. Selection used seeds1801-1803, demand1.0,300s; final held-out tests used1901-1903, demand0.75/1.75,300s. Safety qualification used1951-1953,240s. Selected checkpoint: `{selected}`. Selection was frozen before final testing. All seeds, parameters, metrics and checkpoint SHA-256 are preserved in machine evidence.
 
 ## Reproduce
 
@@ -62,20 +64,20 @@ Use new seeds/output directories for a new experiment; existing run folders are 
     results='| Demand | Controller | Completed timeLoss s | Mean / max queue | Throughput veh/h | Unfinished trips |\n|---|---|---|---|---|---|\n'
     for g in benchmark['groups']:
         m=g['metrics']
-        fmt=lambda key:f"{m[key]['mean']:.2f} Â±{m[key]['sampleSD']:.2f}"
+        fmt=lambda key:f"{m[key]['mean']:.2f} ±{m[key]['sampleSD']:.2f}"
         results+=f"| {g['demandScale']} | {g['mode']} | {fmt('meanCompletedTimeLossSeconds')} | {fmt('meanNetworkQueue')} /{fmt('maxNetworkQueue')} | {fmt('throughputVehiclesPerHour')} | {fmt('unfinishedTrips')} |\n"
-    paired='| Demand | Seed | Candidate âˆ’MPC timeLoss s | Throughput difference vehicles |\n|---|---|---:|---:|\n'
+    paired='| Demand | Seed | Candidate −MPC timeLoss s | Throughput difference vehicles |\n|---|---|---:|---:|\n'
     for r in benchmark['pairedComparisons']:
         paired+=f"| {r['demandScale']} | {r['seed']} | {r['delayDifferenceSeconds']:.4f} | {r['throughputDifference']} |\n"
-    write('CONTROLLER_BENCHMARK_REPORT.md',f'''# Controller benchmark report â€” Phase 4
+    write('CONTROLLER_BENCHMARK_REPORT.md',f'''# Controller benchmark report — Phase 4
 
-Thirty matched final trials completed: five modes Ã—two demand scales Ã—three held-out seeds. The learned candidate ran **offline through MPC and the independent supervisors**; it was never installed in the operational coordinator. There is no qualified-policy operational result.
+Thirty matched final trials completed: five modes ×two demand scales ×three held-out seeds. The learned candidate ran **offline through MPC and the independent supervisors**; it was never installed in the operational coordinator. There is no qualified-policy operational result.
 
 {results}
-Entries are mean Â±sample standard deviation across seeds901,902,903. Horizon300 simulated seconds, one-second simulation step, five-second candidate recommendations, demand scales0.75 and1.75. Same network/route inputs, SUMO1.28.0, seeds and horizon in each mode. No warm-up exclusion. Hint-free hybrid is the existing MPC executable path with no learned recommendation; equivalent outcomes are expected. Baselines are native fixed-time, supervised Max-Pressure and constrained MPC. Actual control timing is not tuned after seeing final results.
+Entries are mean ±sample standard deviation across seeds1901,1902,1903. Horizon300 simulated seconds, one-second simulation step, five-second candidate recommendations, demand scales0.75 and1.75. Same network/route inputs, SUMO1.28.0, seeds and horizon in each mode. No warm-up exclusion. Hint-free hybrid is the existing MPC executable path with no learned recommendation; equivalent outcomes are expected. Baselines are native fixed-time, supervised Max-Pressure and constrained MPC. Actual control timing is not tuned after seeing final results.
 
 {paired}
-Three seeds support descriptive variability, not a claim of statistical significance or general traffic superiority. Seed/demand partitions were recorded before testing; the selected checkpoint was frozen using separate selection seeds801-803 at demand1.0. Other candidates were not selected using final test data.
+Three seeds support descriptive variability, not a claim of statistical significance or general traffic superiority. Seed/demand partitions were recorded before testing; the selected checkpoint was frozen using separate selection seeds1801-1803 at demand1.0. Other candidates were not selected using final test data.
 
 ![Benchmarks](research/phase4/plots/benchmarks.png)
 
@@ -83,7 +85,7 @@ Three seeds support descriptive variability, not a claim of statistical signific
 
 Vehicle delay is completed-trip SUMO `timeLoss`, distinct from waiting time and insertion delay. Unfinished trips are right-censored and listed separately. `meanObservedTimeLossIncludingUnfinished` records partial observed timeLoss, not eventual full-trip delay. `meanDepartDelaySeconds` reports insertion delay for recorded trips; vehicles still waiting to depart may be absent. Different controllers can change insertion capacity even with matched configured demand. No demand-normalized superiority inference is made.
 
-Queues are halted approach vehicles summed over both junctions, sampled every second; report time mean and maximum. Throughput is actual arrivals Ã—3600/300. Waiting fairness is reported as completed-trip mean/p95/max waiting, maximum approach mean wait, maximum service age, and descriptive waiting Gini including unfinished recorded trips. Spillback is downstream-edge indicator seconds. These proxies are not proof of fairness or network stability.
+Queues are halted approach vehicles summed over both junctions, sampled every second; report time mean and maximum. Throughput is actual arrivals ×3600/300. Waiting fairness is reported as completed-trip mean/p95/max waiting, maximum approach mean wait, maximum service age, and descriptive waiting Gini including unfinished recorded trips. Spillback is downstream-edge indicator seconds. These proxies are not proof of fairness or network stability.
 
 Control latency is `HybridNetwork.before_step` for both junctions, excluding simulator stepping, telemetry reads and policy inference. Mean/p95/max are available per trial; they are not full end-to-end latency. Separate policy-inference mean/p95 and total control-compute mean/p95 per five-second decision are also recorded. The latter sums inference and five before_step calls, excluding simulation and telemetry. Fallback controller-seconds measure time showing fallback diagnostics, not a count of solver timeout events. Up to three experiment processes shared the machine; CPU timings reflect that environment, not isolated real-time guarantees. Solver timeouts and supervisor rejections retain safe behavior. Detailed supervisor accepted/rejected counts and safety faults are preserved.
 
@@ -91,19 +93,19 @@ Corridor pedestrian constraints and emergency response are **not applicable/not 
 
 ## Machine-readable evidence
 
-[Trial CSV](research/phase4/trials.csv), [full trials JSON](research/phase4/trials.json), [aggregated results](research/phase4/benchmark-summary.json), [qualification](research/phase4/policy-qualification.json). Raw SUMO tripinfo is in `.checkpoints/phase4/trips`; individual trials and source/version provenance in `.checkpoints/phase4/trials`. SVG plots accompany PNG exports. The recovery artifact archive includes these raw data.
+[Trial CSV](research/phase4/trials.csv), [full trials JSON](research/phase4/trials.json), [aggregated results](research/phase4/benchmark-summary.json), [qualification](research/phase4/policy-qualification.json). Raw SUMO tripinfo is in `.checkpoints/phase4-final/trips`; individual trials and source/version provenance in `.checkpoints/phase4-final/trials`. SVG plots accompany PNG exports. The recovery artifact archive includes these raw data.
 
 Reproduce cached matching experiments after training: `./backend/.venv/Scripts/python.exe scripts/run_phase4_experiments.py`. Rebuild plots/reports: `./backend/.venv/Scripts/python.exe scripts/summarize_phase4.py`, then `./backend/.venv/Scripts/python.exe scripts/report_phase4.py`. Use a new output location for a changed protocol; cache mismatches are rejected.
 ''')
     failed=[c for c in qualification['performanceValidation']['checks'] if not c['passed']]
     failures='\n'.join('- '+c['name']+(f": {c['measuredReductionPercent']:.3f}% mean delay reduction" if 'measuredReductionPercent' in c else ': '+c.get('reason','screening condition failed')) for c in failed)
-    write('POLICY_QUALIFICATION_REPORT.md',f'''# Policy qualification report â€” Phase 4
+    write('POLICY_QUALIFICATION_REPORT.md',f'''# Policy qualification report — Phase 4
 
 **Not qualified. Keep operational MAPPO disabled.** The functioning Max-Pressure +constrained MPC fallback is preserved. No environment variables were set to activate a candidate, and no candidate controlled signals directly.
 
 Selected checkpoint `{selected}`; SHA-256 `{qualification['checkpointSha256']}`. Selection details and the pre-test freeze are recorded in [benchmark-summary.json](research/phase4/benchmark-summary.json).
 
-Numerical inference checks: {qualification['numericalChecksPassed']}. Trained joint decisions: {qualification['trainedDecisionSteps']}. Separate supervised safety checks: {qualification.get('safetyValidationPassed')}, seeds951/952/953,240s each. A minimum step count and finite inference are prerequisites, not evidence of useful learning. Full [qualification evidence](research/phase4/policy-qualification.json).
+Numerical inference checks: {qualification['numericalChecksPassed']}. Trained joint decisions: {qualification['trainedDecisionSteps']}. Separate supervised safety checks: {qualification.get('safetyValidationPassed')}, seeds1951/1952/1953,240s each. A minimum step count and finite inference are prerequisites, not evidence of useful learning. Full [qualification evidence](research/phase4/policy-qualification.json).
 
 Failed or incomplete qualification conditions:
 
@@ -115,7 +117,7 @@ The runtime gate now requires positive performance/usefulness evidence in additi
 
 Future qualification requires new, independently held-out data after any training or model selection changes. Do not reuse the present final-test seeds for model selection and then describe them as unseen. A future qualified configuration must explicitly set both `SYNCHROFLOW_MAPPO_CHECKPOINT` and `SYNCHROFLOW_MAPPO_VALIDATION`; removing both reverses activation. This phase leaves both unset. Positive qualified-policy API/browser inference remains unverified.
 ''')
-    write('RESEARCH_NEXT_STEPS.md',f'''# Research next steps â€” Phase 4
+    write('RESEARCH_NEXT_STEPS.md',f'''# Research next steps — Phase 4
 
 Operationally retain supervised Max-Pressure +constrained MPC and the existing demo. The completed experiment is a bounded reproducible CPU pilot, not a converged MAPPO result or proof of controller superiority.
 
@@ -135,7 +137,7 @@ This section supersedes Stage3 research/Git status below; Stage3 demonstration r
 
 Final backend: {tests}. Four Edge/browser tests passed in41.2s; frontend build,TypeScript,eight frontend groups,pip check,startup smoke and all eight fresh A-H external demos passed. Git2.55.0.windows.5 is installed; exact Stage3 archive preserved as local tag `stage3-verified-demo`, with new local research history. No earlier Git history existed in this export; no remote or push. Recovery pointer: `.checkpoints/PHASE4_RECOVERY.json` (created after final reporting).
 
-Startup remains `./backend/.venv/Scripts/python.exe scripts/run_dev.py`; operational fallback and original network files are preserved. Research evidence/plots: `research/phase4`; raw data/checkpoints `.checkpoints/phase4`. Current limitations include limited training, no qualified learned policy, one benchmark topology, short cold-start/censored experiments, and no candidate pedestrian/emergency qualification.
+Startup remains `./backend/.venv/Scripts/python.exe scripts/run_dev.py`; operational fallback and original network files are preserved. Research evidence/plots: `research/phase4`; raw data/checkpoints `.checkpoints/phase4-final`. Current limitations include limited training, no qualified learned policy, one benchmark topology, short cold-start/censored experiments, and no candidate pedestrian/emergency qualification.
 
 ---
 

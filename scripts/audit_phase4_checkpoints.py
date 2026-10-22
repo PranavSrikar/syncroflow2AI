@@ -15,7 +15,7 @@ def main():
     records=[]
     changes=[]
     for seed in (21,31,41):
-        folder=ROOT/f'.checkpoints/phase4/train-{seed}'
+        folder=ROOT/f'.checkpoints/phase4-final/train-{seed}'
         training=json.loads((folder/'training.json').read_text())
         if training['trainedDecisionSteps']!=1024 or len(training['updates'])!=16:
             raise ValueError('Main training incomplete')
@@ -46,7 +46,7 @@ def main():
     report=dict(checkpointsVerified=len(records),finiteParametersAndOptimizer=True,
                 architectureFingerprint=qualification_fingerprint(),records=records,parameterChanges=changes,
                 usefulnessEstablished=False)
-    (ROOT/'.checkpoints/phase4/checkpoint-audit.json').write_text(json.dumps(report,indent=2),encoding='utf-8')
+    (ROOT/'.checkpoints/phase4-final/checkpoint-audit.json').write_text(json.dumps(report,indent=2),encoding='utf-8')
     print('Verified all48 main-run checkpoints; no operational qualification implied')
 
 

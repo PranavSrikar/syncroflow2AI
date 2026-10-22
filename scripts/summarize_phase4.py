@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT/'.checkpoints/phase4'
+OUT = ROOT/'.checkpoints/phase4-final'
 PUBLIC = ROOT/'research/phase4'
 
 
@@ -65,7 +65,7 @@ def main():
     checks=[]
     for scale in (.75,1.75):
         ratios=[]
-        for seed in (901,902,903):
+        for seed in (1901,1902,1903):
             base=next(r for r in rows if r['mode']=='mpc' and r['seed']==seed and r['demandScale']==scale)
             candidate=next(r for r in rows if r['mode']=='candidate' and r['seed']==seed and r['demandScale']==scale)
             ratio=candidate['meanCompletedTimeLossSeconds']/base['meanCompletedTimeLossSeconds']
