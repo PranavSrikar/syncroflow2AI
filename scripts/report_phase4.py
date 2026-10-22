@@ -17,6 +17,7 @@ def main():
     benchmark=json.loads((DATA/'benchmark-summary.json').read_text())
     qualification=json.loads((DATA/'policy-qualification.json').read_text())
     replay=json.loads((RAW/'reproducibility.json').read_text())
+    resource=json.loads((RAW/'neural-update-resource-probe.json').read_text())
     test=ET.parse(RAW/'backend-final.xml').getroot().find('testsuite')
     tests=f"{test.get('tests')} tests, {test.get('failures')} failures, {test.get('errors')} errors, {test.get('skipped')} skipped, {float(test.get('time')):.2f} s"
     emergency=json.loads((RAW/'emergency-demo.json').read_text())['results'][0]['emergency']
@@ -47,6 +48,8 @@ Replay model seed 21 /episode 21000 for64 joint decisions: bit-identical paramet
 An earlier three-seed1024-decision cohort is preserved under `.checkpoints/phase4`. Development evaluation exposed a phase-expiry defect: resetting remaining=1 at an already-due phase postponed release. The controlled seed701 probe observed the first phase change at46s before correction and12s afterward. The fix lets the independently approved cyclic program execute an already-due transition, with timing bounds and clearance unchanged. Its regression covers all six stages. Earlier final benchmarking was interrupted; those weights were invalidated by the changed controller fingerprint. No pre-fix policy was activated or qualified. Current reports use only fresh corrected runs and fresh development/final seeds; pre-fix evidence remains separate.
 
 Hardware: AMD Ryzen 7 7445HS, 6 cores/12 logical CPUs, about16GB RAM; CPU-only Torch. Exact Python/Torch/NumPy versions and source hashes: [training-summary.json](research/phase4/training-summary.json); complete installed freeze `.checkpoints/phase4-final/environment-freeze.txt`. SUMO1.28.0; Python3.11.9. Measured update durations include SUMO initialization, TraCI, control, telemetry, PPO update and checkpoint saving. They exclude Python imports, model construction and between-update reporting/cleanup. Torch intra-op threads=1 per model process.
+
+Hardware also includes an NVIDIA GeForce RTX4050 Laptop GPU,6141MiB reported by nvidia-smi,driver573.05. Installed Torch2.14.1+cpu has no CUDA training support. A separately labeled synthetic64-decision/four-epoch neural-update resource probe took{resource['wallSeconds']:.4f}s on CPU and saved no checkpoint. Compared with the corrected115.10s SUMO pilot, this supports retaining the working CPU environment for this small network; no GPU speed comparison was run. Device details and the resource probe are preserved with raw artifacts. GPU acceleration of larger learners/perception remains separate work.
 
 ![Training curves](research/phase4/plots/training.png)
 
