@@ -14,7 +14,7 @@ def qualification_fingerprint():
              'app/services/max_pressure_controller.py', 'app/services/sumo_runtime.py',
              'app/services/sumo_adapter.py', 'app/services/emergency_priority.py',
              'app/services/traffic_estimation.py', 'app/services/forecasting.py',
-             'app/services/mappo_coordination.py', 'app/rl/mappo.py',
+             'app/services/mappo_coordination.py', 'app/rl/mappo.py', 'app/rl/sumo_env.py',
              'sumo_scenarios/two_junction/corridor.net.xml']
     return hashlib.sha256(b''.join((backend/name).read_bytes() for name in files)).hexdigest()
 
@@ -54,14 +54,16 @@ class MAPPOCoordinator:
                     or report.get('architectureFingerprint') != qualification_fingerprint()
                     or report.get('trainedDecisionSteps', 0) < 1024
                     or len(set(evidence.get('seeds', []))) < 3 or evidence.get('secondsPerSeed', 0) < 240
-                    or evidence.get('safetyFaults') != 0 or not report.get('numericalChecksPassed')):
+                    or evidence.get('safetyFaults') != 0 or not report.get('numericalChecksPassed')
+                    or not report.get('usefulnessEstablished')
+                    or not report.get('performanceValidation', {}).get('passed')):
                     raise ValueError('Checkpoint lacks required numerical and multi-seed supervised closed-loop validation')
                 from app.rl.mappo import MAPPO
                 model = MAPPO.load(checkpoint)
                 if model.agents != len(self.agents) or model.observation_size != 8 or model.trained_steps != report['trainedDecisionSteps']:
                     raise ValueError('Checkpoint observation/agent/training metadata mismatch')
                 self.model = model
-                self.reason = 'Qualified for supervised SUMO research inference; comparative usefulness unproven'
+                self.reason = 'Qualified for supervised SUMO research inference under the recorded experimental scope'
             except Exception as exc:
                 self.reason = str(exc)+'; supervised MPC fallback'
 

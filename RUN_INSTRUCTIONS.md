@@ -90,7 +90,7 @@ $env:DEBUG='false'
 $env:SYNCHROFLOW_TEST_VIDEO=(Resolve-Path '.checkpoints/perception/road.mp4').Path
 $env:SYNCHROFLOW_TEST_WEIGHTS=(Resolve-Path '.checkpoints/perception/yolo11n.pt').Path
 Push-Location backend
-..venvScriptspython.exe -m pytest -o addopts='-ra'
+./.venv/Scripts/python.exe -m pytest -o addopts='-ra'
 Pop-Location
 npm.cmd run build
 npm.cmd run lint

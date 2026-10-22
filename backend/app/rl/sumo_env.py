@@ -12,7 +12,7 @@ class MultiJunctionEnv:
     action_size = 2
     direction = staticmethod(direction)
 
-    def __init__(self, episode_seconds=180, decision_seconds=5, mode="mpc"):
+    def __init__(self, episode_seconds=180, decision_seconds=5, mode="mpc", demand_scale=1.0, tripinfo=None):
         if mode not in {"mpc", "max_pressure", "fixed_time"}:
             raise ValueError("Unknown research baseline")
         if episode_seconds <= 0 or decision_seconds <= 0:
@@ -20,13 +20,20 @@ class MultiJunctionEnv:
         self.episode_seconds, self.decision_seconds, self.mode = episode_seconds, decision_seconds, mode
         self.folder = Path(__file__).resolve().parents[2] / "sumo_scenarios/two_junction"
         self.connected = False
+        if not 0 < demand_scale <= 4:
+            raise ValueError("Demand scale must be in (0, 4]")
+        self.demand_scale, self.tripinfo = demand_scale, tripinfo
 
     def reset(self, seed=42):
         self.close()
         if traci.isLoaded():
             raise RuntimeError("Training must not take over an existing TraCI simulation")
         self.model = NetworkSafetyModel(self.folder / "corridor.net.xml")
-        traci.start(["sumo", "-c", str(self.folder / "corridor.sumocfg"), "--seed", str(seed), "--no-step-log"], label="mappo_research")
+        command = ["sumo", "-c", str(self.folder / "corridor.sumocfg"), "--seed", str(seed), "--no-step-log",
+                   "--scale", str(self.demand_scale)]
+        if self.tripinfo:
+            command += ["--tripinfo-output", str(self.tripinfo), "--tripinfo-output.write-unfinished", "true"]
+        traci.start(command, label="mappo_research")
         self.connected = True
         try:
             self.network = HybridNetwork(self.model, 'sumo_fixed_time' if self.mode == 'fixed_time' else self.mode)

@@ -10,6 +10,28 @@ from torch import nn
 from torch.distributions import Categorical
 
 
+def generalized_advantages(rewards, values, bootstrap, terminals, gamma=0.99, gae_lambda=0.95):
+    """True terminals cut bootstrapping; time-limit truncations retain it."""
+    reward = torch.as_tensor(np.asarray(rewards), dtype=torch.float32)
+    old_values = torch.as_tensor(np.asarray(values), dtype=torch.float32)
+    following = torch.as_tensor(bootstrap, dtype=torch.float32)
+    if reward.ndim != 2 or old_values.shape != reward.shape or following.shape != reward.shape[1:]:
+        raise ValueError('Expected rewards/values [time, agents] and bootstrap [agents]')
+    if len(terminals) != len(reward) or not len(reward):
+        raise ValueError('One terminal flag per nonempty rollout step required')
+    if not all(torch.isfinite(t).all() for t in (reward, old_values, following)):
+        raise ValueError('Nonfinite rollout')
+    advantage = torch.zeros_like(reward)
+    tail = torch.zeros(reward.shape[1])
+    for step in reversed(range(len(reward))):
+        continuation = 1.0 - float(terminals[step])
+        delta = reward[step] + gamma * following * continuation - old_values[step]
+        tail = delta + gamma * gae_lambda * continuation * tail
+        advantage[step] = tail
+        following = old_values[step]
+    return advantage, advantage + old_values
+
+
 class MAPPO(nn.Module):
     def __init__(self, agents=2, observation_size=8, hidden=32, seed=42):
         super().__init__()
@@ -39,16 +61,7 @@ class MAPPO(nn.Module):
         old_log = torch.as_tensor(np.asarray(log_probs), dtype=torch.float32)
         old_values = torch.as_tensor(np.asarray(values), dtype=torch.float32)
         reward = torch.as_tensor(np.asarray(rewards), dtype=torch.float32)
-        advantage = torch.zeros_like(reward)
-        tail = torch.zeros(self.agents)
-        following = torch.as_tensor(bootstrap, dtype=torch.float32)
-        for step in reversed(range(len(reward))):
-            continuation = 1.0 - float(terminals[step])
-            delta = reward[step] + gamma * following * continuation - old_values[step]
-            tail = delta + gamma * gae_lambda * continuation * tail
-            advantage[step] = tail
-            following = old_values[step]
-        returns = advantage + old_values
+        advantage, returns = generalized_advantages(reward, old_values, bootstrap, terminals, gamma, gae_lambda)
         normalized = (advantage - advantage.mean()) / (advantage.std(unbiased=False) + 1e-8)
         metrics = {}
         for _ in range(epochs):

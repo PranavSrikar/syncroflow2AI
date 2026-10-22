@@ -15,6 +15,8 @@ from app.services.mappo_coordination import qualification_fingerprint
 
 def qualify(checkpoint, seeds=(101, 102, 103), seconds=240):
     model = MAPPO.load(checkpoint)
+    provenance_path = Path(checkpoint).parent / 'training.json'
+    training = json.loads(provenance_path.read_text()) if provenance_path.exists() else None
     rng = np.random.default_rng(2026)
     checks = model.agents == 2 and model.observation_size == 8
     checks = checks and all(torch.isfinite(p).all().item() for p in model.parameters())
@@ -31,6 +33,12 @@ def qualify(checkpoint, seeds=(101, 102, 103), seconds=240):
                   validationScope='Finite deterministic inference plus held-out closed-loop supervisor/clearance/conflict/fairness checks; no performance certification')
     if model.trained_steps < 1024 or not checks:
         return report
+    if training is None or training.get('provenance', {}).get('architectureFingerprint') != qualification_fingerprint():
+        report['status'] = 'missing_current_training_provenance'
+        return report
+    training_seeds = {u['episodeSeed'] for u in training['updates']}
+    if training_seeds.intersection(seeds):
+        raise ValueError('Qualification seeds overlap training')
     if len(set(seeds)) < 3 or seconds < 240:
         raise ValueError('At least three distinct held-out seeds and 240 simulated seconds each required')
     faults, trials = 0, []
@@ -50,7 +58,9 @@ def qualify(checkpoint, seeds=(101, 102, 103), seconds=240):
             trials.append(dict(seed=seed, fault=str(exc)))
         finally:
             env.close()
-    report.update(eligibleForEvaluation=faults == 0, status='qualified_research_only' if faults == 0 else 'safety_validation_failed',
+    report.update(eligibleForEvaluation=False, safetyValidationPassed=faults == 0,
+                  status='safety_passed_performance_validation_required' if faults == 0 else 'safety_validation_failed',
+                  performanceValidation=dict(passed=False, reason='Safety-only qualification cannot establish comparative usefulness'),
                   closedLoopValidation=dict(seeds=list(seeds), secondsPerSeed=seconds, safetyFaults=faults, trials=trials))
     return report
 

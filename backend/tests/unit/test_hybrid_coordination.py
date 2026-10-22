@@ -22,6 +22,22 @@ def test_missing_bad_and_unqualified_policy_falls_back(monkeypatch, tmp_path):
     assert manager.snapshot()['reason'].endswith('supervised MPC fallback')
 
 
+def test_safety_only_evidence_cannot_enable_policy(monkeypatch, tmp_path):
+    import hashlib
+    from app.services.mappo_coordination import qualification_fingerprint
+    weights = tmp_path/'candidate.pt'
+    weights.write_bytes(b'not-a-qualified-policy')
+    report = dict(checkpointSha256=hashlib.sha256(weights.read_bytes()).hexdigest(),
+                  architectureFingerprint=qualification_fingerprint(), eligibleForEvaluation=True,
+                  trainedDecisionSteps=1024, numericalChecksPassed=True,
+                  closedLoopValidation=dict(seeds=[901,902,903],secondsPerSeed=300,safetyFaults=0))
+    validation = tmp_path/'qualification.json'
+    validation.write_text(json.dumps(report))
+    coordinator = MAPPOCoordinator(('A0','B0'),weights,validation)
+    assert coordinator.model is None
+    assert not coordinator.snapshot()['operationalPolicyEnabled']
+
+
 def test_inference_preferences_and_failure_are_bounded(monkeypatch):
     monkeypatch.delenv('SYNCHROFLOW_MAPPO_CHECKPOINT', raising=False)
     monkeypatch.delenv('SYNCHROFLOW_MAPPO_VALIDATION', raising=False)

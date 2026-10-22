@@ -17,13 +17,13 @@ EXTENSIONS = {".py", ".ts", ".tsx", ".css", ".xml", ".sumocfg", ".md", ".json", 
 
 
 def checkpoint():
-    files = [p for p in ROOT.iterdir() if p.is_file() and (p.suffix in EXTENSIONS or p.name in {".gitignore", "bun.lock"}) and not p.name.startswith(".env")]
+    files = [p for p in ROOT.iterdir() if p.is_file() and (p.suffix in EXTENSIONS or p.name in {".gitignore", "bun.lock", ".env.example"}) and (not p.name.startswith(".env") or p.name == ".env.example")]
     for directory in SOURCE_DIRS:
         for parent, folders, names in os.walk(ROOT / directory):
             folders[:] = [d for d in folders if d not in EXCLUDED and not d.startswith(".")]
             for name in names:
                 path = Path(parent) / name
-                if path.suffix in EXTENSIONS and not name.startswith(".env"):
+                if (path.suffix in EXTENSIONS or name in {"Dockerfile", ".env.example"} or directory == 'public') and (not name.startswith(".env") or name == ".env.example"):
                     files.append(path)
     manifest = {}
     folder = ROOT / ".checkpoints"

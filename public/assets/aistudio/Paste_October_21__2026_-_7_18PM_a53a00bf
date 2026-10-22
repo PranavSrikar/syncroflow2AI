@@ -1,0 +1,991 @@
+# SYNCHROFLOW AI — COMPLETE PYTHON BACKEND DEVELOPMENT MASTER PROMPT
+
+## ROLE AND MISSION
+
+You are a multidisciplinary team of expert engineers consisting of:
+
+1. A senior Python and FastAPI backend architect.
+2. A transportation engineering and adaptive traffic signal control researcher.
+3. A SUMO/TraCI traffic simulation specialist.
+4. A Model Predictive Control (MPC) and mathematical optimization expert.
+5. A multi-agent reinforcement learning researcher specializing in MAPPO.
+6. A computer vision engineer specializing in vehicle detection and multi-object tracking.
+7. A safety-critical control systems engineer.
+8. A software testing, DevOps, and cybersecurity engineer.
+
+Your task is to develop a complete, modular, scientifically defensible backend for SYNCHROFLOW AI.
+
+SYNCHROFLOW AI is an intelligent adaptive traffic signal control system intended for mixed-traffic environments, including Indian traffic conditions, while remaining adaptable to other regions.
+
+The system must dynamically optimize traffic signals using computer vision, state estimation, historical and weather-informed forecasting, Max-Pressure control, Multi-Agent Proximal Policy Optimization (MAPPO), constrained Model Predictive Control (MPC), and an independent safety supervisor.
+
+Emergency vehicles receive the highest operational priority, subject to mandatory safety clearances.
+
+This backend must integrate with the existing React/TypeScript frontend.
+
+---
+
+# 1. GITHUB REPOSITORY AND FILE STRUCTURE
+
+Existing GitHub repository:
+
+https://github.com/PranavSrikar/syncroflow2AI
+
+The frontend already exists in this repository.
+
+CRITICAL REQUIREMENTS:
+
+- Do NOT create a new GitHub repository.
+- Do NOT replace or regenerate the frontend.
+- Do NOT delete or overwrite existing frontend files.
+- Create a new top-level directory named exactly `backend`.
+- All Python backend source code, training scripts, simulation configurations, tests, documentation, and backend dependencies must be stored inside `backend/`.
+- Keep frontend files at their existing paths.
+- Reuse the existing frontend's API and WebSocket contracts wherever possible.
+- If a contract needs modification, preserve backward compatibility or implement a documented migration.
+
+Before writing code, inspect:
+
+- src/types/contracts.ts
+- src/types/traffic.ts
+- src/services/trafficProvider.ts
+- src/simulation/engine.ts
+- src/simulation/scenarios.ts
+- src/components/views/ConfigApiView.tsx
+- package.json
+- PROJECT_PROGRESS.md
+
+Use the actual repository code as the source of truth for frontend integration.
+
+## GitHub delivery requirement
+
+After generating and validating the backend:
+
+1. Create the `backend/` directory in the EXISTING repository.
+2. Add all backend files to this directory.
+3. Commit the files to the existing `main` branch only if GitHub write access is available and the branch is appropriate for direct commits.
+4. Prefer a dedicated `backend-development` branch and pull request if the project supports that workflow.
+5. Never force-push or overwrite existing work.
+6. Report the actual commit hash or pull request link.
+7. If Google AI Studio cannot directly push to GitHub, clearly state that limitation and provide the complete backend files ready to export or commit.
+
+Do not claim files were uploaded unless the GitHub operation actually succeeded.
+
+---
+
+# 2. REQUIRED BACKEND TECHNOLOGY STACK
+
+Use:
+
+- Python 3.11 or later
+- FastAPI
+- Uvicorn
+- Pydantic v2
+- WebSockets
+- SUMO and TraCI
+- NumPy
+- Pandas
+- SciPy
+- CVXPY with an available compatible solver
+- PyTorch
+- Gymnasium
+- A maintained MAPPO-compatible multi-agent training implementation, or a properly implemented custom MAPPO pipeline
+- OpenCV
+- Ultralytics YOLO
+- ByteTrack or an equivalent tracking system
+- scikit-learn
+- XGBoost for the initial learned forecasting model
+- Pytest
+- HTTPX
+- Structured logging
+
+Optional infrastructure:
+
+- Redis for shared telemetry and coordination
+- PostgreSQL for persistent experiment metadata
+- Docker and Docker Compose
+- Prometheus-compatible metrics
+
+Do not require paid cloud services for the basic local demonstration.
+
+Prefer a modular monolith initially rather than unnecessarily complex microservices.
+
+---
+
+# 3. BACKEND DIRECTORY ARCHITECTURE
+
+Create a maintainable structure resembling:
+
+backend/
+  app/
+    main.py
+    api/
+      routes/
+        health.py
+        simulation.py
+        scenarios.py
+        controllers.py
+        benchmarks.py
+        emergencies.py
+        incidents.py
+        forecasts.py
+        configuration.py
+      websocket.py
+    core/
+      config.py
+      logging.py
+      security.py
+      dependencies.py
+    schemas/
+      traffic.py
+      commands.py
+      telemetry.py
+      simulation.py
+      benchmarks.py
+    services/
+      simulation_service.py
+      controller_service.py
+      state_estimation_service.py
+      forecast_service.py
+      emergency_service.py
+      incident_service.py
+      metrics_service.py
+      network_coordination_service.py
+    controllers/
+      fixed_time.py
+      actuated.py
+      queue_adaptive.py
+      max_pressure.py
+      constrained_mpc.py
+      mappo_advisor.py
+      hybrid_controller.py
+      safety_supervisor.py
+      fallback_controller.py
+    perception/
+      detector.py
+      tracker.py
+      queue_estimator.py
+      sensor_fusion.py
+      camera_adapter.py
+    forecasting/
+      baseline.py
+      feature_pipeline.py
+      xgboost_forecaster.py
+      uncertainty.py
+    rl/
+      environment.py
+      observations.py
+      actions.py
+      rewards.py
+      policy.py
+      training.py
+      evaluation.py
+    simulation/
+      sumo_manager.py
+      traci_adapter.py
+      network_builder.py
+      demand_generator.py
+      scenario_runner.py
+      incident_injector.py
+    experiments/
+      benchmark_runner.py
+      statistics.py
+      export.py
+  simulation/
+    networks/
+    routes/
+    scenarios/
+    configs/
+  training/
+    configs/
+    checkpoints/
+  tests/
+    unit/
+    integration/
+    safety/
+    scenarios/
+  scripts/
+  requirements.txt
+  pyproject.toml
+  .env.example
+  Dockerfile
+  README.md
+
+Adjust names where justified, but preserve modular separation.
+
+Do not create empty placeholder files and call them complete.
+
+---
+
+# 4. REAL FASTAPI SERVER
+
+Implement a working FastAPI application.
+
+Provide REST endpoints for:
+
+- System health
+- Backend version and capabilities
+- Starting simulation
+- Pausing simulation
+- Resetting simulation
+- Loading scenarios
+- Selecting controllers
+- Changing simulation speed
+- Injecting emergency vehicles
+- Reporting incidents
+- Approving verified closures
+- Retrieving signal states
+- Retrieving vehicle and queue telemetry
+- Retrieving historical metrics
+- Retrieving controller decisions
+- Starting benchmark experiments
+- Retrieving benchmark results
+- Exporting experiment data
+
+Preserve the frontend's existing `/api/v1` conventions.
+
+Provide a WebSocket endpoint compatible with the frontend's expected traffic-state stream.
+
+The backend must be authoritative for:
+
+- Simulation time
+- Vehicle state
+- Signal state
+- Active scenario
+- Controller decisions
+- Safety status
+- Performance metrics
+
+Implement structured errors, command acknowledgements, timestamps, and sequence numbers.
+
+Do not silently fall back to invented traffic data when the backend is unavailable.
+
+---
+
+# 5. SUMO AND TRACI SIMULATION ENGINE
+
+Implement real SUMO-based simulation.
+
+Begin with a realistic four-approach signalized intersection.
+
+Support:
+
+- Multiple inbound and outbound lanes
+- Through movements
+- Protected turning movements
+- Left and right turns
+- U-turns where legally configured
+- Motorcycles
+- Cars
+- Auto-rickshaws
+- Buses
+- Trucks
+- Emergency vehicles
+- Pedestrians
+- Variable arrival rates
+- Queue formation
+- Vehicle discharge
+- Weather-dependent vehicle parameters
+- Road blockages
+- Downstream congestion
+- Lane restrictions
+- Mixed traffic
+
+Create valid SUMO network and route configurations.
+
+Include instructions for installing SUMO and setting SUMO_HOME.
+
+Ensure the backend can launch SUMO in headless mode.
+
+Use TraCI to:
+
+1. Start and stop simulation.
+2. Read vehicle positions and speeds.
+3. Read lane and queue states.
+4. Retrieve traffic signal phases.
+5. Apply legal signal-control commands.
+6. Insert emergency vehicles.
+7. Simulate incidents and lane closures.
+8. Collect completed-trip metrics.
+
+Implement a real simulation clock with deterministic stepping.
+
+Do not use frontend animation time as the authoritative simulation clock.
+
+---
+
+# 6. TRAFFIC STATE ESTIMATION
+
+Develop a state-estimation module that converts raw sensor observations into controller-ready traffic states.
+
+Track:
+
+- Vehicle count per approach
+- Queue length per movement
+- Estimated arrival rate
+- Discharge rate
+- Occupancy
+- Waiting time
+- Vehicle class
+- Turning demand
+- Downstream occupancy
+- Available storage
+- Spillback risk
+- Sensor confidence
+- Weather state
+- Emergency vehicle presence
+- Pedestrian demand
+
+Support multiple observation sources:
+
+- SUMO ground-truth telemetry
+- Simulated noisy camera detections
+- Actual camera detection results
+- Historical observations
+
+The controller must know which observation source is active.
+
+Do not confuse perfect SUMO ground truth with noisy real-world perception.
+
+---
+
+# 7. COMPUTER VISION PIPELINE
+
+Implement a modular computer vision service.
+
+Use YOLO for vehicle detection and ByteTrack for tracking.
+
+Support classes including:
+
+- Cars
+- Motorcycles
+- Buses
+- Trucks
+- Auto-rickshaws where supported by a suitable trained dataset or custom model
+- Pedestrians
+- Emergency vehicles where supported by additional classification and verification
+
+Implement:
+
+- Frame acquisition
+- Detection
+- Tracking
+- Virtual lane and approach regions
+- Stop-line identification
+- Queue estimation
+- Direction-of-travel estimation
+- Confidence scoring
+- Occlusion handling
+- Duplicate-track suppression
+- Multi-camera fusion interfaces
+
+Use a configurable camera calibration file.
+
+Do not claim that a standard pretrained model reliably recognizes Indian auto-rickshaws or emergency vehicles without appropriate validation.
+
+For emergency recognition, design a multi-signal verification mechanism rather than trusting visual appearance alone.
+
+Allow the backend to operate entirely without cameras using SUMO telemetry.
+
+---
+
+# 8. SHORT-HORIZON TRAFFIC FORECASTING
+
+Implement short-horizon demand forecasting.
+
+Forecast:
+
+- Vehicle arrivals
+- Queue growth
+- Turning demand
+- Downstream occupancy
+- Potential spillback
+
+Include:
+
+1. Historical moving-average baseline.
+2. Time-of-day baseline.
+3. XGBoost-based forecasting when training data exists.
+4. Weather-aware feature inputs.
+5. Confidence or uncertainty estimates.
+6. Fallback behavior when a model is unavailable.
+
+Use realistic forecast horizons configurable from approximately 30 seconds to several minutes.
+
+Prevent training-data leakage.
+
+Evaluate predictions using appropriate metrics such as MAE and RMSE.
+
+Distinguish trained forecasts from demonstration forecasts.
+
+---
+
+# 9. MAX-PRESSURE CONTROL
+
+Implement genuine movement-level Max-Pressure control.
+
+For each permitted movement, calculate a pressure contribution using upstream demand, downstream congestion, and relevant service capacity.
+
+Use a configurable formulation consistent with the selected traffic-network model.
+
+Include:
+
+- Movement-specific queue estimates
+- Turning ratios
+- Saturation flow
+- Downstream queue or storage state
+- Spillback protection
+- Legal phase compatibility
+- Pedestrian restrictions
+- Emergency priority
+
+Choose phases based on feasible aggregate movement pressure.
+
+Use Max-Pressure as:
+
+1. An independent benchmark controller.
+2. A candidate-prioritization signal for the hybrid controller.
+3. A fallback when advanced optimization is unavailable.
+
+Document the exact mathematical formulation.
+
+---
+
+# 10. CONSTRAINED MODEL PREDICTIVE CONTROL
+
+Implement a real constrained MPC controller using CVXPY.
+
+At every control decision:
+
+1. Read the current estimated traffic state.
+2. Obtain short-horizon forecasts.
+3. Generate or evaluate legal phase and green-time plans.
+4. Predict queue evolution.
+5. Minimize the defined objective.
+6. Enforce all control constraints.
+7. Apply only the first approved action.
+8. Repeat optimization at the next decision point.
+
+The objective should account for:
+
+- Total queue length
+- Delay
+- Maximum waiting age
+- Downstream spillback
+- Phase switching cost
+- Pedestrian delay
+- Emergency delay
+- Fairness
+
+Use configurable objective weights.
+
+Enforce:
+
+- Minimum green
+- Maximum green
+- Yellow clearance
+- All-red clearance
+- Maximum red where feasible
+- Pedestrian walk and clearance
+- Conflicting movement restrictions
+- Legal phase sequences
+- Downstream storage constraints
+- Emergency preemption requirements
+
+Explain whether the optimization is convex, mixed-integer, or uses legal candidate enumeration.
+
+Do not describe a heuristic candidate ranking system as an exact MPC optimizer.
+
+Set a configurable optimization time budget.
+
+On timeout or infeasibility, transition to a safe deterministic fallback.
+
+---
+
+# 11. MAPPO MULTI-AGENT REINFORCEMENT LEARNING
+
+MAPPO is a REQUIRED core component of the final architecture.
+
+Do not omit it or downgrade it to an optional feature.
+
+Implement a real training and inference pipeline.
+
+Use a centralized-training, decentralized-execution design where appropriate.
+
+Each intersection agent observes:
+
+- Local queue lengths
+- Waiting times
+- Current phase
+- Elapsed phase time
+- Predicted arrivals
+- Neighboring junction congestion
+- Downstream storage
+- Emergency indicators
+- Pedestrian demand
+- Weather and confidence indicators
+
+Possible advisory actions include:
+
+- Recommended phase priority
+- Green split adjustments
+- Corridor coordination recommendations
+- MPC objective-weight adjustments within approved bounds
+
+Define a reward function that considers:
+
+- Throughput
+- Delay
+- Queue reduction
+- Fairness
+- Spillback
+- Emergency vehicle travel time
+- Pedestrian service
+
+Use PyTorch.
+
+Provide:
+
+- Training environment
+- Actor and critic networks
+- PPO clipping objective
+- Advantage estimation
+- Experience collection
+- Training loop
+- Checkpoint saving
+- Checkpoint loading
+- Evaluation mode
+- Random-seed management
+- Training metrics
+
+Begin with a small two- or three-junction training network.
+
+CRITICAL SAFETY RULE:
+
+MAPPO must NEVER directly command roadside signal hardware.
+
+MAPPO produces advisory recommendations.
+
+The constrained MPC validates and optimizes feasible plans.
+
+The independent safety supervisor has final authority.
+
+If MAPPO fails, the system continues using MPC or a deterministic fallback.
+
+Do not claim MAPPO has been trained unless a training run was actually completed.
+
+---
+
+# 12. FULL HYBRID CONTROL ALGORITHM
+
+Implement the SYNCHROFLOW AI hybrid controller using this pipeline:
+
+PERCEPTION
+↓
+SENSOR FUSION
+↓
+TRAFFIC STATE ESTIMATION
+↓
+HISTORICAL + WEATHER-AWARE FORECASTING
+↓
+MAX-PRESSURE PRIORITY COMPUTATION
+↓
+MAPPO MULTI-AGENT COORDINATION ADVICE
+↓
+CONSTRAINED MPC OPTIMIZATION
+↓
+INDEPENDENT SAFETY SUPERVISOR
+↓
+SUMO/TRACI SIGNAL EXECUTION
+↓
+OBSERVATION AND FEEDBACK
+
+The control system must support multiple connected junctions.
+
+It must remain operational if:
+
+- MAPPO is unavailable
+- MPC times out
+- A camera fails
+- Communications are interrupted
+- Forecasting confidence deteriorates
+- An incident blocks an approach
+
+Use explicit fallback policies.
+
+No AI component may override mandatory safety rules.
+
+---
+
+# 13. EMERGENCY VEHICLE PRIORITY
+
+Emergency vehicles must receive the highest operational priority.
+
+Support:
+
+- Ambulances
+- Fire engines
+- Other authenticated authorized emergency responders
+
+When an emergency vehicle is detected:
+
+1. Validate the emergency event.
+2. Determine its approach and expected route.
+3. Estimate arrival time.
+4. Identify the required legal movement.
+5. Request priority.
+6. Safely terminate conflicting green phases.
+7. Complete mandatory yellow clearance.
+8. Complete mandatory all-red clearance.
+9. Respect pedestrian clearance requirements.
+10. Serve the emergency movement.
+11. Restore normal adaptive control safely.
+
+Support simultaneous emergency vehicles with conflict resolution.
+
+Implement emergency corridor coordination across neighboring junctions.
+
+Measure emergency travel-time performance.
+
+A visual detection alone must not authorize real-world preemption.
+
+---
+
+# 14. INDEPENDENT SAFETY SUPERVISOR
+
+Build the safety supervisor as a logically independent component.
+
+It must validate every proposed controller action.
+
+It must enforce:
+
+- Movement conflict matrix
+- Minimum green
+- Maximum green
+- Yellow clearance
+- All-red clearance
+- Pedestrian clearance
+- Maximum red or documented safe exception handling
+- Legal phase transitions
+- Emergency preemption clearance
+- Fault fallback
+- Operator authorization
+
+Reject illegal commands.
+
+Record rejection reasons.
+
+Do not use hardcoded success flags.
+
+Generate auditable safety decision records.
+
+The research software must not be represented as certified for live roadside deployment.
+
+---
+
+# 15. INCIDENT DETECTION AND ROAD OBSTRUCTIONS
+
+Implement incident-handling logic.
+
+Distinguish:
+
+- Normal signal queues
+- Legitimate bus stops
+- Traffic congestion
+- Broken-down vehicles
+- Collisions
+- Road closures
+- Stalled heavy trucks
+- Construction zones
+- False-positive incident detections
+
+Use multi-frame evidence and confidence thresholds.
+
+Allow verified incident states to modify effective lane capacity and legal routing.
+
+Model towing and clearance as simulation events.
+
+Do not claim that municipal services were actually dispatched.
+
+---
+
+# 16. MULTI-JUNCTION NETWORK COORDINATION
+
+Implement a connected corridor containing at least three intersections.
+
+Support:
+
+- Inter-junction vehicle transfers
+- Link storage capacities
+- Travel times
+- Upstream and downstream queues
+- Spillback
+- Signal offsets
+- Green-wave coordination
+- Network-level performance metrics
+
+Ensure network state follows conservation of vehicles.
+
+Allow MAPPO to advise neighboring controllers.
+
+Use Max-Pressure and MPC to account for downstream congestion.
+
+Compare isolated intersection control against coordinated network control.
+
+---
+
+# 17. ALL 25 SCENARIOS
+
+Read the actual 25 scenarios defined in:
+
+src/simulation/scenarios.ts
+
+Preserve their identifiers and intended behaviors.
+
+Implement SUMO-compatible backend configurations for every existing scenario.
+
+Cover:
+
+- Normal traffic
+- Peak demand
+- Mixed traffic
+- Emergency vehicles
+- Monsoon conditions
+- Night conditions
+- Incidents
+- Road closures
+- Sensor failures
+- Communication failures
+- MPC timeout
+- MAPPO failure
+- Pedestrian surges
+- Spillback
+- Transit disruption
+- Irregular turning behavior
+- Multi-junction coordination
+- Combined stress conditions
+
+Use the repository's actual scenario definitions rather than replacing them with an invented catalog.
+
+If a scenario requires unavailable external data or hardware, implement an explicit simulation approximation and document it.
+
+---
+
+# 18. SCIENTIFIC BENCHMARKING
+
+Implement seven controller configurations:
+
+1. Optimized fixed-time
+2. Actuated
+3. Queue-based adaptive
+4. Max-Pressure
+5. MPC-only
+6. MAPPO-assisted MPC
+7. Full SYNCHROFLOW hybrid
+
+All controllers must use:
+
+- The same network
+- Comparable traffic demand
+- Equivalent observation conditions
+- The same random seeds
+- The same evaluation periods
+- The same measurement definitions
+
+Measure:
+
+- Average waiting time
+- P95 waiting time
+- Maximum queue length
+- Throughput
+- Emergency travel time
+- Pedestrian waiting time
+- Spillback events
+- Safety violations or rejected unsafe requests
+- Computational latency
+- Estimated emissions, where a justified model is available
+
+Use multiple seeds.
+
+Report mean, standard deviation, and appropriate confidence intervals.
+
+Do not fabricate benchmark values.
+
+Do not report trained MAPPO results until a trained policy checkpoint is actually evaluated.
+
+---
+
+# 19. FRONTEND INTEGRATION
+
+The existing frontend already has a remote provider.
+
+Read its TypeScript interfaces and implement compatible Python Pydantic models.
+
+Ensure the frontend can:
+
+- Connect to FastAPI
+- Receive WebSocket state updates
+- Control SUMO simulation
+- Change scenarios
+- Select controllers
+- Trigger simulated emergency events
+- Display real backend metrics
+- Show MPC decisions
+- Show MAPPO advisory outputs
+- Display safety-supervisor decisions
+- Run benchmarks
+- Export results
+
+Maintain compatibility with existing frontend navigation and visualization.
+
+Document any required frontend changes separately.
+
+Do not overwrite the existing React application.
+
+---
+
+# 20. TESTING AND VERIFICATION
+
+Implement Pytest-based tests.
+
+Required tests include:
+
+- API health
+- API schema compatibility
+- WebSocket communication
+- Deterministic simulation
+- Vehicle conservation
+- Queue calculations
+- Phase conflict rejection
+- Yellow and all-red timing
+- Pedestrian clearance
+- Emergency preemption
+- Simultaneous emergency conflict
+- Maximum-red fairness
+- MPC feasibility
+- MPC timeout fallback
+- MAPPO inference fallback
+- Sensor failure fallback
+- Communication failure fallback
+- Downstream spillback
+- Incident handling
+- Scenario loading
+- Multi-junction coordination
+- Benchmark reproducibility
+
+Separate unit tests from integration tests that require SUMO, trained checkpoints, or external models.
+
+Never report tests as passing without actually executing them.
+
+---
+
+# 21. LOCAL EXECUTION AND DEPLOYMENT
+
+Provide a complete backend README.
+
+Document:
+
+1. Python installation.
+2. Virtual environment creation.
+3. Dependency installation.
+4. SUMO installation.
+5. SUMO_HOME configuration.
+6. Backend environment variables.
+7. FastAPI startup.
+8. SUMO simulation startup.
+9. API documentation access.
+10. WebSocket connection.
+11. Frontend connection.
+12. Running tests.
+13. Running MAPPO training.
+14. Loading trained checkpoints.
+15. Running controller benchmarks.
+
+Use environment variables rather than hardcoded secrets.
+
+Provide a Dockerfile and optional Docker Compose configuration where practical.
+
+Do not commit secrets or large trained model binaries unnecessarily.
+
+---
+
+# 22. IMPLEMENTATION STRATEGY FOR GOOGLE AI STUDIO DEFAULT MODE
+
+Because this project is large, work incrementally.
+
+Do not attempt to generate the entire backend in one unverified operation.
+
+Follow this sequence:
+
+PHASE A — FastAPI foundation
+Create project structure, configuration, Pydantic contracts, API endpoints, WebSocket state streaming, and tests.
+
+PHASE B — SUMO/TraCI integration
+Create a working intersection network, simulation manager, telemetry extraction, signal control, and scenario loading.
+
+PHASE C — Classical controllers and safety
+Implement fixed-time, actuated, queue-adaptive, Max-Pressure, and independent safety supervision.
+
+PHASE D — Forecasting and constrained MPC
+Implement prediction baselines, weather features, MPC optimization, and fallback behavior.
+
+PHASE E — MAPPO reinforcement learning
+Implement training environments, neural networks, PPO optimization, checkpoints, and inference interfaces.
+
+PHASE F — Hybrid orchestration
+Integrate MAPPO advisory, Max-Pressure, MPC, emergency priority, and safety-supervisor approval.
+
+PHASE G — Computer vision and incident handling
+Implement YOLO/ByteTrack adapters, queue estimation, sensor fusion, and incident workflows.
+
+PHASE H — Network coordination and benchmarks
+Implement multi-junction SUMO simulation, controller comparisons, statistical evaluation, and result exports.
+
+PHASE I — Frontend integration and GitHub delivery
+Connect the backend to the existing frontend, verify compatibility, complete documentation, and commit the backend directory to the existing repository.
+
+At the end of each phase:
+
+- Show files created or modified.
+- Explain what actually works.
+- Identify anything simulated or incomplete.
+- Run available tests.
+- Fix reported errors.
+- Preserve previously completed functionality.
+- Commit completed and tested work when GitHub access permits.
+
+Do not claim completion of a phase merely because interfaces or placeholder functions exist.
+
+---
+
+# FINAL NON-NEGOTIABLE REQUIREMENTS
+
+1. Preserve the entire existing frontend.
+2. Create the backend inside the SAME GitHub repository.
+3. Use the exact top-level folder name `backend`.
+4. Implement real FastAPI endpoints and SUMO integration.
+5. Implement genuine constrained MPC rather than merely displaying MPC terminology.
+6. Implement MAPPO as a required component of the final system.
+7. MAPPO must remain advisory and never directly actuate signals.
+8. Maintain independent safety-supervisor authority.
+9. Emergency vehicles receive the highest operational priority while preserving safety.
+10. Support mixed traffic, pedestrians, weather, incidents, fairness, and spillback.
+11. Support multiple connected intersections.
+12. Use reproducible scientific benchmarks.
+13. Never fabricate measured results or training outcomes.
+14. Preserve frontend/backend compatibility.
+15. Never claim a GitHub upload succeeded without verifying the commit.
+
+## BEGIN NOW
+
+First inspect the existing repository and its TypeScript API contracts.
+
+Then implement PHASE A — FastAPI foundation — inside the new `backend/` folder.
+
+Complete and test Phase A before proceeding to Phase B.
+
+Continue incrementally through the remaining phases, preserving working code.
+
+Ensure that all completed backend files are ultimately committed under `backend/` in:
+
+https://github.com/PranavSrikar/syncroflow2AI
