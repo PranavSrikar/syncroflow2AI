@@ -79,6 +79,8 @@ Thirty matched final trials completed: five modes ×two demand scales ×three he
 {results}
 Entries are mean ±sample standard deviation across seeds1901,1902,1903. Horizon300 simulated seconds, one-second simulation step, five-second candidate recommendations, demand scales0.75 and1.75. Same network/route inputs, SUMO1.28.0, seeds and horizon in each mode. No warm-up exclusion. Hint-free hybrid is the existing MPC executable path with no learned recommendation; equivalent outcomes are expected. Baselines are native fixed-time, supervised Max-Pressure and constrained MPC. Actual control timing is not tuned after seeing final results.
 
+Native SUMO fixed-time uses42s green /3s yellow /42s green /3s yellow, without explicit all-red stages. Adaptive modes use the independently supervised10–45s green,3s yellow and2s all-red ring. Thus this is a comparison of installed research modes, not a pure algorithm ablation with identical clearance budgets. Candidate-versus-MPC qualification uses the same adaptive program/constraints in both arms. A future fixed-time baseline with matched clearance rules would isolate algorithm effects more closely.
+
 {paired}
 Three seeds support descriptive variability, not a claim of statistical significance or general traffic superiority. Seed/demand partitions were recorded before testing; the selected checkpoint was frozen using separate selection seeds1801-1803 at demand1.0. Other candidates were not selected using final test data.
 

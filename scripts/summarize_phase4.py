@@ -91,7 +91,7 @@ def main():
                          selection=selection, operationallyEnabled=False)
     write(PUBLIC/'policy-qualification.json',qualification)
     write(PUBLIC/'benchmark-summary.json',dict(groups=groups,pairedComparisons=paired,selection=selection,
-                                               limitations='Three seeds; cold start; completed-trip delay censored; one topology; no statistical superiority claim'))
+                                               limitations='Three seeds; cold start; completed-trip delay censored; one topology; native fixed-time has no explicit all-red while adaptive modes add2s; candidate/MPC constraints match; no statistical superiority claim'))
     write(PUBLIC/'trials.json',rows)
     plot_dir=PUBLIC/'plots'; plot_dir.mkdir(exist_ok=True)
     fig,axes=plt.subplots(1,2,figsize=(11,4))
