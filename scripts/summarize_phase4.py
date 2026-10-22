@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT/'.checkpoints/phase4-final'
+OUT = ROOT/'.checkpoints/phase4-demand-corrected'
 PUBLIC = ROOT/'research/phase4'
 
 
@@ -33,7 +33,8 @@ def main():
             'throughputVehiclesPerHour','meanCompletedWaitingSeconds','p95CompletedWaitingSeconds',
             'maxCompletedWaitingSeconds','maxApproachMeanWaitSeconds','maxServiceAgeSeconds',
             'spillbackEdgeSeconds','meanControlLatencyMs','p95ControlLatencyMs','maxControlLatencyMs',
-            'completedTrips','unfinishedTrips','meanPolicyInferenceMs','p95PolicyInferenceMs',
+            'completedTrips','unfinishedTrips','departedVehicles','endPendingVehicles','maxPendingVehicles',
+            'meanPendingVehicles','observedInsertionDemandVehicles','meanPolicyInferenceMs','p95PolicyInferenceMs',
             'meanDecisionControlComputeMs','p95DecisionControlComputeMs','fallbackControllerSeconds','hintControllerSeconds']
     for row in rows:
         row['supervisorRejections'] = sum(s['rejectedActions'] for s in row['supervisors'].values())
@@ -65,7 +66,7 @@ def main():
     checks=[]
     for scale in (.75,1.75):
         ratios=[]
-        for seed in (1901,1902,1903):
+        for seed in (2901,2902,2903):
             base=next(r for r in rows if r['mode']=='mpc' and r['seed']==seed and r['demandScale']==scale)
             candidate=next(r for r in rows if r['mode']=='candidate' and r['seed']==seed and r['demandScale']==scale)
             ratio=candidate['meanCompletedTimeLossSeconds']/base['meanCompletedTimeLossSeconds']

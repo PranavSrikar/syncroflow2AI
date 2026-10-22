@@ -11,7 +11,7 @@ import sys
 import time
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT/'.checkpoints/phase4-final'
+OUT = ROOT/'.checkpoints/phase4-demand-corrected'
 PYTHON = sys.executable
 
 
@@ -32,15 +32,15 @@ def main():
     reports = [OUT/f'train-{seed}/training.json' for seed in (21,31,41)]
     while not all(p.exists() and len(json.loads(p.read_text())['updates']) >= 16 for p in reports):
         time.sleep(5)
-    checkpoints = [str(Path('.checkpoints/phase4-final')/p.parent.name/Path(json.loads(p.read_text())['latestCheckpoint']).name)
+    checkpoints = [str(Path('.checkpoints/phase4-demand-corrected')/p.parent.name/Path(json.loads(p.read_text())['latestCheckpoint']).name)
                    for p in reports]
     batch(['benchmark','--seconds','300','--scales','1','--modes','mpc',
-           '--checkpoints',*checkpoints,'--split','selection'], [1801,1802,1803], 'selection')
+           '--checkpoints',*checkpoints,'--split','selection'], [2801,2802,2803], 'selection')
     scores = {}
     for checkpoint in checkpoints:
         label = Path(checkpoint).parent.name
         rows = [json.loads((OUT/'trials'/f'selection-{label}-d1.0-s{seed}-t300.json').read_text())
-                for seed in (1801,1802,1803)]
+                for seed in (2801,2802,2803)]
         if any(r['status'] != 'completed' for r in rows):
             scores[checkpoint] = None
         else:
@@ -51,7 +51,7 @@ def main():
     selected = min(finite, key=lambda k:(finite[k], int(Path(k).parent.name.split('-')[1])))
     selection = dict(scores=scores, selectedCheckpoint=selected,
                      checkpointSha256=hashlib.sha256(Path(selected).read_bytes()).hexdigest(),
-                     selectionSeeds=[1801,1802,1803], testSeeds=[1901,1902,1903],
+                     selectionSeeds=[2801,2802,2803], testSeeds=[2901,2902,2903],
                      criterion='lowest mean completed-trip timeLoss; model-seed tie break',
                      frozenBeforeFinalTesting=True)
     selection_path = OUT/'selection.json'
@@ -60,11 +60,11 @@ def main():
     selection_path.write_text(json.dumps(selection,indent=2),encoding='utf-8')
     batch(['benchmark','--seconds','300','--scales','.75','1.75',
            '--modes','fixed_time','max_pressure','mpc','hybrid',
-           '--checkpoints',selected,'--split','test'], [1901,1902,1903], 'test')
+           '--checkpoints',selected,'--split','test'], [2901,2902,2903], 'test')
     with (OUT/'qualification.log').open('w',encoding='utf-8') as log:
         subprocess.run([PYTHON,str(ROOT/'scripts/qualify_mappo.py'),'--checkpoint',selected,
                         '--output',str(OUT/'safety-qualification.json'),
-                        '--seeds','1951','1952','1953','--seconds','240'],cwd=ROOT,
+                        '--seeds','2951','2952','2953','--seconds','240'],cwd=ROOT,
                        stdout=log,stderr=subprocess.STDOUT,check=True)
     (OUT/'experiments-complete.json').write_text(json.dumps(selection,indent=2),encoding='utf-8')
 

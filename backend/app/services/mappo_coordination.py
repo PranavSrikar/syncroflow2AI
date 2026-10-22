@@ -15,7 +15,9 @@ def qualification_fingerprint():
              'app/services/sumo_adapter.py', 'app/services/emergency_priority.py',
              'app/services/traffic_estimation.py', 'app/services/forecasting.py',
              'app/services/mappo_coordination.py', 'app/rl/mappo.py', 'app/rl/sumo_env.py',
-             'sumo_scenarios/two_junction/corridor.net.xml']
+             'sumo_scenarios/two_junction/corridor.net.xml',
+             'sumo_scenarios/two_junction/corridor.rou.xml',
+             'sumo_scenarios/two_junction/corridor.sumocfg']
     return hashlib.sha256(b''.join((backend/name).read_bytes() for name in files)).hexdigest()
 
 

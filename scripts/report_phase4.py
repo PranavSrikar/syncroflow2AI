@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 
 ROOT=Path(__file__).resolve().parents[1]
 DATA=ROOT/'research/phase4'
-RAW=ROOT/'.checkpoints/phase4-final'
+RAW=ROOT/'.checkpoints/phase4-demand-corrected'
 
 
 def write(name,text):
@@ -18,6 +18,8 @@ def main():
     qualification=json.loads((DATA/'policy-qualification.json').read_text(encoding='utf-8'))
     replay=json.loads((RAW/'reproducibility.json').read_text(encoding='utf-8'))
     resource=json.loads((RAW/'neural-update-resource-probe.json').read_text(encoding='utf-8'))
+    pilot=json.loads((RAW/'train-11/training.json').read_text(encoding='utf-8'))
+    browser_seconds=json.loads((RAW/'verification.json').read_text(encoding='utf-8'))['browser']['seconds']
     test=ET.parse(RAW/'backend-final.xml').getroot().find('testsuite')
     tests=f"{test.get('tests')} tests, {test.get('failures')} failures, {test.get('errors')} errors, {test.get('skipped')} skipped, {float(test.get('time')):.2f} s"
     emergency=json.loads((RAW/'emergency-demo.json').read_text(encoding='utf-8'))['results'][0]['emergency']
@@ -28,7 +30,7 @@ def main():
     selected=benchmark['selection']['selectedCheckpoint']
     write('MAPPO_TRAINING_REPORT.md',f'''# MAPPO training report — Phase 4
 
-Three independent CPU training runs completed using corrected SUMO occupancy observations and corrected phase-expiry execution. They are **unvalidated candidate policies**, not evidence of convergence or a useful operational controller. Operational MAPPO remains disabled.
+Three independent CPU training runs completed using corrected SUMO occupancy observations,phase-expiry execution and Poisson demand rates. They are **unvalidated candidate policies**, not evidence of convergence or a useful operational controller. Operational MAPPO remains disabled.
 
 {table}
 Total measured update wall durations: {total:.2f} seconds; processes ran concurrently, so this sum is not elapsed calendar time. Each run has 16 episodes of 320 simulated seconds, 64 five-second decisions per episode: 1024 joint decisions /2048 agent samples per model. The 64-decision seed-11 pilot is excluded from selection. No earlier pre-correction weights were resumed.
@@ -43,17 +45,19 @@ Reward is unchanged: per-second -(0.1 queue +0.01 sum current waiting time +2 sp
 
 ## Reproducibility and evidence
 
-Replay model seed 21 /episode 21000 for64 joint decisions: bit-identical parameters = **{replay['bitIdenticalParameters']}**; maximum parameter difference {replay['maxParameterDifference']}. This single replay does not establish determinism across hardware or timing-dependent solver timeouts. Per-update checkpoints and progress/configuration logs: `.checkpoints/phase4-final/train-21`, `train-31`, `train-41`. Each update is preserved without overwriting older weights. Training source hashes are recorded at process start. Corrected runs used a frozen controller/training driver. Resume requires the exact recorded source configuration; otherwise start a new run.
+Replay model seed 21 /episode 21000 for64 joint decisions: bit-identical parameters = **{replay['bitIdenticalParameters']}**; maximum parameter difference {replay['maxParameterDifference']}. This single replay does not establish determinism across hardware or timing-dependent solver timeouts. Per-update checkpoints and progress/configuration logs: `.checkpoints/phase4-demand-corrected/train-21`, `train-31`, `train-41`. Each update is preserved without overwriting older weights. Training source hashes are recorded at process start. Corrected runs used a frozen controller/training driver. Resume requires the exact recorded source configuration; otherwise start a new run.
 
 An earlier three-seed1024-decision cohort is preserved under `.checkpoints/phase4`. Development evaluation exposed a phase-expiry defect: resetting remaining=1 at an already-due phase postponed release. The controlled seed701 probe observed the first phase change at46s before correction and12s afterward. The fix lets the independently approved cyclic program execute an already-due transition, with timing bounds and clearance unchanged. Its regression covers all six stages. Earlier final benchmarking was interrupted; those weights were invalidated by the changed controller fingerprint. No pre-fix policy was activated or qualified. Current reports use only fresh corrected runs and fresh development/final seeds; pre-fix evidence remains separate.
 
-Hardware: AMD Ryzen 7 7445HS, 6 cores/12 logical CPUs, about16GB RAM; CPU-only Torch. Exact Python/Torch/NumPy versions and source hashes: [training-summary.json](research/phase4/training-summary.json); complete installed freeze `.checkpoints/phase4-final/environment-freeze.txt`. SUMO1.28.0; Python3.11.9. Measured update durations include SUMO initialization, TraCI, control, telemetry, PPO update and checkpoint saving. They exclude Python imports, model construction and between-update reporting/cleanup. Torch intra-op threads=1 per model process.
+A second complete cohort/study is preserved under `.checkpoints/phase4-final` and `research/phase4-saturated`. It exposed a separate demand configuration defect: legacy `exp(6)`-style flow values were rates in vehicles/second,not mean headways. Their total was190800veh/hour before scaling,so both test strata were extreme insertion-limited overload. That candidate failed2% delay-reduction screening (-0.06695% and+0.37398% reduction); all30 stress trials and three safety trials nevertheless remain published as specifically labeled stress evidence. The primary study here retrains from scratch after correcting rates to reciprocal mean gaps and adding route/config bytes to qualification fingerprints. The exact legacy route/config is preserved under `corridor.legacy-saturated.*`. [SUMO flow parameter semantics](https://sumo.dlr.de/docs/Definition_of_Vehicles%2C_Vehicle_Types%2C_and_Routes.html).
 
-Hardware also includes an NVIDIA GeForce RTX4050 Laptop GPU,6141MiB reported by nvidia-smi,driver573.05. Installed Torch2.14.1+cpu has no CUDA training support. A separately labeled synthetic64-decision/four-epoch neural-update resource probe took{resource['wallSeconds']:.4f}s on CPU and saved no checkpoint. Compared with the corrected115.10s SUMO pilot, this supports retaining the working CPU environment for this small network; no GPU speed comparison was run. Device details and the resource probe are preserved with raw artifacts. GPU acceleration of larger learners/perception remains separate work.
+Hardware: AMD Ryzen 7 7445HS, 6 cores/12 logical CPUs, about16GB RAM; CPU-only Torch. Exact Python/Torch/NumPy versions and source hashes: [training-summary.json](research/phase4/training-summary.json); complete installed freeze `.checkpoints/phase4-demand-corrected/environment-freeze.txt`. SUMO1.28.0; Python3.11.9. Measured update durations include SUMO initialization, TraCI, control, telemetry, PPO update and checkpoint saving. They exclude Python imports, model construction and between-update reporting/cleanup. Torch intra-op threads=1 per model process.
+
+Hardware also includes an NVIDIA GeForce RTX4050 Laptop GPU,6141MiB reported by nvidia-smi,driver573.05. Installed Torch2.14.1+cpu has no CUDA training support. A separately labeled synthetic64-decision/four-epoch neural-update resource probe took{resource['wallSeconds']:.4f}s on CPU and saved no checkpoint. Compared with the primary{pilot['elapsedSeconds']:.2f}s SUMO pilot, this supports retaining the working CPU environment for this small network; no GPU speed comparison was run. Device details and the resource probe are preserved with raw artifacts. GPU acceleration of larger learners/perception remains separate work.
 
 ![Training curves](research/phase4/plots/training.png)
 
-Changing episode seeds make the reward curve unsuitable as a controlled performance comparison. Selection used seeds1801-1803, demand1.0,300s; final held-out tests used1901-1903, demand0.75/1.75,300s. Safety qualification used1951-1953,240s. Selected checkpoint: `{selected}`. Selection was frozen before final testing. All seeds, parameters, metrics and checkpoint SHA-256 are preserved in machine evidence.
+Changing episode seeds make the reward curve unsuitable as a controlled performance comparison. Selection used seeds2801-2803, demand1.0,300s; final held-out tests used2901-2903, demand0.75/1.75,300s. Safety qualification used2951-2953,240s. Selected checkpoint: `{selected}`. Selection was frozen before final testing. All seeds, parameters, metrics and checkpoint SHA-256 are preserved in machine evidence.
 
 ## Reproduce
 
@@ -77,12 +81,12 @@ Use new seeds/output directories for a new experiment; existing run folders are 
 Thirty matched final trials completed: five modes ×two demand scales ×three held-out seeds. The learned candidate ran **offline through MPC and the independent supervisors**; it was never installed in the operational coordinator. There is no qualified-policy operational result.
 
 {results}
-Entries are mean ±sample standard deviation across seeds1901,1902,1903. Horizon300 simulated seconds, one-second simulation step, five-second candidate recommendations, demand scales0.75 and1.75. Same network/route inputs, SUMO1.28.0, seeds and horizon in each mode. No warm-up exclusion. Hint-free hybrid is the existing MPC executable path with no learned recommendation; equivalent outcomes are expected. Baselines are native fixed-time, supervised Max-Pressure and constrained MPC. Actual control timing is not tuned after seeing final results.
+Entries are mean ±sample standard deviation across seeds2901,2902,2903. Horizon300 simulated seconds, one-second simulation step, five-second candidate recommendations, demand scales0.75 and1.75. Same network/route inputs, SUMO1.28.0, seeds and horizon in each mode. No warm-up exclusion. Hint-free hybrid is the existing MPC executable path with no learned recommendation; equivalent outcomes are expected. Baselines are native fixed-time, supervised Max-Pressure and constrained MPC. Actual control timing is not tuned after seeing final results.
 
 Native SUMO fixed-time uses42s green /3s yellow /42s green /3s yellow, without explicit all-red stages. Adaptive modes use the independently supervised10–45s green,3s yellow and2s all-red ring. Thus this is a comparison of installed research modes, not a pure algorithm ablation with identical clearance budgets. Candidate-versus-MPC qualification uses the same adaptive program/constraints in both arms. A future fixed-time baseline with matched clearance rules would isolate algorithm effects more closely.
 
 {paired}
-Three seeds support descriptive variability, not a claim of statistical significance or general traffic superiority. Seed/demand partitions were recorded before testing; the selected checkpoint was frozen using separate selection seeds1801-1803 at demand1.0. Other candidates were not selected using final test data.
+Three seeds support descriptive variability, not a claim of statistical significance or general traffic superiority. Seed/demand partitions were recorded before testing; the selected checkpoint was frozen using separate selection seeds2801-2803 at demand1.0. Other candidates were not selected using final test data.
 
 No untrained-actor or constant-hold/release ablation was run. Any measured candidate benefit is therefore a property of this saved checkpoint/controller combination; it does not prove that learning, rather than initialization or a static timing preference, caused the benefit. Those controls are required before attributing gains specifically to MAPPO learning.
 
@@ -91,6 +95,8 @@ No untrained-actor or constant-hold/release ablation was run. Any measured candi
 ## Measurement definitions and limitations
 
 Vehicle delay is completed-trip SUMO `timeLoss`, distinct from waiting time and insertion delay. Unfinished trips are right-censored and listed separately. `meanObservedTimeLossIncludingUnfinished` records partial observed timeLoss, not eventual full-trip delay. `meanDepartDelaySeconds` reports insertion delay for recorded trips; vehicles still waiting to depart may be absent. Different controllers can change insertion capacity even with matched configured demand. No demand-normalized superiority inference is made.
+
+Current Poisson rates represent mean gaps6,8,9,12,7,11s (base2591.558veh/hour),then scale0.75/1.75. These are designed synthetic loads,not field calibration. Every trial records actual inserted (`departedVehicles`) and pending vehicles waiting for insertion,with mean/max/end backlog. `observedInsertionDemandVehicles` is inserted plus end-pending demand,not a future-flow count. A same-seed100s probe inserted59 versus121 vehicles at the two scales,pending0 versus5. The earlier legacy overload results are separately labeled in `research/phase4-saturated` and are not mixed into this load sweep.
 
 These experiments use SUMO observations/state estimates and measured-arrival fallback; no genuine historical/weather dataset or camera-derived control input was enabled. They do not measure forecasting accuracy, camera errors or robustness to changed perception/weather. Those integrations remain verified demonstration paths rather than experimentally validated performance factors here.
 
@@ -102,7 +108,7 @@ Corridor pedestrian constraints and emergency response are **not applicable/not 
 
 ## Machine-readable evidence
 
-[Trial CSV](research/phase4/trials.csv), [full trials JSON](research/phase4/trials.json), [aggregated results](research/phase4/benchmark-summary.json), [qualification](research/phase4/policy-qualification.json). Raw SUMO tripinfo is in `.checkpoints/phase4-final/trips`; individual trials and source/version provenance in `.checkpoints/phase4-final/trials`. SVG plots accompany PNG exports. The recovery artifact archive includes these raw data.
+[Trial CSV](research/phase4/trials.csv), [full trials JSON](research/phase4/trials.json), [aggregated results](research/phase4/benchmark-summary.json), [qualification](research/phase4/policy-qualification.json). Raw SUMO tripinfo is in `.checkpoints/phase4-demand-corrected/trips`; individual trials and source/version provenance in `.checkpoints/phase4-demand-corrected/trials`. SVG plots accompany PNG exports. The recovery artifact archive includes these raw data.
 
 Reproduce cached matching experiments after training: `./backend/.venv/Scripts/python.exe scripts/run_phase4_experiments.py`. Rebuild plots/reports: `./backend/.venv/Scripts/python.exe scripts/summarize_phase4.py`, then `./backend/.venv/Scripts/python.exe scripts/report_phase4.py`. Use a new output location for a changed protocol; cache mismatches are rejected.
 ''')
@@ -114,7 +120,7 @@ Reproduce cached matching experiments after training: `./backend/.venv/Scripts/p
 
 Selected checkpoint `{selected}`; SHA-256 `{qualification['checkpointSha256']}`. Selection details and the pre-test freeze are recorded in [benchmark-summary.json](research/phase4/benchmark-summary.json).
 
-Numerical inference checks: {qualification['numericalChecksPassed']}. Trained joint decisions: {qualification['trainedDecisionSteps']}. Separate supervised safety checks: {qualification.get('safetyValidationPassed')}, seeds1951/1952/1953,240s each. A minimum step count and finite inference are prerequisites, not evidence of useful learning. Full [qualification evidence](research/phase4/policy-qualification.json).
+Numerical inference checks: {qualification['numericalChecksPassed']}. Trained joint decisions: {qualification['trainedDecisionSteps']}. Separate supervised safety checks: {qualification.get('safetyValidationPassed')}, seeds2951/2952/2953,240s each. A minimum step count and finite inference are prerequisites, not evidence of useful learning. Full [qualification evidence](research/phase4/policy-qualification.json).
 
 Failed or incomplete qualification conditions:
 
@@ -138,15 +144,15 @@ Operationally retain supervised Max-Pressure +constrained MPC and the existing d
 6. Calibrate arrival/saturation/receiving models, PCU weights and forecast uncertainty with genuine data. Camera field accuracy, metric calibration, live hardware, historical forecast accuracy and adverse-weather generalization remain outside this experiment.
 7. Maintain local Git checkpoints, verified archives and independent copies. Current separate recovery copies are on the same machine, not off-device backup. Review credentials before any publication; no push or remote was configured.
 
-Regression evidence: {tests}; four real-browser tests passed in34.0s; build,TypeScript,eight frontend groups,pip check,startup smoke and all eight fresh A-H external demos passed. Existing one Starlette warning and Vite warnings remain. Read the training,benchmark and qualification reports for actual numbers and limitations. No production safety certification, real-road superiority or guaranteed camera accuracy is claimed.
+Regression evidence: {tests}; four real-browser tests passed in{browser_seconds:.1f}s; build,TypeScript,eight frontend groups,pip check,startup smoke and all eight fresh A-H external demos passed. Existing one Starlette warning and Vite warnings remain. Read the training,benchmark and qualification reports for actual numbers and limitations. No production safety certification, real-road superiority or guaranteed camera accuracy is claimed.
 ''')
     summary=f'''# Phase 4 research update
 
 This section supersedes Stage3 research/Git status below; Stage3 demonstration results remain historical evidence. Fixed repeated postponement of an already-due signal expiry: the controlled release probe observed its first phase change at12s rather than46s, without weakening timing or clearance checks. Earlier research weights were invalidated and preserved separately. Three corrected-architecture MAPPO runs completed,1024 joint decisions each;30 matched final corridor trials and separate held-out safety trials are recorded. **MAPPO remains unqualified and operationally disabled.** Read [MAPPO_TRAINING_REPORT.md](MAPPO_TRAINING_REPORT.md), [CONTROLLER_BENCHMARK_REPORT.md](CONTROLLER_BENCHMARK_REPORT.md), [POLICY_QUALIFICATION_REPORT.md](POLICY_QUALIFICATION_REPORT.md) and [RESEARCH_NEXT_STEPS.md](RESEARCH_NEXT_STEPS.md).
 
-Final backend: {tests}. Four Edge/browser tests passed in34.0s; frontend build,TypeScript,eight frontend groups,pip check,startup smoke and all eight fresh A-H external demos passed. Git2.55.0.windows.5 is installed; exact Stage3 archive preserved as local tag `stage3-verified-demo`, with new local research history. No earlier Git history existed in this export; no remote or push. Recovery pointer: `.checkpoints/PHASE4_RECOVERY.json` (created after final reporting).
+Final backend: {tests}. Four Edge/browser tests passed in{browser_seconds:.1f}s; frontend build,TypeScript,eight frontend groups,pip check,startup smoke and all eight fresh A-H external demos passed. Git2.55.0.windows.5 is installed; exact Stage3 archive preserved as local tag `stage3-verified-demo`, with new local research history. No earlier Git history existed in this export; no remote or push. Recovery pointer: `.checkpoints/PHASE4_RECOVERY.json` (created after final reporting).
 
-Startup remains `./backend/.venv/Scripts/python.exe scripts/run_dev.py`; operational fallback and original network files are preserved. Research evidence/plots: `research/phase4`; raw data/checkpoints `.checkpoints/phase4-final`. Current limitations include limited training, no qualified learned policy, one benchmark topology, short cold-start/censored experiments, and no candidate pedestrian/emergency qualification.
+Startup remains `./backend/.venv/Scripts/python.exe scripts/run_dev.py`; operational fallback and original network files are preserved. Research evidence/plots: `research/phase4`; raw data/checkpoints `.checkpoints/phase4-demand-corrected`. Current limitations include limited training, no qualified learned policy, one benchmark topology, short cold-start/censored experiments, and no candidate pedestrian/emergency qualification.
 
 ---
 

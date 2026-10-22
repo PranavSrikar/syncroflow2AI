@@ -27,7 +27,7 @@ from app.services.mappo_coordination import qualification_fingerprint
 import torch
 import traci
 
-OUT = ROOT / '.checkpoints/phase4-final'
+OUT = ROOT / '.checkpoints/phase4-demand-corrected'
 
 
 def write(path, value):
@@ -124,6 +124,8 @@ def trial(mode, seed, seconds, scale, checkpoint=None, split='test'):
     fallback_controller_seconds = 0
     hint_controller_seconds = 0
     joint_action_counts = {}
+    departed_vehicles = 0
+    pending_samples = []
     started = time.perf_counter()
     result = dict(mode=mode, model=label, seed=seed, seconds=seconds, demandScale=scale,
                   split=split, checkpoint=str(checkpoint) if checkpoint else None,
@@ -155,6 +157,8 @@ def trial(mode, seed, seconds, scale, checkpoint=None, split='test'):
                     hint_controller_seconds += len(env.controllers)
                 traci.simulationStep()
                 env.network.after_step()
+                departed_vehicles += traci.simulation.getDepartedNumber()
+                pending_samples.append(len(traci.simulation.getPendingVehicles()))
                 now = traci.simulation.getTime()
                 approaches = [a for raw in env.network.raw.values() for a in raw['approaches'].values()]
                 queues.append(sum(a['queued'] for a in approaches))
@@ -164,6 +168,9 @@ def trial(mode, seed, seconds, scale, checkpoint=None, split='test'):
             decision_latencies.append(decision_ms)
             obs = env.observations()
         result.update(status='completed', arrivedVehicles=env.network.total_arrived,
+                      departedVehicles=departed_vehicles, endPendingVehicles=pending_samples[-1],
+                      maxPendingVehicles=max(pending_samples), meanPendingVehicles=float(np.mean(pending_samples)),
+                      observedInsertionDemandVehicles=departed_vehicles+pending_samples[-1],
                       throughputVehiclesPerHour=env.network.total_arrived*3600/seconds,
                       meanNetworkQueue=float(np.mean(queues)), maxNetworkQueue=max(queues),
                       maxApproachMeanWaitSeconds=max(waits), maxServiceAgeSeconds=max(red_ages),
@@ -210,7 +217,7 @@ if __name__ == '__main__':
     p.add_argument('--rollout', type=int, default=64)
     p.add_argument('--resume', action='store_true')
     p = sub.add_parser('benchmark')
-    p.add_argument('--seeds', type=int, nargs='+', default=[1901,1902,1903])
+    p.add_argument('--seeds', type=int, nargs='+', default=[2901,2902,2903])
     p.add_argument('--seconds', type=int, default=300)
     p.add_argument('--scales', type=float, nargs='+', default=[1.0,1.75])
     p.add_argument('--modes', nargs='+', default=['fixed_time','max_pressure','mpc','hybrid'])

@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<configuration>
+  <input>
+    <net-file value="corridor.net.xml" />
+    <route-files value="corridor.legacy-saturated.rou.xml" />
+  </input>
+  <time>
+    <begin value="0" />
+    <step-length value="1" />
+  </time>
+  <processing>
+    <time-to-teleport value="-1" />
+  </processing>
+</configuration>
