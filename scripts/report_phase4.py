@@ -13,14 +13,14 @@ def write(name,text):
 
 
 def main():
-    training=json.loads((DATA/'training-summary.json').read_text())
-    benchmark=json.loads((DATA/'benchmark-summary.json').read_text())
-    qualification=json.loads((DATA/'policy-qualification.json').read_text())
-    replay=json.loads((RAW/'reproducibility.json').read_text())
-    resource=json.loads((RAW/'neural-update-resource-probe.json').read_text())
+    training=json.loads((DATA/'training-summary.json').read_text(encoding='utf-8'))
+    benchmark=json.loads((DATA/'benchmark-summary.json').read_text(encoding='utf-8'))
+    qualification=json.loads((DATA/'policy-qualification.json').read_text(encoding='utf-8'))
+    replay=json.loads((RAW/'reproducibility.json').read_text(encoding='utf-8'))
+    resource=json.loads((RAW/'neural-update-resource-probe.json').read_text(encoding='utf-8'))
     test=ET.parse(RAW/'backend-final.xml').getroot().find('testsuite')
     tests=f"{test.get('tests')} tests, {test.get('failures')} failures, {test.get('errors')} errors, {test.get('skipped')} skipped, {float(test.get('time')):.2f} s"
-    emergency=json.loads((RAW/'emergency-demo.json').read_text())['results'][0]['emergency']
+    emergency=json.loads((RAW/'emergency-demo.json').read_text(encoding='utf-8'))['results'][0]['emergency']
     table='| Model seed | Episode seeds | Decisions | Wall seconds | First / last critic loss | Final checkpoint |\n|---|---|---:|---:|---|---|\n'
     for r in training:
         table+=f"| {r['modelSeed']} | {r['updates'][0]['episodeSeed']}-{r['updates'][-1]['episodeSeed']} | {r['trainedDecisionSteps']} | {r['elapsedSeconds']:.2f} | {r['updates'][0]['valueLoss']:.2f} / {r['updates'][-1]['valueLoss']:.2f} | update-0016.pt |\n"
@@ -84,11 +84,15 @@ Native SUMO fixed-time uses42s green /3s yellow /42s green /3s yellow, without e
 {paired}
 Three seeds support descriptive variability, not a claim of statistical significance or general traffic superiority. Seed/demand partitions were recorded before testing; the selected checkpoint was frozen using separate selection seeds1801-1803 at demand1.0. Other candidates were not selected using final test data.
 
+No untrained-actor or constant-hold/release ablation was run. Any measured candidate benefit is therefore a property of this saved checkpoint/controller combination; it does not prove that learning, rather than initialization or a static timing preference, caused the benefit. Those controls are required before attributing gains specifically to MAPPO learning.
+
 ![Benchmarks](research/phase4/plots/benchmarks.png)
 
 ## Measurement definitions and limitations
 
 Vehicle delay is completed-trip SUMO `timeLoss`, distinct from waiting time and insertion delay. Unfinished trips are right-censored and listed separately. `meanObservedTimeLossIncludingUnfinished` records partial observed timeLoss, not eventual full-trip delay. `meanDepartDelaySeconds` reports insertion delay for recorded trips; vehicles still waiting to depart may be absent. Different controllers can change insertion capacity even with matched configured demand. No demand-normalized superiority inference is made.
+
+These experiments use SUMO observations/state estimates and measured-arrival fallback; no genuine historical/weather dataset or camera-derived control input was enabled. They do not measure forecasting accuracy, camera errors or robustness to changed perception/weather. Those integrations remain verified demonstration paths rather than experimentally validated performance factors here.
 
 Queues are halted approach vehicles summed over both junctions, sampled every second; report time mean and maximum. Throughput is actual arrivals ×3600/300. Waiting fairness is reported as completed-trip mean/p95/max waiting, maximum approach mean wait, maximum service age, and descriptive waiting Gini including unfinished recorded trips. Spillback is downstream-edge indicator seconds. These proxies are not proof of fairness or network stability.
 
@@ -128,7 +132,7 @@ Operationally retain supervised Max-Pressure +constrained MPC and the existing d
 
 1. Diagnose critic fit and actor gradient magnitude. Compare reward scaling/value normalization and separate actor/critic optimization on training/selection data, with controlled ablations. Large raw targets and shared gradient clipping may suppress actor updates; this is a hypothesis, not an established cause. Preserve the current runs before changing reward or optimization.
 2. Extend episode duration, training coverage and decision budget according to measured learning progress. Compare multiple independent model seeds and select only using designated development data.1024 decisions per model is limited experience. Do not treat it as a universal sufficient-training threshold.
-3. Revisit the release/hold hint interface only through controlled experiments. Quantify how often MPC accepts or overrides each hint; a weak hint penalty may yield behavior indistinguishable from MPC. Never strengthen hints by weakening safety/fairness/emergency constraints.
+3. Revisit the release/hold hint interface only through controlled experiments. Compare untrained actor,constant-hold,constant-release and trained hints against the same MPC; quantify how often hints affect timing and actual traffic outcomes. A checkpoint benefit alone cannot establish that learning caused it. Never strengthen hints by weakening safety/fairness/emergency constraints.
 4. Build candidate evaluation coverage for combined corridor pedestrians/emergencies, sustained spillback, sensor faults and solver timeouts. Current separate baseline regressions do not qualify a learned policy for these cases.
 5. Allocate fresh final-test seeds/scenarios before the next model selection. Expand horizons, demand families and topologies; evaluate warm-up and right-censoring sensitivity, insertion backlog and per-vehicle/movement fairness. Use more repeats and a predeclared statistical analysis before significance claims.
 6. Calibrate arrival/saturation/receiving models, PCU weights and forecast uncertainty with genuine data. Camera field accuracy, metric calibration, live hardware, historical forecast accuracy and adverse-weather generalization remain outside this experiment.
@@ -157,17 +161,17 @@ Startup remains `./backend/.venv/Scripts/python.exe scripts/run_dev.py`; operati
 
 Git for Windows2.55.0.windows.5 is installed at `C:/Program Files/Git/cmd/git.exe`. New shells inherit its installed machine PATH; existing shells may need restarting or the absolute path. The original export had no Git history. Local tag `stage3-verified-demo` preserves all167 manifest files byte-for-byte in its initial commit; later commits preserve research changes. No force-push, remote or publication occurred.
 
-Stage3 source/artifact archives, their separate copies, ZIP CRCs and every manifest entry were verified before changes. The final Phase4 recovery pointer `.checkpoints/PHASE4_RECOVERY.json` lists source/artifact archives and a Git bundle, exact hashes and separate copies. Research artifacts include every update checkpoint, raw tripinfo, training/configuration logs, qualification,tests and environment freeze. Original Stage1/2/3 recovery copies remain untouched. Separate copies are on the same machine, not off-device backups.
+Stage3 source/artifact archives, their separate copies, ZIP CRCs and every manifest entry were verified before changes. The final Phase4 recovery pointer `.checkpoints/PHASE4_RECOVERY.json` lists source/artifact archives and a Git bundle, exact hashes and separate copies. Research artifacts include every update checkpoint, raw tripinfo, training/configuration logs, qualification,tests,environment freeze and the available recorded-video/YOLO assets. Original Stage1/2/3 recovery copies remain untouched. Separate copies are on the same machine, not off-device backups.
 
 Restore source into a new empty folder; verify SHA-256 and CHECKPOINT_MANIFEST.json before extracting matching artifacts. Never extract over current work. For Git history use `git clone <bundle-path> <new-folder>`; do not initialize over another repository. Install dependencies and rerun checks using RUN_INSTRUCTIONS.md. Templates/Dockerfile/extensionless public assets are now included by the source archiver; personal.env credentials remain excluded. Never enable unqualified saved weights. Keep checkpoint/architecture hashes intact; Git line-ending conversion or controller edits can invalidate byte-based qualification fingerprints, requiring fresh validation.
 
 ---
 
 '''
-    p=ROOT/'RECOVERY_GUIDE.md'; old=p.read_text()
+    p=ROOT/'RECOVERY_GUIDE.md'; old=p.read_text(encoding='utf-8')
     if old.startswith('# Phase 4 recovery and Git update'): old=old.split('\n---\n\n',1)[1]
     p.write_text(recovery+old,encoding='utf-8')
-    p=ROOT/'RUN_INSTRUCTIONS.md'; old=p.read_text()
+    p=ROOT/'RUN_INSTRUCTIONS.md'; old=p.read_text(encoding='utf-8')
     if not old.startswith('# Phase 4 research commands'):
         p.write_text('''# Phase 4 research commands
 

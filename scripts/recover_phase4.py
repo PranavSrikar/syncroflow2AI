@@ -41,6 +41,7 @@ def recover(label='final'):
     paths=[p for folder in (ROOT/'.checkpoints/phase4-final',ROOT/'.checkpoints/phase4')
            for p in folder.rglob('*') if p.is_file() and p.suffix!='.tmp']
     paths += [ROOT/f'.checkpoints/{n}' for n in ('STAGE1_RECOVERY.json','STAGE2_RECOVERY.json','STAGE3_RECOVERY.json','phase4-recovery-audit.json')]
+    paths += [p for p in (ROOT/f'.checkpoints/perception/{n}' for n in ('road.mp4','yolo11n.pt','cameras-api.json')) if p.is_file()]
     manifest={}
     with zipfile.ZipFile(artifacts,'x',compression=zipfile.ZIP_DEFLATED) as z:
         for p in sorted(paths):

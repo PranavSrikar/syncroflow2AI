@@ -1,0 +1,4514 @@
+{
+  "checkpointSha256": "4a0ed2c8ffc4fda5bc9b96c5b22d0d8d9806bc8446caf09840b2f6fe13e54929",
+  "architectureFingerprint": "30951bfc017ad222d26c7b3457d3e46b1d9fc834ea9bc1e8d565b921f75edaff",
+  "trainedDecisionSteps": 1024,
+  "numericalChecksPassed": true,
+  "eligibleForEvaluation": false,
+  "minimumDecisionSteps": 1024,
+  "status": "not_qualified_keep_operational_policy_disabled",
+  "usefulnessEstablished": false,
+  "validationScope": "Finite deterministic inference plus held-out closed-loop supervisor/clearance/conflict/fairness checks; no performance certification",
+  "safetyValidationPassed": true,
+  "performanceValidation": {
+    "passed": false,
+    "checks": [
+      {
+        "name": "no_delay_regression_over_5pct_d0.75_s1901",
+        "passed": true
+      },
+      {
+        "name": "no_throughput_loss_over_2pct_d0.75_s1901",
+        "passed": true
+      },
+      {
+        "name": "no_service_age_increase_d0.75_s1901",
+        "passed": true
+      },
+      {
+        "name": "no_safety_fault_or_rejection_d0.75_s1901",
+        "passed": true
+      },
+      {
+        "name": "no_delay_regression_over_5pct_d0.75_s1902",
+        "passed": true
+      },
+      {
+        "name": "no_throughput_loss_over_2pct_d0.75_s1902",
+        "passed": true
+      },
+      {
+        "name": "no_service_age_increase_d0.75_s1902",
+        "passed": true
+      },
+      {
+        "name": "no_safety_fault_or_rejection_d0.75_s1902",
+        "passed": true
+      },
+      {
+        "name": "no_delay_regression_over_5pct_d0.75_s1903",
+        "passed": true
+      },
+      {
+        "name": "no_throughput_loss_over_2pct_d0.75_s1903",
+        "passed": true
+      },
+      {
+        "name": "no_service_age_increase_d0.75_s1903",
+        "passed": true
+      },
+      {
+        "name": "no_safety_fault_or_rejection_d0.75_s1903",
+        "passed": true
+      },
+      {
+        "name": "at_least_2pct_mean_delay_reduction_d0.75",
+        "passed": false,
+        "measuredReductionPercent": -0.06695432170466656
+      },
+      {
+        "name": "no_delay_regression_over_5pct_d1.75_s1901",
+        "passed": true
+      },
+      {
+        "name": "no_throughput_loss_over_2pct_d1.75_s1901",
+        "passed": true
+      },
+      {
+        "name": "no_service_age_increase_d1.75_s1901",
+        "passed": true
+      },
+      {
+        "name": "no_safety_fault_or_rejection_d1.75_s1901",
+        "passed": true
+      },
+      {
+        "name": "no_delay_regression_over_5pct_d1.75_s1902",
+        "passed": true
+      },
+      {
+        "name": "no_throughput_loss_over_2pct_d1.75_s1902",
+        "passed": true
+      },
+      {
+        "name": "no_service_age_increase_d1.75_s1902",
+        "passed": true
+      },
+      {
+        "name": "no_safety_fault_or_rejection_d1.75_s1902",
+        "passed": true
+      },
+      {
+        "name": "no_delay_regression_over_5pct_d1.75_s1903",
+        "passed": true
+      },
+      {
+        "name": "no_throughput_loss_over_2pct_d1.75_s1903",
+        "passed": true
+      },
+      {
+        "name": "no_service_age_increase_d1.75_s1903",
+        "passed": true
+      },
+      {
+        "name": "no_safety_fault_or_rejection_d1.75_s1903",
+        "passed": true
+      },
+      {
+        "name": "at_least_2pct_mean_delay_reduction_d1.75",
+        "passed": false,
+        "measuredReductionPercent": 0.37398398253164244
+      },
+      {
+        "name": "candidate_combined_pedestrian_emergency_validation",
+        "passed": false,
+        "reason": "Corridor has neither pedestrians nor emergency arrivals; baseline regressions are separate"
+      }
+    ],
+    "pairedComparisons": [
+      {
+        "seed": 1901,
+        "demandScale": 0.75,
+        "delayRatio": 1.0,
+        "delayDifferenceSeconds": 0.0,
+        "throughputDifference": 0
+      },
+      {
+        "seed": 1902,
+        "demandScale": 0.75,
+        "delayRatio": 1.0021035348554552,
+        "delayDifferenceSeconds": 0.04957286432160757,
+        "throughputDifference": 0
+      },
+      {
+        "seed": 1903,
+        "demandScale": 0.75,
+        "delayRatio": 1.0,
+        "delayDifferenceSeconds": 0.0,
+        "throughputDifference": 0
+      },
+      {
+        "seed": 1901,
+        "demandScale": 1.75,
+        "delayRatio": 1.000007235641322,
+        "delayDifferenceSeconds": 0.00019950124688250526,
+        "throughputDifference": 0
+      },
+      {
+        "seed": 1902,
+        "demandScale": 1.75,
+        "delayRatio": 0.9883599906476818,
+        "delayDifferenceSeconds": -0.2778158081771629,
+        "throughputDifference": 3
+      },
+      {
+        "seed": 1903,
+        "demandScale": 1.75,
+        "delayRatio": 1.0,
+        "delayDifferenceSeconds": 0.0,
+        "throughputDifference": 0
+      }
+    ],
+    "protocol": "PHASE4_EXPERIMENT_PLAN.md"
+  },
+  "closedLoopValidation": {
+    "seeds": [
+      1951,
+      1952,
+      1953
+    ],
+    "secondsPerSeed": 240,
+    "safetyFaults": 0,
+    "trials": [
+      {
+        "seed": 1951,
+        "simTime": 240.0,
+        "supervisors": {
+          "A0": {
+            "status": "enforcing_vehicle_timing",
+            "reason": "Validated cyclic program; green/yellow/all-red bounds and red fairness gate; clearance occupancy hold",
+            "acceptedActions": 140,
+            "rejectedActions": 0,
+            "decisions": [
+              {
+                "simTime": 80.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 81.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 82.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 83.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 84.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 85.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 86.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 87.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 88.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 89.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 90.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 91.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 92.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 93.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 94.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 95.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 96.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 97.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 98.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 99.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 100.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 101.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 102.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 9.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 103.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 8.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 104.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 7.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 105.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 6.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 106.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 5.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 107.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 4.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 108.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 3.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 109.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 2.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 110.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 1.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 126.0,
+                "accepted": true,
+                "phaseIndex": 3,
+                "remainingSec": 1.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 142.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 143.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 144.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 145.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 146.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 147.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 148.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 149.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 150.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 151.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 152.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 153.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 154.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 155.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 156.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 157.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 158.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 159.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 160.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 161.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 162.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 163.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 164.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 165.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 166.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 167.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 168.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 9.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 169.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 8.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 170.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 7.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 171.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 6.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 172.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 5.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 173.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 4.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 174.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 3.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 175.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 2.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 176.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 1.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 192.0,
+                "accepted": true,
+                "phaseIndex": 3,
+                "remainingSec": 1.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 208.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 209.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 210.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 211.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 212.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 213.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 214.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 215.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 216.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 217.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 218.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 219.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 220.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 221.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 222.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 223.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 224.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 225.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 226.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 227.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 228.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 229.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 230.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 231.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 232.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 233.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 234.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 9.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 235.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 8.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 236.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 7.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 237.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 6.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 238.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 5.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 239.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 4.0,
+                "reason": "constrained_mpc"
+              }
+            ],
+            "lastDecision": {
+              "accepted": true,
+              "phaseIndex": 0,
+              "remainingSec": 4.0,
+              "reason": "constrained_mpc"
+            },
+            "pedestrianAdaptiveControl": "disabled"
+          },
+          "B0": {
+            "status": "enforcing_vehicle_timing",
+            "reason": "Validated cyclic program; green/yellow/all-red bounds and red fairness gate; clearance occupancy hold",
+            "acceptedActions": 140,
+            "rejectedActions": 0,
+            "decisions": [
+              {
+                "simTime": 80.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 81.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 82.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 83.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 84.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 85.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 86.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 87.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 88.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 89.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 90.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 91.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 92.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 93.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 94.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 95.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 96.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 97.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 98.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 99.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 100.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 101.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 102.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 9.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 103.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 8.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 104.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 7.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 105.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 6.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 106.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 5.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 107.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 4.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 108.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 3.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 109.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 2.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 110.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 1.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 126.0,
+                "accepted": true,
+                "phaseIndex": 3,
+                "remainingSec": 1.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 142.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 143.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 144.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 145.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 146.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 147.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 148.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 149.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 150.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 151.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 152.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 153.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 154.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 155.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 156.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 157.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 158.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 159.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 160.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 161.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 162.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 163.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 164.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 165.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 166.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 167.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 168.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 9.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 169.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 8.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 170.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 7.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 171.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 6.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 172.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 5.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 173.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 4.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 174.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 3.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 175.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 2.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 176.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 1.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 192.0,
+                "accepted": true,
+                "phaseIndex": 3,
+                "remainingSec": 1.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 208.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 209.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 210.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 211.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 212.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 213.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 214.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 215.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 216.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 217.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 218.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 219.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 220.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 221.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 222.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 223.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 224.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 225.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 226.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 227.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 228.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 229.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 230.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 231.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 232.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 233.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 234.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 9.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 235.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 8.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 236.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 7.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 237.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 6.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 238.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 5.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 239.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 4.0,
+                "reason": "constrained_mpc"
+              }
+            ],
+            "lastDecision": {
+              "accepted": true,
+              "phaseIndex": 0,
+              "remainingSec": 4.0,
+              "reason": "constrained_mpc"
+            },
+            "pedestrianAdaptiveControl": "disabled"
+          }
+        }
+      },
+      {
+        "seed": 1952,
+        "simTime": 240.0,
+        "supervisors": {
+          "A0": {
+            "status": "enforcing_vehicle_timing",
+            "reason": "Validated cyclic program; green/yellow/all-red bounds and red fairness gate; clearance occupancy hold",
+            "acceptedActions": 140,
+            "rejectedActions": 0,
+            "decisions": [
+              {
+                "simTime": 80.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 81.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 82.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 83.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 84.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 85.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 86.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 87.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 88.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 89.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 90.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 91.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 92.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 93.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 94.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 95.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 96.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 97.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 98.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 99.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 100.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 101.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 102.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 9.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 103.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 8.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 104.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 7.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 105.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 6.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 106.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 5.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 107.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 4.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 108.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 3.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 109.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 2.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 110.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 1.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 126.0,
+                "accepted": true,
+                "phaseIndex": 3,
+                "remainingSec": 1.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 142.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 143.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 144.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 145.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 146.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 147.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 148.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 149.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 150.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 151.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 152.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 153.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 154.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 155.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 156.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 157.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 158.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 159.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 160.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 161.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 162.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 163.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 164.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 165.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 166.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 167.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 168.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 9.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 169.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 8.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 170.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 7.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 171.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 6.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 172.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 5.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 173.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 4.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 174.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 3.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 175.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 2.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 176.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 1.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 192.0,
+                "accepted": true,
+                "phaseIndex": 3,
+                "remainingSec": 1.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 208.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 209.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 210.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 211.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 212.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 213.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 214.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 215.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 216.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 217.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 218.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 219.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 220.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 221.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 222.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 223.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 224.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 225.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 226.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 227.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 228.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 229.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 230.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 231.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 232.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 233.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 234.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 9.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 235.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 8.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 236.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 7.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 237.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 6.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 238.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 5.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 239.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 4.0,
+                "reason": "constrained_mpc"
+              }
+            ],
+            "lastDecision": {
+              "accepted": true,
+              "phaseIndex": 0,
+              "remainingSec": 4.0,
+              "reason": "constrained_mpc"
+            },
+            "pedestrianAdaptiveControl": "disabled"
+          },
+          "B0": {
+            "status": "enforcing_vehicle_timing",
+            "reason": "Validated cyclic program; green/yellow/all-red bounds and red fairness gate; clearance occupancy hold",
+            "acceptedActions": 140,
+            "rejectedActions": 0,
+            "decisions": [
+              {
+                "simTime": 80.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 81.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 82.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 83.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 84.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 85.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 86.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 87.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 88.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 89.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 90.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 91.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 92.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 93.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 94.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 95.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 96.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 97.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 98.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 99.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 100.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 101.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 102.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 9.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 103.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 8.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 104.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 7.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 105.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 6.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 106.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 5.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 107.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 4.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 108.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 3.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 109.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 2.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 110.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 1.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 126.0,
+                "accepted": true,
+                "phaseIndex": 3,
+                "remainingSec": 1.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 142.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 143.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 144.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 145.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 146.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 147.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 148.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 149.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 150.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 151.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 152.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 153.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 154.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 155.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 156.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 157.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 158.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 159.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 160.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 161.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 162.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 163.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 164.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 165.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 166.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 167.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 168.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 9.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 169.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 8.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 170.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 7.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 171.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 6.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 172.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 5.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 173.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 4.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 174.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 3.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 175.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 2.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 176.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 1.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 192.0,
+                "accepted": true,
+                "phaseIndex": 3,
+                "remainingSec": 1.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 208.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 209.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 210.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 211.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 212.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 213.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 214.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 215.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 216.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 217.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 218.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 219.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 220.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 221.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 222.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 223.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 224.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 225.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 226.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 227.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 228.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 229.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 230.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 231.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 232.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 233.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 234.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 9.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 235.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 8.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 236.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 7.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 237.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 6.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 238.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 5.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 239.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 4.0,
+                "reason": "constrained_mpc"
+              }
+            ],
+            "lastDecision": {
+              "accepted": true,
+              "phaseIndex": 0,
+              "remainingSec": 4.0,
+              "reason": "constrained_mpc"
+            },
+            "pedestrianAdaptiveControl": "disabled"
+          }
+        }
+      },
+      {
+        "seed": 1953,
+        "simTime": 240.0,
+        "supervisors": {
+          "A0": {
+            "status": "enforcing_vehicle_timing",
+            "reason": "Validated cyclic program; green/yellow/all-red bounds and red fairness gate; clearance occupancy hold",
+            "acceptedActions": 140,
+            "rejectedActions": 0,
+            "decisions": [
+              {
+                "simTime": 80.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 81.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 82.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 83.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 84.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 85.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 86.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 87.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 88.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 89.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 90.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 91.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 92.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 93.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 94.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 95.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 96.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 97.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 98.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 99.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 100.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 101.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 102.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 9.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 103.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 8.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 104.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 7.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 105.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 6.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 106.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 5.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 107.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 4.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 108.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 3.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 109.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 2.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 110.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 1.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 126.0,
+                "accepted": true,
+                "phaseIndex": 3,
+                "remainingSec": 2.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 127.0,
+                "accepted": true,
+                "phaseIndex": 3,
+                "remainingSec": 2.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 128.0,
+                "accepted": true,
+                "phaseIndex": 3,
+                "remainingSec": 1.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 144.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 145.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 146.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 147.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 148.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 149.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 150.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 151.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 152.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 153.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 154.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 155.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 156.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 157.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 158.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 159.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 160.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 161.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 162.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 163.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 164.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 165.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 166.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 167.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 168.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 169.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 170.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 9.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 171.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 8.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 172.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 7.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 173.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 6.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 174.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 5.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 175.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 4.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 176.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 3.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 177.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 2.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 178.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 1.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 194.0,
+                "accepted": true,
+                "phaseIndex": 3,
+                "remainingSec": 1.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 210.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 211.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 212.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 213.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 214.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 215.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 216.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 217.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 218.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 219.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 220.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 221.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 222.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 223.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 224.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 225.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 226.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 227.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 228.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 229.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 230.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 231.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 232.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 233.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 234.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 235.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 236.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 9.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 237.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 8.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 238.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 7.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 239.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 6.0,
+                "reason": "constrained_mpc"
+              }
+            ],
+            "lastDecision": {
+              "accepted": true,
+              "phaseIndex": 0,
+              "remainingSec": 6.0,
+              "reason": "constrained_mpc"
+            },
+            "pedestrianAdaptiveControl": "disabled"
+          },
+          "B0": {
+            "status": "enforcing_vehicle_timing",
+            "reason": "Validated cyclic program; green/yellow/all-red bounds and red fairness gate; clearance occupancy hold",
+            "acceptedActions": 139,
+            "rejectedActions": 0,
+            "decisions": [
+              {
+                "simTime": 80.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 81.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 82.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 83.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 84.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 85.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 86.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 87.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 88.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 89.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 90.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 91.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 92.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 93.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 94.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 95.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 96.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 97.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 98.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 99.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 100.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 101.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 102.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 9.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 103.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 8.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 104.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 7.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 105.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 6.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 106.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 5.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 107.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 4.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 108.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 3.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 109.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 2.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 110.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 1.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 126.0,
+                "accepted": true,
+                "phaseIndex": 3,
+                "remainingSec": 1.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 142.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 143.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 144.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 145.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 146.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 147.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 148.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 149.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 150.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 151.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 152.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 153.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 154.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 155.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 156.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 157.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 158.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 159.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 160.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 161.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 162.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 163.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 164.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 165.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 166.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 167.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 168.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 9.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 169.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 8.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 170.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 7.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 171.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 6.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 172.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 5.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 173.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 4.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 174.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 3.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 175.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 2.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 176.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 1.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 192.0,
+                "accepted": true,
+                "phaseIndex": 3,
+                "remainingSec": 1.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 208.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 209.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 210.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 211.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 212.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 213.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 214.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 215.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 216.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 217.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 218.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 219.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 220.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 221.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 222.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 223.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 224.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 225.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 226.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 227.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 228.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 229.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 230.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 231.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 232.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 233.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 10.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 234.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 9.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 235.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 8.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 236.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 7.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 237.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 6.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 238.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 5.0,
+                "reason": "constrained_mpc"
+              },
+              {
+                "simTime": 239.0,
+                "accepted": true,
+                "phaseIndex": 0,
+                "remainingSec": 4.0,
+                "reason": "constrained_mpc"
+              }
+            ],
+            "lastDecision": {
+              "accepted": true,
+              "phaseIndex": 0,
+              "remainingSec": 4.0,
+              "reason": "constrained_mpc"
+            },
+            "pedestrianAdaptiveControl": "disabled"
+          }
+        }
+      }
+    ]
+  },
+  "selection": {
+    "scores": {
+      ".checkpoints\\phase4-final\\train-21\\update-0016.pt": 24.40923887447312,
+      ".checkpoints\\phase4-final\\train-31\\update-0016.pt": 24.76791607274954,
+      ".checkpoints\\phase4-final\\train-41\\update-0016.pt": 26.77893174645156
+    },
+    "selectedCheckpoint": ".checkpoints\\phase4-final\\train-21\\update-0016.pt",
+    "checkpointSha256": "4a0ed2c8ffc4fda5bc9b96c5b22d0d8d9806bc8446caf09840b2f6fe13e54929",
+    "selectionSeeds": [
+      1801,
+      1802,
+      1803
+    ],
+    "testSeeds": [
+      1901,
+      1902,
+      1903
+    ],
+    "criterion": "lowest mean completed-trip timeLoss; model-seed tie break",
+    "frozenBeforeFinalTesting": true
+  },
+  "operationallyEnabled": false
+}

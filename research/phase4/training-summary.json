@@ -1,0 +1,869 @@
+[
+  {
+    "modelSeed": 21,
+    "rolloutSteps": 64,
+    "decisionSeconds": 5,
+    "gamma": 0.99,
+    "gaeLambda": 0.95,
+    "learningRate": 0.0003,
+    "epochs": 4,
+    "clip": 0.2,
+    "entropyCoefficient": 0.01,
+    "observationRepresentation": "occupancy_fraction_corrected_stage3",
+    "provenance": {
+      "python": "3.11.9",
+      "torch": "2.14.1+cpu",
+      "numpy": "1.26.4",
+      "cuda": false,
+      "logicalCPUs": 12,
+      "architectureFingerprint": "30951bfc017ad222d26c7b3457d3e46b1d9fc834ea9bc1e8d565b921f75edaff",
+      "sourceHashes": {
+        "scripts\\research_phase4.py": "d93c2ec4eaeb3a9e79530c7279cc1481d4575772b41a2888efb7a2559b37deac",
+        "backend\\app\\rl\\sumo_env.py": "db391854dbe3a65a4d151881561a4c27e035e798a8f2bacaef670b5c60e2323e",
+        "backend\\sumo_scenarios\\two_junction\\corridor.rou.xml": "31f2d3962541e3ea11f9ac6d9025a6df0ce196299b2d8f848ae2fcd410bb5da2"
+      }
+    },
+    "startedUtc": "2026-10-22T19:01:27.163373+00:00",
+    "updates": [
+      {
+        "update": 1,
+        "episodeSeed": 21000,
+        "trainedDecisionSteps": 64,
+        "reward": [
+          -1504.3634033203125,
+          -1467.693603515625
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 116.59730350004975,
+        "arrivedVehicles": 439,
+        "actorLoss": -0.0010616909712553024,
+        "valueLoss": 116384.28125,
+        "entropy": 0.6663923263549805,
+        "gradientNorm": 376.590087890625
+      },
+      {
+        "update": 2,
+        "episodeSeed": 21001,
+        "trainedDecisionSteps": 128,
+        "reward": [
+          -1595.6331787109375,
+          -1509.8116455078125
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 123.65249420003965,
+        "arrivedVehicles": 429,
+        "actorLoss": -0.000458763912320137,
+        "valueLoss": 128166.5859375,
+        "entropy": 0.6646777391433716,
+        "gradientNorm": 397.177734375
+      },
+      {
+        "update": 3,
+        "episodeSeed": 21002,
+        "trainedDecisionSteps": 192,
+        "reward": [
+          -1518.1134033203125,
+          -1529.7635498046875
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 125.1161134999711,
+        "arrivedVehicles": 437,
+        "actorLoss": -0.0025159642100334167,
+        "valueLoss": 122899.7421875,
+        "entropy": 0.6679807305335999,
+        "gradientNorm": 388.9593505859375
+      },
+      {
+        "update": 4,
+        "episodeSeed": 21003,
+        "trainedDecisionSteps": 256,
+        "reward": [
+          -1598.335205078125,
+          -1602.743408203125
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 125.62140689999796,
+        "arrivedVehicles": 442,
+        "actorLoss": -0.00206625834107399,
+        "valueLoss": 136279.1875,
+        "entropy": 0.6726387143135071,
+        "gradientNorm": 413.86956787109375
+      },
+      {
+        "update": 5,
+        "episodeSeed": 21004,
+        "trainedDecisionSteps": 320,
+        "reward": [
+          -1542.943603515625,
+          -1557.27490234375
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 117.7873668000102,
+        "arrivedVehicles": 434,
+        "actorLoss": -0.00041482970118522644,
+        "valueLoss": 125638.671875,
+        "entropy": 0.6766140460968018,
+        "gradientNorm": 399.7544860839844
+      },
+      {
+        "update": 6,
+        "episodeSeed": 21005,
+        "trainedDecisionSteps": 384,
+        "reward": [
+          -1480.94482421875,
+          -1539.103271484375
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 117.27693960000761,
+        "arrivedVehicles": 442,
+        "actorLoss": -0.0011356575414538383,
+        "valueLoss": 121645.875,
+        "entropy": 0.6792040467262268,
+        "gradientNorm": 397.7510681152344
+      },
+      {
+        "update": 7,
+        "episodeSeed": 21006,
+        "trainedDecisionSteps": 448,
+        "reward": [
+          -1505.99365234375,
+          -1494.2235107421875
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 114.23311900009867,
+        "arrivedVehicles": 433,
+        "actorLoss": -0.0005297483876347542,
+        "valueLoss": 118849.140625,
+        "entropy": 0.6816375255584717,
+        "gradientNorm": 398.3733215332031
+      },
+      {
+        "update": 8,
+        "episodeSeed": 21007,
+        "trainedDecisionSteps": 512,
+        "reward": [
+          -1550.9151611328125,
+          -1550.3333740234375
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 116.56286930001806,
+        "arrivedVehicles": 428,
+        "actorLoss": 0.0002327198162674904,
+        "valueLoss": 126703.75,
+        "entropy": 0.6828956604003906,
+        "gradientNorm": 420.8167724609375
+      },
+      {
+        "update": 9,
+        "episodeSeed": 21008,
+        "trainedDecisionSteps": 576,
+        "reward": [
+          -1538.9033203125,
+          -1585.6234130859375
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 121.96311530005187,
+        "arrivedVehicles": 445,
+        "actorLoss": -0.0002469089813530445,
+        "valueLoss": 129021.2421875,
+        "entropy": 0.6827279329299927,
+        "gradientNorm": 433.5418701171875
+      },
+      {
+        "update": 10,
+        "episodeSeed": 21009,
+        "trainedDecisionSteps": 640,
+        "reward": [
+          -1652.86328125,
+          -1578.68017578125
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 118.14589869999327,
+        "arrivedVehicles": 434,
+        "actorLoss": -0.0005564652383327484,
+        "valueLoss": 137508.625,
+        "entropy": 0.6827901601791382,
+        "gradientNorm": 457.4028015136719
+      },
+      {
+        "update": 11,
+        "episodeSeed": 21010,
+        "trainedDecisionSteps": 704,
+        "reward": [
+          -1535.7034912109375,
+          -1514.3631591796875
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 107.53858649998438,
+        "arrivedVehicles": 437,
+        "actorLoss": -0.00039146095514297485,
+        "valueLoss": 122636.09375,
+        "entropy": 0.6819822788238525,
+        "gradientNorm": 440.5538635253906
+      },
+      {
+        "update": 12,
+        "episodeSeed": 21011,
+        "trainedDecisionSteps": 768,
+        "reward": [
+          -1487.7333984375,
+          -1518.5849609375
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 108.1078467000043,
+        "arrivedVehicles": 442,
+        "actorLoss": -0.0025300299748778343,
+        "valueLoss": 119177.015625,
+        "entropy": 0.6832422018051147,
+        "gradientNorm": 446.8749694824219
+      },
+      {
+        "update": 13,
+        "episodeSeed": 21012,
+        "trainedDecisionSteps": 832,
+        "reward": [
+          -1519.383544921875,
+          -1506.5736083984375
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 108.51571030006744,
+        "arrivedVehicles": 434,
+        "actorLoss": -0.0007067006081342697,
+        "valueLoss": 120806.6171875,
+        "entropy": 0.6852664351463318,
+        "gradientNorm": 462.2032470703125
+      },
+      {
+        "update": 14,
+        "episodeSeed": 21013,
+        "trainedDecisionSteps": 896,
+        "reward": [
+          -1517.7884521484375,
+          -1582.42333984375
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 110.58523470000364,
+        "arrivedVehicles": 432,
+        "actorLoss": -6.431993097066879e-05,
+        "valueLoss": 126871.625,
+        "entropy": 0.6866141557693481,
+        "gradientNorm": 489.2012023925781
+      },
+      {
+        "update": 15,
+        "episodeSeed": 21014,
+        "trainedDecisionSteps": 960,
+        "reward": [
+          -1546.34326171875,
+          -1522.4532470703125
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 106.5461625000462,
+        "arrivedVehicles": 435,
+        "actorLoss": 0.00014429818838834763,
+        "valueLoss": 124076.46875,
+        "entropy": 0.6872197389602661,
+        "gradientNorm": 498.05657958984375
+      },
+      {
+        "update": 16,
+        "episodeSeed": 21015,
+        "trainedDecisionSteps": 1024,
+        "reward": [
+          -1510.2532958984375,
+          -1505.5333251953125
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 106.04723060003016,
+        "arrivedVehicles": 440,
+        "actorLoss": -0.00044674985110759735,
+        "valueLoss": 120236.4296875,
+        "entropy": 0.6868451833724976,
+        "gradientNorm": 504.2624206542969
+      }
+    ],
+    "status": "unvalidated_research_candidate",
+    "operationallyEnabled": false,
+    "latestCheckpoint": "C:\\Users\\prana\\Documents\\TrafficRegulationResearch\\syncroflow2AI-main\\.checkpoints\\phase4-final\\train-21\\update-0016.pt",
+    "trainedDecisionSteps": 1024,
+    "elapsedSeconds": 1844.2973981003743
+  },
+  {
+    "modelSeed": 31,
+    "rolloutSteps": 64,
+    "decisionSeconds": 5,
+    "gamma": 0.99,
+    "gaeLambda": 0.95,
+    "learningRate": 0.0003,
+    "epochs": 4,
+    "clip": 0.2,
+    "entropyCoefficient": 0.01,
+    "observationRepresentation": "occupancy_fraction_corrected_stage3",
+    "provenance": {
+      "python": "3.11.9",
+      "torch": "2.14.1+cpu",
+      "numpy": "1.26.4",
+      "cuda": false,
+      "logicalCPUs": 12,
+      "architectureFingerprint": "30951bfc017ad222d26c7b3457d3e46b1d9fc834ea9bc1e8d565b921f75edaff",
+      "sourceHashes": {
+        "scripts\\research_phase4.py": "d93c2ec4eaeb3a9e79530c7279cc1481d4575772b41a2888efb7a2559b37deac",
+        "backend\\app\\rl\\sumo_env.py": "db391854dbe3a65a4d151881561a4c27e035e798a8f2bacaef670b5c60e2323e",
+        "backend\\sumo_scenarios\\two_junction\\corridor.rou.xml": "31f2d3962541e3ea11f9ac6d9025a6df0ce196299b2d8f848ae2fcd410bb5da2"
+      }
+    },
+    "startedUtc": "2026-10-22T19:01:37.444629+00:00",
+    "updates": [
+      {
+        "update": 1,
+        "episodeSeed": 31000,
+        "trainedDecisionSteps": 64,
+        "reward": [
+          -1482.33349609375,
+          -1508.4033203125
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 118.33938999997918,
+        "arrivedVehicles": 443,
+        "actorLoss": -0.0023580649867653847,
+        "valueLoss": 117990.2109375,
+        "entropy": 0.6919342875480652,
+        "gradientNorm": 397.97113037109375
+      },
+      {
+        "update": 2,
+        "episodeSeed": 31001,
+        "trainedDecisionSteps": 128,
+        "reward": [
+          -1579.54833984375,
+          -1539.9766845703125
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 133.52195379999466,
+        "arrivedVehicles": 417,
+        "actorLoss": 4.5632943511009216e-05,
+        "valueLoss": 132179.0,
+        "entropy": 0.6920775771141052,
+        "gradientNorm": 405.1615905761719
+      },
+      {
+        "update": 3,
+        "episodeSeed": 31002,
+        "trainedDecisionSteps": 192,
+        "reward": [
+          -1520.3033447265625,
+          -1529.983642578125
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 122.83816090004984,
+        "arrivedVehicles": 435,
+        "actorLoss": 2.7485191822052002e-05,
+        "valueLoss": 123108.46875,
+        "entropy": 0.6920154094696045,
+        "gradientNorm": 407.2261962890625
+      },
+      {
+        "update": 4,
+        "episodeSeed": 31003,
+        "trainedDecisionSteps": 256,
+        "reward": [
+          -1520.4732666015625,
+          -1531.4132080078125
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 118.73297580005601,
+        "arrivedVehicles": 438,
+        "actorLoss": -0.00047209765762090683,
+        "valueLoss": 123734.484375,
+        "entropy": 0.6919949054718018,
+        "gradientNorm": 410.37835693359375
+      },
+      {
+        "update": 5,
+        "episodeSeed": 31004,
+        "trainedDecisionSteps": 320,
+        "reward": [
+          -1481.693603515625,
+          -1534.473388671875
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 116.26642780005932,
+        "arrivedVehicles": 435,
+        "actorLoss": -0.0006029633805155754,
+        "valueLoss": 120448.625,
+        "entropy": 0.6919053792953491,
+        "gradientNorm": 406.3945007324219
+      },
+      {
+        "update": 6,
+        "episodeSeed": 31005,
+        "trainedDecisionSteps": 384,
+        "reward": [
+          -1463.4833984375,
+          -1526.4732666015625
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 115.60751979995985,
+        "arrivedVehicles": 438,
+        "actorLoss": -0.00025540683418512344,
+        "valueLoss": 118161.3359375,
+        "entropy": 0.6917220950126648,
+        "gradientNorm": 405.1679992675781
+      },
+      {
+        "update": 7,
+        "episodeSeed": 31006,
+        "trainedDecisionSteps": 448,
+        "reward": [
+          -1607.453369140625,
+          -1568.9183349609375
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 118.72565859998576,
+        "arrivedVehicles": 440,
+        "actorLoss": -0.000337027944624424,
+        "valueLoss": 132924.28125,
+        "entropy": 0.6917040348052979,
+        "gradientNorm": 431.1979675292969
+      },
+      {
+        "update": 8,
+        "episodeSeed": 31007,
+        "trainedDecisionSteps": 512,
+        "reward": [
+          -1551.3333740234375,
+          -1516.3133544921875
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 116.3430296999868,
+        "arrivedVehicles": 434,
+        "actorLoss": -0.0004893317818641663,
+        "valueLoss": 125013.6640625,
+        "entropy": 0.6912555694580078,
+        "gradientNorm": 423.6470642089844
+      },
+      {
+        "update": 9,
+        "episodeSeed": 31008,
+        "trainedDecisionSteps": 576,
+        "reward": [
+          -1510.7332763671875,
+          -1486.9833984375
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 114.7556220999686,
+        "arrivedVehicles": 439,
+        "actorLoss": -5.910173058509827e-06,
+        "valueLoss": 118657.1171875,
+        "entropy": 0.6910487413406372,
+        "gradientNorm": 420.7169189453125
+      },
+      {
+        "update": 10,
+        "episodeSeed": 31009,
+        "trainedDecisionSteps": 640,
+        "reward": [
+          -1528.2349853515625,
+          -1500.38330078125
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 114.30643160000909,
+        "arrivedVehicles": 436,
+        "actorLoss": -0.001113911159336567,
+        "valueLoss": 121769.7109375,
+        "entropy": 0.6911243200302124,
+        "gradientNorm": 433.8265686035156
+      },
+      {
+        "update": 11,
+        "episodeSeed": 31010,
+        "trainedDecisionSteps": 704,
+        "reward": [
+          -1531.8333740234375,
+          -1494.9833984375
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 107.19392800005153,
+        "arrivedVehicles": 436,
+        "actorLoss": 0.00042293500155210495,
+        "valueLoss": 121217.2109375,
+        "entropy": 0.6909510493278503,
+        "gradientNorm": 439.24267578125
+      },
+      {
+        "update": 12,
+        "episodeSeed": 31011,
+        "trainedDecisionSteps": 768,
+        "reward": [
+          -1518.543212890625,
+          -1517.08349609375
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 107.87943029997405,
+        "arrivedVehicles": 433,
+        "actorLoss": -0.0002889372408390045,
+        "valueLoss": 121479.921875,
+        "entropy": 0.6908969879150391,
+        "gradientNorm": 447.9707336425781
+      },
+      {
+        "update": 13,
+        "episodeSeed": 31012,
+        "trainedDecisionSteps": 832,
+        "reward": [
+          -1607.7430419921875,
+          -1559.8631591796875
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 112.83064080006443,
+        "arrivedVehicles": 440,
+        "actorLoss": -9.805522859096527e-05,
+        "valueLoss": 131744.671875,
+        "entropy": 0.6909046769142151,
+        "gradientNorm": 475.72406005859375
+      },
+      {
+        "update": 14,
+        "episodeSeed": 31013,
+        "trainedDecisionSteps": 896,
+        "reward": [
+          -1652.8951416015625,
+          -1597.9901123046875
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 115.00859010010026,
+        "arrivedVehicles": 441,
+        "actorLoss": 2.203322947025299e-05,
+        "valueLoss": 139157.625,
+        "entropy": 0.6909867525100708,
+        "gradientNorm": 499.9524230957031
+      },
+      {
+        "update": 15,
+        "episodeSeed": 31014,
+        "trainedDecisionSteps": 960,
+        "reward": [
+          -1662.373291015625,
+          -1608.9200439453125
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 110.30832900002133,
+        "arrivedVehicles": 431,
+        "actorLoss": -0.0005259821191430092,
+        "valueLoss": 140585.46875,
+        "entropy": 0.6909876465797424,
+        "gradientNorm": 517.6572265625
+      },
+      {
+        "update": 16,
+        "episodeSeed": 31015,
+        "trainedDecisionSteps": 1024,
+        "reward": [
+          -1320.2381591796875,
+          -1581.2781982421875
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 110.74494570004754,
+        "arrivedVehicles": 412,
+        "actorLoss": -0.0009469203650951385,
+        "valueLoss": 111412.078125,
+        "entropy": 0.6910579800605774,
+        "gradientNorm": 464.4737243652344
+      }
+    ],
+    "status": "unvalidated_research_candidate",
+    "operationallyEnabled": false,
+    "latestCheckpoint": "C:\\Users\\prana\\Documents\\TrafficRegulationResearch\\syncroflow2AI-main\\.checkpoints\\phase4-final\\train-31\\update-0016.pt",
+    "trainedDecisionSteps": 1024,
+    "elapsedSeconds": 1853.4030340003083
+  },
+  {
+    "modelSeed": 41,
+    "rolloutSteps": 64,
+    "decisionSeconds": 5,
+    "gamma": 0.99,
+    "gaeLambda": 0.95,
+    "learningRate": 0.0003,
+    "epochs": 4,
+    "clip": 0.2,
+    "entropyCoefficient": 0.01,
+    "observationRepresentation": "occupancy_fraction_corrected_stage3",
+    "provenance": {
+      "python": "3.11.9",
+      "torch": "2.14.1+cpu",
+      "numpy": "1.26.4",
+      "cuda": false,
+      "logicalCPUs": 12,
+      "architectureFingerprint": "30951bfc017ad222d26c7b3457d3e46b1d9fc834ea9bc1e8d565b921f75edaff",
+      "sourceHashes": {
+        "scripts\\research_phase4.py": "d93c2ec4eaeb3a9e79530c7279cc1481d4575772b41a2888efb7a2559b37deac",
+        "backend\\app\\rl\\sumo_env.py": "db391854dbe3a65a4d151881561a4c27e035e798a8f2bacaef670b5c60e2323e",
+        "backend\\sumo_scenarios\\two_junction\\corridor.rou.xml": "31f2d3962541e3ea11f9ac6d9025a6df0ce196299b2d8f848ae2fcd410bb5da2"
+      }
+    },
+    "startedUtc": "2026-10-22T19:01:47.820437+00:00",
+    "updates": [
+      {
+        "update": 1,
+        "episodeSeed": 41000,
+        "trainedDecisionSteps": 64,
+        "reward": [
+          -1570.2432861328125,
+          -1650.5833740234375
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 122.69746140006464,
+        "arrivedVehicles": 433,
+        "actorLoss": -0.0009350189939141273,
+        "valueLoss": 137831.40625,
+        "entropy": 0.6871188879013062,
+        "gradientNorm": 474.1449279785156
+      },
+      {
+        "update": 2,
+        "episodeSeed": 41001,
+        "trainedDecisionSteps": 128,
+        "reward": [
+          -1531.705078125,
+          -1542.643310546875
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 124.46131330006756,
+        "arrivedVehicles": 435,
+        "actorLoss": -0.0005576061084866524,
+        "valueLoss": 124459.9296875,
+        "entropy": 0.6860021948814392,
+        "gradientNorm": 455.0451354980469
+      },
+      {
+        "update": 3,
+        "episodeSeed": 41002,
+        "trainedDecisionSteps": 192,
+        "reward": [
+          -1623.603515625,
+          -1618.3516845703125
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 127.94024480006192,
+        "arrivedVehicles": 421,
+        "actorLoss": -3.254041075706482e-06,
+        "valueLoss": 138840.515625,
+        "entropy": 0.6858311295509338,
+        "gradientNorm": 479.8000183105469
+      },
+      {
+        "update": 4,
+        "episodeSeed": 41003,
+        "trainedDecisionSteps": 256,
+        "reward": [
+          -1519.7431640625,
+          -1461.02490234375
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 117.2107308000559,
+        "arrivedVehicles": 442,
+        "actorLoss": -8.840486407279968e-05,
+        "valueLoss": 117011.984375,
+        "entropy": 0.6858781576156616,
+        "gradientNorm": 446.915283203125
+      },
+      {
+        "update": 5,
+        "episodeSeed": 41004,
+        "trainedDecisionSteps": 320,
+        "reward": [
+          -1467.7833251953125,
+          -1513.983642578125
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 115.48019949998707,
+        "arrivedVehicles": 438,
+        "actorLoss": -0.00025809742510318756,
+        "valueLoss": 117273.515625,
+        "entropy": 0.6853092908859253,
+        "gradientNorm": 453.3330993652344
+      },
+      {
+        "update": 6,
+        "episodeSeed": 41005,
+        "trainedDecisionSteps": 384,
+        "reward": [
+          -1520.5430908203125,
+          -1515.193115234375
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 115.75659709994216,
+        "arrivedVehicles": 438,
+        "actorLoss": -0.0002471907064318657,
+        "valueLoss": 122434.65625,
+        "entropy": 0.6847690343856812,
+        "gradientNorm": 469.8654479980469
+      },
+      {
+        "update": 7,
+        "episodeSeed": 41006,
+        "trainedDecisionSteps": 448,
+        "reward": [
+          -1500.3533935546875,
+          -1535.7633056640625
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 115.54883790004533,
+        "arrivedVehicles": 437,
+        "actorLoss": -0.00013481918722391129,
+        "valueLoss": 121589.3125,
+        "entropy": 0.6851183772087097,
+        "gradientNorm": 476.6630554199219
+      },
+      {
+        "update": 8,
+        "episodeSeed": 41007,
+        "trainedDecisionSteps": 512,
+        "reward": [
+          -1491.71337890625,
+          -1535.7734375
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 116.30075350007974,
+        "arrivedVehicles": 437,
+        "actorLoss": -6.493274122476578e-05,
+        "valueLoss": 121524.5390625,
+        "entropy": 0.6856898069381714,
+        "gradientNorm": 484.1775817871094
+      },
+      {
+        "update": 9,
+        "episodeSeed": 41008,
+        "trainedDecisionSteps": 576,
+        "reward": [
+          -1549.5380859375,
+          -1561.0098876953125
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 123.54734479996841,
+        "arrivedVehicles": 425,
+        "actorLoss": -5.1130540668964386e-05,
+        "valueLoss": 130281.2109375,
+        "entropy": 0.6863117814064026,
+        "gradientNorm": 497.6223449707031
+      },
+      {
+        "update": 10,
+        "episodeSeed": 41009,
+        "trainedDecisionSteps": 640,
+        "reward": [
+          -1517.4033203125,
+          -1475.134765625
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 112.93896509998012,
+        "arrivedVehicles": 434,
+        "actorLoss": -1.3027340173721313e-05,
+        "valueLoss": 118062.4609375,
+        "entropy": 0.6863691210746765,
+        "gradientNorm": 495.2156982421875
+      },
+      {
+        "update": 11,
+        "episodeSeed": 41010,
+        "trainedDecisionSteps": 704,
+        "reward": [
+          -1535.80322265625,
+          -1511.9332275390625
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 106.78127959999256,
+        "arrivedVehicles": 439,
+        "actorLoss": -0.0001998748630285263,
+        "valueLoss": 122396.2109375,
+        "entropy": 0.686301589012146,
+        "gradientNorm": 518.1296997070312
+      },
+      {
+        "update": 12,
+        "episodeSeed": 41011,
+        "trainedDecisionSteps": 768,
+        "reward": [
+          -1519.1136474609375,
+          -1551.043212890625
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 107.97521679999772,
+        "arrivedVehicles": 439,
+        "actorLoss": -0.001079578883945942,
+        "valueLoss": 123879.9375,
+        "entropy": 0.6866618394851685,
+        "gradientNorm": 533.1595458984375
+      },
+      {
+        "update": 13,
+        "episodeSeed": 41012,
+        "trainedDecisionSteps": 832,
+        "reward": [
+          -1670.843505859375,
+          -1626.9034423828125
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 118.31253220001236,
+        "arrivedVehicles": 446,
+        "actorLoss": 0.0001115826889872551,
+        "valueLoss": 144489.21875,
+        "entropy": 0.6883242130279541,
+        "gradientNorm": 589.3121948242188
+      },
+      {
+        "update": 14,
+        "episodeSeed": 41013,
+        "trainedDecisionSteps": 896,
+        "reward": [
+          -1498.928466796875,
+          -1566.3035888671875
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 111.17499019997194,
+        "arrivedVehicles": 436,
+        "actorLoss": 0.00018709711730480194,
+        "valueLoss": 123776.4921875,
+        "entropy": 0.6885568499565125,
+        "gradientNorm": 559.1455688476562
+      },
+      {
+        "update": 15,
+        "episodeSeed": 41014,
+        "trainedDecisionSteps": 960,
+        "reward": [
+          -1479.323486328125,
+          -1494.5836181640625
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 106.11018439999316,
+        "arrivedVehicles": 447,
+        "actorLoss": -0.0011836821213364601,
+        "valueLoss": 116158.109375,
+        "entropy": 0.6889402270317078,
+        "gradientNorm": 554.1603393554688
+      },
+      {
+        "update": 16,
+        "episodeSeed": 41015,
+        "trainedDecisionSteps": 1024,
+        "reward": [
+          -1605.2633056640625,
+          -1666.3232421875
+        ],
+        "simTime": 320.0,
+        "wallSeconds": 107.36851340008434,
+        "arrivedVehicles": 433,
+        "actorLoss": 4.326784983277321e-05,
+        "valueLoss": 143736.875,
+        "entropy": 0.6900005340576172,
+        "gradientNorm": 634.4396362304688
+      }
+    ],
+    "status": "unvalidated_research_candidate",
+    "operationallyEnabled": false,
+    "latestCheckpoint": "C:\\Users\\prana\\Documents\\TrafficRegulationResearch\\syncroflow2AI-main\\.checkpoints\\phase4-final\\train-41\\update-0016.pt",
+    "trainedDecisionSteps": 1024,
+    "elapsedSeconds": 1849.605164800305
+  }
+]

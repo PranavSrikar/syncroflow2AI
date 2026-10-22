@@ -1,0 +1,1220 @@
+{
+  "groups": [
+    {
+      "mode": "fixed_time",
+      "demandScale": 0.75,
+      "n": 3,
+      "metrics": {
+        "meanCompletedTimeLossSeconds": {
+          "mean": 43.53486310423698,
+          "sampleSD": 2.7417040720219568
+        },
+        "meanNetworkQueue": {
+          "mean": 46.38444444444445,
+          "sampleSD": 4.382949708603576
+        },
+        "maxNetworkQueue": {
+          "mean": 76,
+          "sampleSD": 0.0
+        },
+        "throughputVehiclesPerHour": {
+          "mean": 4300.0,
+          "sampleSD": 36.66060555964672
+        },
+        "meanCompletedWaitingSeconds": {
+          "mean": 31.1691106554139,
+          "sampleSD": 1.963048043430178
+        },
+        "p95CompletedWaitingSeconds": {
+          "mean": 67.03333333333332,
+          "sampleSD": 5.621684207898299
+        },
+        "maxCompletedWaitingSeconds": {
+          "mean": 77.33333333333333,
+          "sampleSD": 5.686240703077327
+        },
+        "maxApproachMeanWaitSeconds": {
+          "mean": 35.36666666666667,
+          "sampleSD": 0.25166114784235816
+        },
+        "maxServiceAgeSeconds": {
+          "mean": 48.0,
+          "sampleSD": 0.0
+        },
+        "spillbackEdgeSeconds": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "meanControlLatencyMs": {
+          "mean": 0.003560555891858207,
+          "sampleSD": 8.151565778405202e-05
+        },
+        "p95ControlLatencyMs": {
+          "mean": 0.0041683262679725885,
+          "sampleSD": 5.920054700883888e-05
+        },
+        "maxControlLatencyMs": {
+          "mean": 0.011000006149212519,
+          "sampleSD": 0.0076629286278598295
+        },
+        "completedTrips": {
+          "mean": 358.3333333333333,
+          "sampleSD": 3.0550504633038935
+        },
+        "unfinishedTrips": {
+          "mean": 109,
+          "sampleSD": 6.082762530298219
+        },
+        "meanPolicyInferenceMs": {
+          "mean": 0.0,
+          "sampleSD": 0.0
+        },
+        "p95PolicyInferenceMs": {
+          "mean": 0.0,
+          "sampleSD": 0.0
+        },
+        "meanDecisionControlComputeMs": {
+          "mean": 0.017802779459291034,
+          "sampleSD": 0.0004075782889202599
+        },
+        "p95DecisionControlComputeMs": {
+          "mean": 0.01967496161038677,
+          "sampleSD": 0.0010235185682667329
+        },
+        "fallbackControllerSeconds": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "hintControllerSeconds": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "supervisorRejections": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "supervisorAcceptedActions": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "meanObservedTimeLossIncludingUnfinished": {
+          "mean": 41.71412228107743,
+          "sampleSD": 3.2782719883118694
+        },
+        "meanDepartDelaySeconds": {
+          "mean": 125.05459289997174,
+          "sampleSD": 2.4973439022877764
+        },
+        "waitingGiniIncludingUnfinished": {
+          "mean": 0.34406295004253057,
+          "sampleSD": 0.015264545733323694
+        },
+        "maxObservedWaitingIncludingUnfinished": {
+          "mean": 77.33333333333333,
+          "sampleSD": 5.686240703077327
+        }
+      }
+    },
+    {
+      "mode": "max_pressure",
+      "demandScale": 0.75,
+      "n": 3,
+      "metrics": {
+        "meanCompletedTimeLossSeconds": {
+          "mean": 60.352974430752866,
+          "sampleSD": 0.3943213851230016
+        },
+        "meanNetworkQueue": {
+          "mean": 39.657777777777774,
+          "sampleSD": 0.5475636272853849
+        },
+        "maxNetworkQueue": {
+          "mean": 54.333333333333336,
+          "sampleSD": 1.1547005383792515
+        },
+        "throughputVehiclesPerHour": {
+          "mean": 3328.0,
+          "sampleSD": 34.64101615137755
+        },
+        "meanCompletedWaitingSeconds": {
+          "mean": 32.457386041563105,
+          "sampleSD": 0.28646601787339204
+        },
+        "p95CompletedWaitingSeconds": {
+          "mean": 72.36666666666666,
+          "sampleSD": 0.6350852961085687
+        },
+        "maxCompletedWaitingSeconds": {
+          "mean": 81.66666666666667,
+          "sampleSD": 3.0550504633038935
+        },
+        "maxApproachMeanWaitSeconds": {
+          "mean": 9.327886710239651,
+          "sampleSD": 0.3377942774388704
+        },
+        "maxServiceAgeSeconds": {
+          "mean": 26.0,
+          "sampleSD": 0.0
+        },
+        "spillbackEdgeSeconds": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "meanControlLatencyMs": {
+          "mean": 1.9479972230167024,
+          "sampleSD": 0.014236329268127956
+        },
+        "p95ControlLatencyMs": {
+          "mean": 3.550371686772754,
+          "sampleSD": 0.03998016322360446
+        },
+        "maxControlLatencyMs": {
+          "mean": 4.155533310646812,
+          "sampleSD": 0.2732534638145756
+        },
+        "completedTrips": {
+          "mean": 277.3333333333333,
+          "sampleSD": 2.8867513459481287
+        },
+        "unfinishedTrips": {
+          "mean": 114.33333333333333,
+          "sampleSD": 5.033222956847166
+        },
+        "meanPolicyInferenceMs": {
+          "mean": 0.0,
+          "sampleSD": 0.0
+        },
+        "p95PolicyInferenceMs": {
+          "mean": 0.0,
+          "sampleSD": 0.0
+        },
+        "meanDecisionControlComputeMs": {
+          "mean": 9.739986115083513,
+          "sampleSD": 0.07118164634063963
+        },
+        "p95DecisionControlComputeMs": {
+          "mean": 15.670754946768284,
+          "sampleSD": 0.5248248360998611
+        },
+        "fallbackControllerSeconds": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "hintControllerSeconds": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "supervisorRejections": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "supervisorAcceptedActions": {
+          "mean": 63.333333333333336,
+          "sampleSD": 5.033222956847166
+        },
+        "meanObservedTimeLossIncludingUnfinished": {
+          "mean": 56.49605297121834,
+          "sampleSD": 0.27824788787088517
+        },
+        "meanDepartDelaySeconds": {
+          "mean": 122.7063732193774,
+          "sampleSD": 0.8284607709512188
+        },
+        "waitingGiniIncludingUnfinished": {
+          "mean": 0.32143839662470375,
+          "sampleSD": 0.004741498262381987
+        },
+        "maxObservedWaitingIncludingUnfinished": {
+          "mean": 81.66666666666667,
+          "sampleSD": 3.0550504633038935
+        }
+      }
+    },
+    {
+      "mode": "mpc",
+      "demandScale": 0.75,
+      "n": 3,
+      "metrics": {
+        "meanCompletedTimeLossSeconds": {
+          "mean": 24.67994251377924,
+          "sampleSD": 2.1381407239820076
+        },
+        "meanNetworkQueue": {
+          "mean": 36.416666666666664,
+          "sampleSD": 2.7163026340965764
+        },
+        "maxNetworkQueue": {
+          "mean": 50.666666666666664,
+          "sampleSD": 1.1547005383792515
+        },
+        "throughputVehiclesPerHour": {
+          "mean": 4828.0,
+          "sampleSD": 79.89993742175271
+        },
+        "meanCompletedWaitingSeconds": {
+          "mean": 14.083325433737958,
+          "sampleSD": 1.4614880026518215
+        },
+        "p95CompletedWaitingSeconds": {
+          "mean": 79.416666666666,
+          "sampleSD": 3.3490048273076236
+        },
+        "maxCompletedWaitingSeconds": {
+          "mean": 168.66666666666666,
+          "sampleSD": 0.5773502691896257
+        },
+        "maxApproachMeanWaitSeconds": {
+          "mean": 38.37777777777778,
+          "sampleSD": 1.2429057948271098
+        },
+        "maxServiceAgeSeconds": {
+          "mean": 55.0,
+          "sampleSD": 0.0
+        },
+        "spillbackEdgeSeconds": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "meanControlLatencyMs": {
+          "mean": 5.719014441258171,
+          "sampleSD": 0.05536963942311815
+        },
+        "p95ControlLatencyMs": {
+          "mean": 9.638893344284346,
+          "sampleSD": 0.06325133523721568
+        },
+        "maxControlLatencyMs": {
+          "mean": 12.645299973276755,
+          "sampleSD": 1.3270974543464256
+        },
+        "completedTrips": {
+          "mean": 402.3333333333333,
+          "sampleSD": 6.6583281184793925
+        },
+        "unfinishedTrips": {
+          "mean": 97.33333333333333,
+          "sampleSD": 1.1547005383792515
+        },
+        "meanPolicyInferenceMs": {
+          "mean": 0.0,
+          "sampleSD": 0.0
+        },
+        "p95PolicyInferenceMs": {
+          "mean": 0.0,
+          "sampleSD": 0.0
+        },
+        "meanDecisionControlComputeMs": {
+          "mean": 28.59507220629085,
+          "sampleSD": 0.2768481971155905
+        },
+        "p95DecisionControlComputeMs": {
+          "mean": 46.68391667849694,
+          "sampleSD": 0.5307148101436745
+        },
+        "fallbackControllerSeconds": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "hintControllerSeconds": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "supervisorRejections": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "supervisorAcceptedActions": {
+          "mean": 340,
+          "sampleSD": 0.0
+        },
+        "meanObservedTimeLossIncludingUnfinished": {
+          "mean": 33.859532445694185,
+          "sampleSD": 1.9567583216738142
+        },
+        "meanDepartDelaySeconds": {
+          "mean": 128.294253402657,
+          "sampleSD": 2.574130759538368
+        },
+        "waitingGiniIncludingUnfinished": {
+          "mean": 0.772745334649012,
+          "sampleSD": 0.058367487962295156
+        },
+        "maxObservedWaitingIncludingUnfinished": {
+          "mean": 197.33333333333334,
+          "sampleSD": 2.0816659994661326
+        }
+      }
+    },
+    {
+      "mode": "hybrid",
+      "demandScale": 0.75,
+      "n": 3,
+      "metrics": {
+        "meanCompletedTimeLossSeconds": {
+          "mean": 24.67994251377924,
+          "sampleSD": 2.1381407239820076
+        },
+        "meanNetworkQueue": {
+          "mean": 36.416666666666664,
+          "sampleSD": 2.7163026340965764
+        },
+        "maxNetworkQueue": {
+          "mean": 50.666666666666664,
+          "sampleSD": 1.1547005383792515
+        },
+        "throughputVehiclesPerHour": {
+          "mean": 4828.0,
+          "sampleSD": 79.89993742175271
+        },
+        "meanCompletedWaitingSeconds": {
+          "mean": 14.083325433737958,
+          "sampleSD": 1.4614880026518215
+        },
+        "p95CompletedWaitingSeconds": {
+          "mean": 79.416666666666,
+          "sampleSD": 3.3490048273076236
+        },
+        "maxCompletedWaitingSeconds": {
+          "mean": 168.66666666666666,
+          "sampleSD": 0.5773502691896257
+        },
+        "maxApproachMeanWaitSeconds": {
+          "mean": 38.37777777777778,
+          "sampleSD": 1.2429057948271098
+        },
+        "maxServiceAgeSeconds": {
+          "mean": 55.0,
+          "sampleSD": 0.0
+        },
+        "spillbackEdgeSeconds": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "meanControlLatencyMs": {
+          "mean": 6.0324778892875965,
+          "sampleSD": 0.08517792758245546
+        },
+        "p95ControlLatencyMs": {
+          "mean": 9.808404984263083,
+          "sampleSD": 0.15750675960826932
+        },
+        "maxControlLatencyMs": {
+          "mean": 83.24623332979779,
+          "sampleSD": 1.319898338909105
+        },
+        "completedTrips": {
+          "mean": 402.3333333333333,
+          "sampleSD": 6.6583281184793925
+        },
+        "unfinishedTrips": {
+          "mean": 97.33333333333333,
+          "sampleSD": 1.1547005383792515
+        },
+        "meanPolicyInferenceMs": {
+          "mean": 0.0,
+          "sampleSD": 0.0
+        },
+        "p95PolicyInferenceMs": {
+          "mean": 0.0,
+          "sampleSD": 0.0
+        },
+        "meanDecisionControlComputeMs": {
+          "mean": 30.162389446437977,
+          "sampleSD": 0.4258896379122773
+        },
+        "p95DecisionControlComputeMs": {
+          "mean": 48.25672829756513,
+          "sampleSD": 0.42623639444318606
+        },
+        "fallbackControllerSeconds": {
+          "mean": 0.3333333333333333,
+          "sampleSD": 0.5773502691896257
+        },
+        "hintControllerSeconds": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "supervisorRejections": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "supervisorAcceptedActions": {
+          "mean": 339.6666666666667,
+          "sampleSD": 0.5773502691896257
+        },
+        "meanObservedTimeLossIncludingUnfinished": {
+          "mean": 33.859532445694185,
+          "sampleSD": 1.9567583216738142
+        },
+        "meanDepartDelaySeconds": {
+          "mean": 128.294253402657,
+          "sampleSD": 2.574130759538368
+        },
+        "waitingGiniIncludingUnfinished": {
+          "mean": 0.772745334649012,
+          "sampleSD": 0.058367487962295156
+        },
+        "maxObservedWaitingIncludingUnfinished": {
+          "mean": 197.33333333333334,
+          "sampleSD": 2.0816659994661326
+        }
+      }
+    },
+    {
+      "mode": "candidate",
+      "demandScale": 0.75,
+      "n": 3,
+      "metrics": {
+        "meanCompletedTimeLossSeconds": {
+          "mean": 24.69646680188644,
+          "sampleSD": 2.125386143679134
+        },
+        "meanNetworkQueue": {
+          "mean": 36.294444444444444,
+          "sampleSD": 2.8165193912844773
+        },
+        "maxNetworkQueue": {
+          "mean": 50.333333333333336,
+          "sampleSD": 1.5275252316519468
+        },
+        "throughputVehiclesPerHour": {
+          "mean": 4828.0,
+          "sampleSD": 79.89993742175271
+        },
+        "meanCompletedWaitingSeconds": {
+          "mean": 14.06908757779156,
+          "sampleSD": 1.4742764803437542
+        },
+        "p95CompletedWaitingSeconds": {
+          "mean": 79.366666666666,
+          "sampleSD": 3.3054248340160197
+        },
+        "maxCompletedWaitingSeconds": {
+          "mean": 169.0,
+          "sampleSD": 1.0
+        },
+        "maxApproachMeanWaitSeconds": {
+          "mean": 37.94444444444444,
+          "sampleSD": 0.5091750772173153
+        },
+        "maxServiceAgeSeconds": {
+          "mean": 55.0,
+          "sampleSD": 0.0
+        },
+        "spillbackEdgeSeconds": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "meanControlLatencyMs": {
+          "mean": 5.927793000591919,
+          "sampleSD": 0.0487182338680674
+        },
+        "p95ControlLatencyMs": {
+          "mean": 9.920000015214706,
+          "sampleSD": 0.12852473611246604
+        },
+        "maxControlLatencyMs": {
+          "mean": 11.532699999709925,
+          "sampleSD": 1.059839435832972
+        },
+        "completedTrips": {
+          "mean": 402.3333333333333,
+          "sampleSD": 6.6583281184793925
+        },
+        "unfinishedTrips": {
+          "mean": 97,
+          "sampleSD": 1.0
+        },
+        "meanPolicyInferenceMs": {
+          "mean": 0.9063972224895325,
+          "sampleSD": 0.011156448472091025
+        },
+        "p95PolicyInferenceMs": {
+          "mean": 0.963406666414812,
+          "sampleSD": 0.01793094187435788
+        },
+        "meanDecisionControlComputeMs": {
+          "mean": 30.545362225449125,
+          "sampleSD": 0.23402390877894216
+        },
+        "p95DecisionControlComputeMs": {
+          "mean": 49.53479003355218,
+          "sampleSD": 0.952675757972237
+        },
+        "fallbackControllerSeconds": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "hintControllerSeconds": {
+          "mean": 600,
+          "sampleSD": 0.0
+        },
+        "supervisorRejections": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "supervisorAcceptedActions": {
+          "mean": 340,
+          "sampleSD": 0.0
+        },
+        "meanObservedTimeLossIncludingUnfinished": {
+          "mean": 33.839072211633145,
+          "sampleSD": 1.9714999759297316
+        },
+        "meanDepartDelaySeconds": {
+          "mean": 128.10752967342924,
+          "sampleSD": 2.4555991925365173
+        },
+        "waitingGiniIncludingUnfinished": {
+          "mean": 0.7726875895953818,
+          "sampleSD": 0.058316307976151005
+        },
+        "maxObservedWaitingIncludingUnfinished": {
+          "mean": 198.33333333333334,
+          "sampleSD": 3.0550504633038935
+        }
+      }
+    },
+    {
+      "mode": "fixed_time",
+      "demandScale": 1.75,
+      "n": 3,
+      "metrics": {
+        "meanCompletedTimeLossSeconds": {
+          "mean": 43.88418344284348,
+          "sampleSD": 2.280242099309978
+        },
+        "meanNetworkQueue": {
+          "mean": 47.31666666666666,
+          "sampleSD": 3.9666834733537506
+        },
+        "maxNetworkQueue": {
+          "mean": 76.66666666666667,
+          "sampleSD": 0.5773502691896257
+        },
+        "throughputVehiclesPerHour": {
+          "mean": 4300.0,
+          "sampleSD": 38.57460304397182
+        },
+        "meanCompletedWaitingSeconds": {
+          "mean": 31.53203627551544,
+          "sampleSD": 1.727321616973911
+        },
+        "p95CompletedWaitingSeconds": {
+          "mean": 68.63333333333333,
+          "sampleSD": 3.9878983604567
+        },
+        "maxCompletedWaitingSeconds": {
+          "mean": 80.33333333333333,
+          "sampleSD": 2.0816659994661326
+        },
+        "maxApproachMeanWaitSeconds": {
+          "mean": 36.157575757575756,
+          "sampleSD": 0.09972413740548036
+        },
+        "maxServiceAgeSeconds": {
+          "mean": 48.0,
+          "sampleSD": 0.0
+        },
+        "spillbackEdgeSeconds": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "meanControlLatencyMs": {
+          "mean": 0.003633444300956196,
+          "sampleSD": 0.00015330909832620703
+        },
+        "p95ControlLatencyMs": {
+          "mean": 0.004233328703170021,
+          "sampleSD": 5.7671614745417424e-05
+        },
+        "maxControlLatencyMs": {
+          "mean": 0.02509999709824721,
+          "sampleSD": 0.029526922760501718
+        },
+        "completedTrips": {
+          "mean": 358.3333333333333,
+          "sampleSD": 3.2145502536643185
+        },
+        "unfinishedTrips": {
+          "mean": 109.66666666666667,
+          "sampleSD": 4.041451884327381
+        },
+        "meanPolicyInferenceMs": {
+          "mean": 0.0,
+          "sampleSD": 0.0
+        },
+        "p95PolicyInferenceMs": {
+          "mean": 0.0,
+          "sampleSD": 0.0
+        },
+        "meanDecisionControlComputeMs": {
+          "mean": 0.01816722150478098,
+          "sampleSD": 0.0007665454916310351
+        },
+        "p95DecisionControlComputeMs": {
+          "mean": 0.019286765018478036,
+          "sampleSD": 0.0004188776857463278
+        },
+        "fallbackControllerSeconds": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "hintControllerSeconds": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "supervisorRejections": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "supervisorAcceptedActions": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "meanObservedTimeLossIncludingUnfinished": {
+          "mean": 42.381199227642675,
+          "sampleSD": 2.6326390451308823
+        },
+        "meanDepartDelaySeconds": {
+          "mean": 127.56920535101804,
+          "sampleSD": 1.7805217762927068
+        },
+        "waitingGiniIncludingUnfinished": {
+          "mean": 0.34452598604970924,
+          "sampleSD": 0.017731935338881552
+        },
+        "maxObservedWaitingIncludingUnfinished": {
+          "mean": 80.33333333333333,
+          "sampleSD": 2.0816659994661326
+        }
+      }
+    },
+    {
+      "mode": "max_pressure",
+      "demandScale": 1.75,
+      "n": 3,
+      "metrics": {
+        "meanCompletedTimeLossSeconds": {
+          "mean": 60.59205993653358,
+          "sampleSD": 0.8788984850313486
+        },
+        "meanNetworkQueue": {
+          "mean": 39.31888888888889,
+          "sampleSD": 0.8597824875664334
+        },
+        "maxNetworkQueue": {
+          "mean": 53.333333333333336,
+          "sampleSD": 1.1547005383792515
+        },
+        "throughputVehiclesPerHour": {
+          "mean": 3300.0,
+          "sampleSD": 24.0
+        },
+        "meanCompletedWaitingSeconds": {
+          "mean": 32.29110438698886,
+          "sampleSD": 0.6952463317959082
+        },
+        "p95CompletedWaitingSeconds": {
+          "mean": 71.39999999999999,
+          "sampleSD": 1.9697715603592274
+        },
+        "maxCompletedWaitingSeconds": {
+          "mean": 80.33333333333333,
+          "sampleSD": 2.0816659994661326
+        },
+        "maxApproachMeanWaitSeconds": {
+          "mean": 9.470014906547414,
+          "sampleSD": 0.31833713003417297
+        },
+        "maxServiceAgeSeconds": {
+          "mean": 26.333333333333332,
+          "sampleSD": 0.5773502691896257
+        },
+        "spillbackEdgeSeconds": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "meanControlLatencyMs": {
+          "mean": 1.939620999748715,
+          "sampleSD": 0.030273450005698484
+        },
+        "p95ControlLatencyMs": {
+          "mean": 3.5442233376670633,
+          "sampleSD": 0.0986228308579843
+        },
+        "maxControlLatencyMs": {
+          "mean": 4.357199999503791,
+          "sampleSD": 0.6379389644203788
+        },
+        "completedTrips": {
+          "mean": 275,
+          "sampleSD": 2.0
+        },
+        "unfinishedTrips": {
+          "mean": 116,
+          "sampleSD": 4.0
+        },
+        "meanPolicyInferenceMs": {
+          "mean": 0.0,
+          "sampleSD": 0.0
+        },
+        "p95PolicyInferenceMs": {
+          "mean": 0.0,
+          "sampleSD": 0.0
+        },
+        "meanDecisionControlComputeMs": {
+          "mean": 9.698104998743576,
+          "sampleSD": 0.15136725002849244
+        },
+        "p95DecisionControlComputeMs": {
+          "mean": 15.375194958566377,
+          "sampleSD": 0.7380311606823218
+        },
+        "fallbackControllerSeconds": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "hintControllerSeconds": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "supervisorRejections": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "supervisorAcceptedActions": {
+          "mean": 63.666666666666664,
+          "sampleSD": 4.041451884327381
+        },
+        "meanObservedTimeLossIncludingUnfinished": {
+          "mean": 56.81615413317714,
+          "sampleSD": 0.5757301052613488
+        },
+        "meanDepartDelaySeconds": {
+          "mean": 125.29032063171825,
+          "sampleSD": 0.45277154974992595
+        },
+        "waitingGiniIncludingUnfinished": {
+          "mean": 0.3195009652950324,
+          "sampleSD": 0.002454485059122617
+        },
+        "maxObservedWaitingIncludingUnfinished": {
+          "mean": 80.33333333333333,
+          "sampleSD": 2.0816659994661326
+        }
+      }
+    },
+    {
+      "mode": "mpc",
+      "demandScale": 1.75,
+      "n": 3,
+      "metrics": {
+        "meanCompletedTimeLossSeconds": {
+          "mean": 24.74404608195468,
+          "sampleSD": 2.5073341502996733
+        },
+        "meanNetworkQueue": {
+          "mean": 36.15222222222222,
+          "sampleSD": 2.3829727776999996
+        },
+        "maxNetworkQueue": {
+          "mean": 51.333333333333336,
+          "sampleSD": 0.5773502691896257
+        },
+        "throughputVehiclesPerHour": {
+          "mean": 4800.0,
+          "sampleSD": 12.0
+        },
+        "meanCompletedWaitingSeconds": {
+          "mean": 14.18264302172722,
+          "sampleSD": 1.7996164057739137
+        },
+        "p95CompletedWaitingSeconds": {
+          "mean": 78.36666666666578,
+          "sampleSD": 1.3051181300293777
+        },
+        "maxCompletedWaitingSeconds": {
+          "mean": 168.66666666666666,
+          "sampleSD": 3.0550504633038935
+        },
+        "maxApproachMeanWaitSeconds": {
+          "mean": 38.43333333333333,
+          "sampleSD": 1.2096831541082687
+        },
+        "maxServiceAgeSeconds": {
+          "mean": 55.0,
+          "sampleSD": 0.0
+        },
+        "spillbackEdgeSeconds": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "meanControlLatencyMs": {
+          "mean": 5.741830891024114,
+          "sampleSD": 0.16149584368736
+        },
+        "p95ControlLatencyMs": {
+          "mean": 9.765893343137577,
+          "sampleSD": 0.10939895835115708
+        },
+        "maxControlLatencyMs": {
+          "mean": 16.081233276054263,
+          "sampleSD": 8.10506518385256
+        },
+        "completedTrips": {
+          "mean": 400,
+          "sampleSD": 1.0
+        },
+        "unfinishedTrips": {
+          "mean": 99.33333333333333,
+          "sampleSD": 2.0816659994661326
+        },
+        "meanPolicyInferenceMs": {
+          "mean": 0.0,
+          "sampleSD": 0.0
+        },
+        "p95PolicyInferenceMs": {
+          "mean": 0.0,
+          "sampleSD": 0.0
+        },
+        "meanDecisionControlComputeMs": {
+          "mean": 28.709154455120572,
+          "sampleSD": 0.8074792184368015
+        },
+        "p95DecisionControlComputeMs": {
+          "mean": 47.792893349348255,
+          "sampleSD": 0.6199881845228447
+        },
+        "fallbackControllerSeconds": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "hintControllerSeconds": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "supervisorRejections": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "supervisorAcceptedActions": {
+          "mean": 337.6666666666667,
+          "sampleSD": 4.041451884327381
+        },
+        "meanObservedTimeLossIncludingUnfinished": {
+          "mean": 33.68840540487079,
+          "sampleSD": 2.095642876673816
+        },
+        "meanDepartDelaySeconds": {
+          "mean": 132.05851904894118,
+          "sampleSD": 2.8168946425506225
+        },
+        "waitingGiniIncludingUnfinished": {
+          "mean": 0.7749966444095485,
+          "sampleSD": 0.05560738006762262
+        },
+        "maxObservedWaitingIncludingUnfinished": {
+          "mean": 197.33333333333334,
+          "sampleSD": 2.516611478423583
+        }
+      }
+    },
+    {
+      "mode": "hybrid",
+      "demandScale": 1.75,
+      "n": 3,
+      "metrics": {
+        "meanCompletedTimeLossSeconds": {
+          "mean": 24.74404608195468,
+          "sampleSD": 2.5073341502996733
+        },
+        "meanNetworkQueue": {
+          "mean": 36.15222222222222,
+          "sampleSD": 2.3829727776999996
+        },
+        "maxNetworkQueue": {
+          "mean": 51.333333333333336,
+          "sampleSD": 0.5773502691896257
+        },
+        "throughputVehiclesPerHour": {
+          "mean": 4800.0,
+          "sampleSD": 12.0
+        },
+        "meanCompletedWaitingSeconds": {
+          "mean": 14.18264302172722,
+          "sampleSD": 1.7996164057739137
+        },
+        "p95CompletedWaitingSeconds": {
+          "mean": 78.36666666666578,
+          "sampleSD": 1.3051181300293777
+        },
+        "maxCompletedWaitingSeconds": {
+          "mean": 168.66666666666666,
+          "sampleSD": 3.0550504633038935
+        },
+        "maxApproachMeanWaitSeconds": {
+          "mean": 38.43333333333333,
+          "sampleSD": 1.2096831541082687
+        },
+        "maxServiceAgeSeconds": {
+          "mean": 55.0,
+          "sampleSD": 0.0
+        },
+        "spillbackEdgeSeconds": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "meanControlLatencyMs": {
+          "mean": 5.882754111662507,
+          "sampleSD": 0.3291251390813835
+        },
+        "p95ControlLatencyMs": {
+          "mean": 9.740611639184257,
+          "sampleSD": 0.19569290779288964
+        },
+        "maxControlLatencyMs": {
+          "mean": 53.65233332850039,
+          "sampleSD": 72.0459644942317
+        },
+        "completedTrips": {
+          "mean": 400,
+          "sampleSD": 1.0
+        },
+        "unfinishedTrips": {
+          "mean": 99.33333333333333,
+          "sampleSD": 2.0816659994661326
+        },
+        "meanPolicyInferenceMs": {
+          "mean": 0.0,
+          "sampleSD": 0.0
+        },
+        "p95PolicyInferenceMs": {
+          "mean": 0.0,
+          "sampleSD": 0.0
+        },
+        "meanDecisionControlComputeMs": {
+          "mean": 29.413770558312535,
+          "sampleSD": 1.6456256954069177
+        },
+        "p95DecisionControlComputeMs": {
+          "mean": 47.52492840634659,
+          "sampleSD": 0.651047201387442
+        },
+        "fallbackControllerSeconds": {
+          "mean": 0.3333333333333333,
+          "sampleSD": 0.5773502691896257
+        },
+        "hintControllerSeconds": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "supervisorRejections": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "supervisorAcceptedActions": {
+          "mean": 337.3333333333333,
+          "sampleSD": 3.7859388972001824
+        },
+        "meanObservedTimeLossIncludingUnfinished": {
+          "mean": 33.68840540487079,
+          "sampleSD": 2.095642876673816
+        },
+        "meanDepartDelaySeconds": {
+          "mean": 132.05851904894118,
+          "sampleSD": 2.8168946425506225
+        },
+        "waitingGiniIncludingUnfinished": {
+          "mean": 0.7749966444095485,
+          "sampleSD": 0.05560738006762262
+        },
+        "maxObservedWaitingIncludingUnfinished": {
+          "mean": 197.33333333333334,
+          "sampleSD": 2.516611478423583
+        }
+      }
+    },
+    {
+      "mode": "candidate",
+      "demandScale": 1.75,
+      "n": 3,
+      "metrics": {
+        "meanCompletedTimeLossSeconds": {
+          "mean": 24.65150731297792,
+          "sampleSD": 2.560586507021772
+        },
+        "meanNetworkQueue": {
+          "mean": 36.11666666666667,
+          "sampleSD": 2.404525825281244
+        },
+        "maxNetworkQueue": {
+          "mean": 51.333333333333336,
+          "sampleSD": 0.5773502691896257
+        },
+        "throughputVehiclesPerHour": {
+          "mean": 4812.0,
+          "sampleSD": 12.0
+        },
+        "meanCompletedWaitingSeconds": {
+          "mean": 14.112798011190929,
+          "sampleSD": 1.8479541803612003
+        },
+        "p95CompletedWaitingSeconds": {
+          "mean": 77.18333333333284,
+          "sampleSD": 2.3304148414670385
+        },
+        "maxCompletedWaitingSeconds": {
+          "mean": 168.0,
+          "sampleSD": 2.0
+        },
+        "maxApproachMeanWaitSeconds": {
+          "mean": 37.7962962962963,
+          "sampleSD": 0.2625453125695888
+        },
+        "maxServiceAgeSeconds": {
+          "mean": 55.0,
+          "sampleSD": 0.0
+        },
+        "spillbackEdgeSeconds": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "meanControlLatencyMs": {
+          "mean": 5.735360002015821,
+          "sampleSD": 0.4707018936153218
+        },
+        "p95ControlLatencyMs": {
+          "mean": 10.070034995442256,
+          "sampleSD": 0.14815975871061438
+        },
+        "maxControlLatencyMs": {
+          "mean": 11.792133329436183,
+          "sampleSD": 0.8425112987409107
+        },
+        "completedTrips": {
+          "mean": 401,
+          "sampleSD": 1.0
+        },
+        "unfinishedTrips": {
+          "mean": 98,
+          "sampleSD": 2.6457513110645907
+        },
+        "meanPolicyInferenceMs": {
+          "mean": 0.8259016684153013,
+          "sampleSD": 0.06414162594887288
+        },
+        "p95PolicyInferenceMs": {
+          "mean": 0.9175499978785713,
+          "sampleSD": 0.035560890655264514
+        },
+        "meanDecisionControlComputeMs": {
+          "mean": 29.502701678494404,
+          "sampleSD": 2.4163963321183863
+        },
+        "p95DecisionControlComputeMs": {
+          "mean": 49.78781512084728,
+          "sampleSD": 0.6888117567739439
+        },
+        "fallbackControllerSeconds": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "hintControllerSeconds": {
+          "mean": 600,
+          "sampleSD": 0.0
+        },
+        "supervisorRejections": {
+          "mean": 0,
+          "sampleSD": 0.0
+        },
+        "supervisorAcceptedActions": {
+          "mean": 338,
+          "sampleSD": 3.4641016151377544
+        },
+        "meanObservedTimeLossIncludingUnfinished": {
+          "mean": 33.655482261934836,
+          "sampleSD": 2.092755238805099
+        },
+        "meanDepartDelaySeconds": {
+          "mean": 131.85523761324512,
+          "sampleSD": 2.671815978635744
+        },
+        "waitingGiniIncludingUnfinished": {
+          "mean": 0.7751394788041104,
+          "sampleSD": 0.05539599742260507
+        },
+        "maxObservedWaitingIncludingUnfinished": {
+          "mean": 198.0,
+          "sampleSD": 2.6457513110645907
+        }
+      }
+    }
+  ],
+  "pairedComparisons": [
+    {
+      "seed": 1901,
+      "demandScale": 0.75,
+      "delayRatio": 1.0,
+      "delayDifferenceSeconds": 0.0,
+      "throughputDifference": 0
+    },
+    {
+      "seed": 1902,
+      "demandScale": 0.75,
+      "delayRatio": 1.0021035348554552,
+      "delayDifferenceSeconds": 0.04957286432160757,
+      "throughputDifference": 0
+    },
+    {
+      "seed": 1903,
+      "demandScale": 0.75,
+      "delayRatio": 1.0,
+      "delayDifferenceSeconds": 0.0,
+      "throughputDifference": 0
+    },
+    {
+      "seed": 1901,
+      "demandScale": 1.75,
+      "delayRatio": 1.000007235641322,
+      "delayDifferenceSeconds": 0.00019950124688250526,
+      "throughputDifference": 0
+    },
+    {
+      "seed": 1902,
+      "demandScale": 1.75,
+      "delayRatio": 0.9883599906476818,
+      "delayDifferenceSeconds": -0.2778158081771629,
+      "throughputDifference": 3
+    },
+    {
+      "seed": 1903,
+      "demandScale": 1.75,
+      "delayRatio": 1.0,
+      "delayDifferenceSeconds": 0.0,
+      "throughputDifference": 0
+    }
+  ],
+  "selection": {
+    "scores": {
+      ".checkpoints\\phase4-final\\train-21\\update-0016.pt": 24.40923887447312,
+      ".checkpoints\\phase4-final\\train-31\\update-0016.pt": 24.76791607274954,
+      ".checkpoints\\phase4-final\\train-41\\update-0016.pt": 26.77893174645156
+    },
+    "selectedCheckpoint": ".checkpoints\\phase4-final\\train-21\\update-0016.pt",
+    "checkpointSha256": "4a0ed2c8ffc4fda5bc9b96c5b22d0d8d9806bc8446caf09840b2f6fe13e54929",
+    "selectionSeeds": [
+      1801,
+      1802,
+      1803
+    ],
+    "testSeeds": [
+      1901,
+      1902,
+      1903
+    ],
+    "criterion": "lowest mean completed-trip timeLoss; model-seed tie break",
+    "frozenBeforeFinalTesting": true
+  },
+  "limitations": "Three seeds; cold start; completed-trip delay censored; one topology; native fixed-time has no explicit all-red while adaptive modes add2s; candidate/MPC constraints match; no statistical superiority claim"
+}
