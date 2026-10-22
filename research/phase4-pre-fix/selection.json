@@ -1,0 +1,21 @@
+{
+  "scores": {
+    ".checkpoints\\phase4\\train-21\\update-0016.pt": 45.08764672701218,
+    ".checkpoints\\phase4\\train-31\\update-0016.pt": 45.08764672701218,
+    ".checkpoints\\phase4\\train-41\\update-0016.pt": 45.08764672701218
+  },
+  "selectedCheckpoint": ".checkpoints\\phase4\\train-21\\update-0016.pt",
+  "checkpointSha256": "755c5eaf8848651b1d7d881639328f0934959aab1295372ad14c34676f74119d",
+  "selectionSeeds": [
+    801,
+    802,
+    803
+  ],
+  "testSeeds": [
+    901,
+    902,
+    903
+  ],
+  "criterion": "lowest mean completed-trip timeLoss; model-seed tie break",
+  "frozenBeforeFinalTesting": true
+}

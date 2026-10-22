@@ -1,3 +1,11 @@
+# Phase 4 research update
+
+Research is in progress. Git2.55.0.windows.5 is restored; stage3-verified-demo preserves the original release and no remote was configured. Found and fixed repeated postponement of an already-due signal expiry; supervised probe first observed phase change46s before /12s after. Corrected regression:107 backend tests passed in351.02s (one existing warning),4 browser tests in34.0s,all8 A-H external demos passed. The corrected emergency fixture completed its approach in70 simulated seconds.
+
+Fresh corrected training for model seeds21/31/41 is underway in .checkpoints/phase4-final. Pre-fix runs remain in .checkpoints/phase4 and are invalid for the changed controller fingerprint. Fresh selection1801-1803,final1901-1903,safety1951-1953 are reserved. No policy is qualified or operationally enabled. Training/evaluation/report generation are not yet complete. Read PHASE4_EXPERIMENT_PLAN.md. Recovery milestones: .checkpoints/PHASE4_PROGRESS_RECOVERY.json; final pointer will be created after completed research reporting.
+
+---
+
 # Implementation plan - final stabilization complete
 
 ## Completed and verified

@@ -1,0 +1,133 @@
+{
+  "pairs": [
+    {
+      "split": "selection",
+      "model": "train-21",
+      "seed": 801,
+      "demandScale": 1.0,
+      "jointActionCounts": {
+        "1,1": 57,
+        "0,0": 3
+      },
+      "hintControllerSeconds": 600,
+      "recordedTripAttributesIdentical": true,
+      "retainedSafetyDecisionsIdentical": false,
+      "delayDifferenceSeconds": 0.0
+    },
+    {
+      "split": "selection",
+      "model": "train-21",
+      "seed": 802,
+      "demandScale": 1.0,
+      "jointActionCounts": {
+        "1,1": 55,
+        "0,0": 3,
+        "1,0": 2
+      },
+      "hintControllerSeconds": 600,
+      "recordedTripAttributesIdentical": true,
+      "retainedSafetyDecisionsIdentical": false,
+      "delayDifferenceSeconds": 0.0
+    },
+    {
+      "split": "selection",
+      "model": "train-21",
+      "seed": 803,
+      "demandScale": 1.0,
+      "jointActionCounts": {
+        "1,1": 55,
+        "0,0": 3,
+        "1,0": 2
+      },
+      "hintControllerSeconds": 600,
+      "recordedTripAttributesIdentical": true,
+      "retainedSafetyDecisionsIdentical": false,
+      "delayDifferenceSeconds": 0.0
+    },
+    {
+      "split": "selection",
+      "model": "train-31",
+      "seed": 801,
+      "demandScale": 1.0,
+      "jointActionCounts": {
+        "0,0": 33,
+        "1,0": 9,
+        "1,1": 18
+      },
+      "hintControllerSeconds": 600,
+      "recordedTripAttributesIdentical": true,
+      "retainedSafetyDecisionsIdentical": false,
+      "delayDifferenceSeconds": 0.0
+    },
+    {
+      "split": "selection",
+      "model": "train-31",
+      "seed": 802,
+      "demandScale": 1.0,
+      "jointActionCounts": {
+        "0,0": 34,
+        "1,0": 8,
+        "1,1": 18
+      },
+      "hintControllerSeconds": 600,
+      "recordedTripAttributesIdentical": true,
+      "retainedSafetyDecisionsIdentical": false,
+      "delayDifferenceSeconds": 0.0
+    },
+    {
+      "split": "selection",
+      "model": "train-31",
+      "seed": 803,
+      "demandScale": 1.0,
+      "jointActionCounts": {
+        "0,0": 32,
+        "1,0": 10,
+        "1,1": 18
+      },
+      "hintControllerSeconds": 600,
+      "recordedTripAttributesIdentical": true,
+      "retainedSafetyDecisionsIdentical": false,
+      "delayDifferenceSeconds": 0.0
+    },
+    {
+      "split": "selection",
+      "model": "train-41",
+      "seed": 801,
+      "demandScale": 1.0,
+      "jointActionCounts": {
+        "1,1": 60
+      },
+      "hintControllerSeconds": 600,
+      "recordedTripAttributesIdentical": true,
+      "retainedSafetyDecisionsIdentical": false,
+      "delayDifferenceSeconds": 0.0
+    },
+    {
+      "split": "selection",
+      "model": "train-41",
+      "seed": 802,
+      "demandScale": 1.0,
+      "jointActionCounts": {
+        "1,1": 60
+      },
+      "hintControllerSeconds": 600,
+      "recordedTripAttributesIdentical": true,
+      "retainedSafetyDecisionsIdentical": false,
+      "delayDifferenceSeconds": 0.0
+    },
+    {
+      "split": "selection",
+      "model": "train-41",
+      "seed": 803,
+      "demandScale": 1.0,
+      "jointActionCounts": {
+        "1,1": 60
+      },
+      "hintControllerSeconds": 600,
+      "recordedTripAttributesIdentical": true,
+      "retainedSafetyDecisionsIdentical": false,
+      "delayDifferenceSeconds": 0.0
+    }
+  ],
+  "limitations": "Passive comparisons only. Trip attributes are completed/unfinished outcome summaries, not trajectories. Safety histories retain only100 entries per junction. No causal all-hold/all-release intervention was run. Identical results do not distinguish constraint dominance, weak hint weight, or policy coverage."
+}

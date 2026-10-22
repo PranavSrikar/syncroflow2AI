@@ -1,0 +1,3 @@
+# Optional training and scientific plotting; see the run's exact environment freeze.
+-r requirements-rl.txt
+matplotlib==3.11.2

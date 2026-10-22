@@ -1,0 +1,11 @@
+{
+  "checkpointSha256": "755c5eaf8848651b1d7d881639328f0934959aab1295372ad14c34676f74119d",
+  "architectureFingerprint": "30951bfc017ad222d26c7b3457d3e46b1d9fc834ea9bc1e8d565b921f75edaff",
+  "trainedDecisionSteps": 1024,
+  "numericalChecksPassed": true,
+  "eligibleForEvaluation": false,
+  "minimumDecisionSteps": 1024,
+  "status": "missing_current_training_provenance",
+  "usefulnessEstablished": false,
+  "validationScope": "Finite deterministic inference plus held-out closed-loop supervisor/clearance/conflict/fairness checks; no performance certification"
+}

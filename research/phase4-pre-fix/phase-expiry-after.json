@@ -1,0 +1,835 @@
+{
+  "seed": 701,
+  "controlledRecommendation": "release after minimum green with remaining=1 second",
+  "firstPhaseTransition": {
+    "A0": 12.0,
+    "B0": 12.0
+  },
+  "trace": [
+    {
+      "simTime": 1.0,
+      "junctions": {
+        "A0": {
+          "phase": 0,
+          "nextSwitch": 11.0,
+          "spent": 1.0
+        },
+        "B0": {
+          "phase": 0,
+          "nextSwitch": 11.0,
+          "spent": 1.0
+        }
+      }
+    },
+    {
+      "simTime": 2.0,
+      "junctions": {
+        "A0": {
+          "phase": 0,
+          "nextSwitch": 11.0,
+          "spent": 2.0
+        },
+        "B0": {
+          "phase": 0,
+          "nextSwitch": 11.0,
+          "spent": 2.0
+        }
+      }
+    },
+    {
+      "simTime": 3.0,
+      "junctions": {
+        "A0": {
+          "phase": 0,
+          "nextSwitch": 11.0,
+          "spent": 3.0
+        },
+        "B0": {
+          "phase": 0,
+          "nextSwitch": 11.0,
+          "spent": 3.0
+        }
+      }
+    },
+    {
+      "simTime": 4.0,
+      "junctions": {
+        "A0": {
+          "phase": 0,
+          "nextSwitch": 11.0,
+          "spent": 4.0
+        },
+        "B0": {
+          "phase": 0,
+          "nextSwitch": 11.0,
+          "spent": 4.0
+        }
+      }
+    },
+    {
+      "simTime": 5.0,
+      "junctions": {
+        "A0": {
+          "phase": 0,
+          "nextSwitch": 11.0,
+          "spent": 5.0
+        },
+        "B0": {
+          "phase": 0,
+          "nextSwitch": 11.0,
+          "spent": 5.0
+        }
+      }
+    },
+    {
+      "simTime": 6.0,
+      "junctions": {
+        "A0": {
+          "phase": 0,
+          "nextSwitch": 11.0,
+          "spent": 6.0
+        },
+        "B0": {
+          "phase": 0,
+          "nextSwitch": 11.0,
+          "spent": 6.0
+        }
+      }
+    },
+    {
+      "simTime": 7.0,
+      "junctions": {
+        "A0": {
+          "phase": 0,
+          "nextSwitch": 11.0,
+          "spent": 7.0
+        },
+        "B0": {
+          "phase": 0,
+          "nextSwitch": 11.0,
+          "spent": 7.0
+        }
+      }
+    },
+    {
+      "simTime": 8.0,
+      "junctions": {
+        "A0": {
+          "phase": 0,
+          "nextSwitch": 11.0,
+          "spent": 8.0
+        },
+        "B0": {
+          "phase": 0,
+          "nextSwitch": 11.0,
+          "spent": 8.0
+        }
+      }
+    },
+    {
+      "simTime": 9.0,
+      "junctions": {
+        "A0": {
+          "phase": 0,
+          "nextSwitch": 11.0,
+          "spent": 9.0
+        },
+        "B0": {
+          "phase": 0,
+          "nextSwitch": 11.0,
+          "spent": 9.0
+        }
+      }
+    },
+    {
+      "simTime": 10.0,
+      "junctions": {
+        "A0": {
+          "phase": 0,
+          "nextSwitch": 11.0,
+          "spent": 10.0
+        },
+        "B0": {
+          "phase": 0,
+          "nextSwitch": 11.0,
+          "spent": 10.0
+        }
+      }
+    },
+    {
+      "simTime": 11.0,
+      "junctions": {
+        "A0": {
+          "phase": 0,
+          "nextSwitch": 11.0,
+          "spent": 11.0
+        },
+        "B0": {
+          "phase": 0,
+          "nextSwitch": 11.0,
+          "spent": 11.0
+        }
+      }
+    },
+    {
+      "simTime": 12.0,
+      "junctions": {
+        "A0": {
+          "phase": 1,
+          "nextSwitch": 14.0,
+          "spent": 1.0
+        },
+        "B0": {
+          "phase": 1,
+          "nextSwitch": 14.0,
+          "spent": 1.0
+        }
+      }
+    },
+    {
+      "simTime": 13.0,
+      "junctions": {
+        "A0": {
+          "phase": 1,
+          "nextSwitch": 14.0,
+          "spent": 2.0
+        },
+        "B0": {
+          "phase": 1,
+          "nextSwitch": 14.0,
+          "spent": 2.0
+        }
+      }
+    },
+    {
+      "simTime": 14.0,
+      "junctions": {
+        "A0": {
+          "phase": 1,
+          "nextSwitch": 14.0,
+          "spent": 3.0
+        },
+        "B0": {
+          "phase": 1,
+          "nextSwitch": 14.0,
+          "spent": 3.0
+        }
+      }
+    },
+    {
+      "simTime": 15.0,
+      "junctions": {
+        "A0": {
+          "phase": 2,
+          "nextSwitch": 16.0,
+          "spent": 1.0
+        },
+        "B0": {
+          "phase": 2,
+          "nextSwitch": 16.0,
+          "spent": 1.0
+        }
+      }
+    },
+    {
+      "simTime": 16.0,
+      "junctions": {
+        "A0": {
+          "phase": 2,
+          "nextSwitch": 16.0,
+          "spent": 2.0
+        },
+        "B0": {
+          "phase": 2,
+          "nextSwitch": 16.0,
+          "spent": 2.0
+        }
+      }
+    },
+    {
+      "simTime": 17.0,
+      "junctions": {
+        "A0": {
+          "phase": 3,
+          "nextSwitch": 27.0,
+          "spent": 1.0
+        },
+        "B0": {
+          "phase": 3,
+          "nextSwitch": 27.0,
+          "spent": 1.0
+        }
+      }
+    },
+    {
+      "simTime": 18.0,
+      "junctions": {
+        "A0": {
+          "phase": 3,
+          "nextSwitch": 27.0,
+          "spent": 2.0
+        },
+        "B0": {
+          "phase": 3,
+          "nextSwitch": 27.0,
+          "spent": 2.0
+        }
+      }
+    },
+    {
+      "simTime": 19.0,
+      "junctions": {
+        "A0": {
+          "phase": 3,
+          "nextSwitch": 27.0,
+          "spent": 3.0
+        },
+        "B0": {
+          "phase": 3,
+          "nextSwitch": 27.0,
+          "spent": 3.0
+        }
+      }
+    },
+    {
+      "simTime": 20.0,
+      "junctions": {
+        "A0": {
+          "phase": 3,
+          "nextSwitch": 27.0,
+          "spent": 4.0
+        },
+        "B0": {
+          "phase": 3,
+          "nextSwitch": 27.0,
+          "spent": 4.0
+        }
+      }
+    },
+    {
+      "simTime": 21.0,
+      "junctions": {
+        "A0": {
+          "phase": 3,
+          "nextSwitch": 27.0,
+          "spent": 5.0
+        },
+        "B0": {
+          "phase": 3,
+          "nextSwitch": 27.0,
+          "spent": 5.0
+        }
+      }
+    },
+    {
+      "simTime": 22.0,
+      "junctions": {
+        "A0": {
+          "phase": 3,
+          "nextSwitch": 27.0,
+          "spent": 6.0
+        },
+        "B0": {
+          "phase": 3,
+          "nextSwitch": 27.0,
+          "spent": 6.0
+        }
+      }
+    },
+    {
+      "simTime": 23.0,
+      "junctions": {
+        "A0": {
+          "phase": 3,
+          "nextSwitch": 27.0,
+          "spent": 7.0
+        },
+        "B0": {
+          "phase": 3,
+          "nextSwitch": 27.0,
+          "spent": 7.0
+        }
+      }
+    },
+    {
+      "simTime": 24.0,
+      "junctions": {
+        "A0": {
+          "phase": 3,
+          "nextSwitch": 27.0,
+          "spent": 8.0
+        },
+        "B0": {
+          "phase": 3,
+          "nextSwitch": 27.0,
+          "spent": 8.0
+        }
+      }
+    },
+    {
+      "simTime": 25.0,
+      "junctions": {
+        "A0": {
+          "phase": 3,
+          "nextSwitch": 27.0,
+          "spent": 9.0
+        },
+        "B0": {
+          "phase": 3,
+          "nextSwitch": 27.0,
+          "spent": 9.0
+        }
+      }
+    },
+    {
+      "simTime": 26.0,
+      "junctions": {
+        "A0": {
+          "phase": 3,
+          "nextSwitch": 27.0,
+          "spent": 10.0
+        },
+        "B0": {
+          "phase": 3,
+          "nextSwitch": 27.0,
+          "spent": 10.0
+        }
+      }
+    },
+    {
+      "simTime": 27.0,
+      "junctions": {
+        "A0": {
+          "phase": 3,
+          "nextSwitch": 27.0,
+          "spent": 11.0
+        },
+        "B0": {
+          "phase": 3,
+          "nextSwitch": 27.0,
+          "spent": 11.0
+        }
+      }
+    },
+    {
+      "simTime": 28.0,
+      "junctions": {
+        "A0": {
+          "phase": 4,
+          "nextSwitch": 30.0,
+          "spent": 1.0
+        },
+        "B0": {
+          "phase": 4,
+          "nextSwitch": 30.0,
+          "spent": 1.0
+        }
+      }
+    },
+    {
+      "simTime": 29.0,
+      "junctions": {
+        "A0": {
+          "phase": 4,
+          "nextSwitch": 30.0,
+          "spent": 2.0
+        },
+        "B0": {
+          "phase": 4,
+          "nextSwitch": 30.0,
+          "spent": 2.0
+        }
+      }
+    },
+    {
+      "simTime": 30.0,
+      "junctions": {
+        "A0": {
+          "phase": 4,
+          "nextSwitch": 30.0,
+          "spent": 3.0
+        },
+        "B0": {
+          "phase": 4,
+          "nextSwitch": 30.0,
+          "spent": 3.0
+        }
+      }
+    },
+    {
+      "simTime": 31.0,
+      "junctions": {
+        "A0": {
+          "phase": 5,
+          "nextSwitch": 32.0,
+          "spent": 1.0
+        },
+        "B0": {
+          "phase": 5,
+          "nextSwitch": 32.0,
+          "spent": 1.0
+        }
+      }
+    },
+    {
+      "simTime": 32.0,
+      "junctions": {
+        "A0": {
+          "phase": 5,
+          "nextSwitch": 32.0,
+          "spent": 2.0
+        },
+        "B0": {
+          "phase": 5,
+          "nextSwitch": 32.0,
+          "spent": 2.0
+        }
+      }
+    },
+    {
+      "simTime": 33.0,
+      "junctions": {
+        "A0": {
+          "phase": 0,
+          "nextSwitch": 43.0,
+          "spent": 1.0
+        },
+        "B0": {
+          "phase": 0,
+          "nextSwitch": 43.0,
+          "spent": 1.0
+        }
+      }
+    },
+    {
+      "simTime": 34.0,
+      "junctions": {
+        "A0": {
+          "phase": 0,
+          "nextSwitch": 43.0,
+          "spent": 2.0
+        },
+        "B0": {
+          "phase": 0,
+          "nextSwitch": 43.0,
+          "spent": 2.0
+        }
+      }
+    },
+    {
+      "simTime": 35.0,
+      "junctions": {
+        "A0": {
+          "phase": 0,
+          "nextSwitch": 43.0,
+          "spent": 3.0
+        },
+        "B0": {
+          "phase": 0,
+          "nextSwitch": 43.0,
+          "spent": 3.0
+        }
+      }
+    },
+    {
+      "simTime": 36.0,
+      "junctions": {
+        "A0": {
+          "phase": 0,
+          "nextSwitch": 43.0,
+          "spent": 4.0
+        },
+        "B0": {
+          "phase": 0,
+          "nextSwitch": 43.0,
+          "spent": 4.0
+        }
+      }
+    },
+    {
+      "simTime": 37.0,
+      "junctions": {
+        "A0": {
+          "phase": 0,
+          "nextSwitch": 43.0,
+          "spent": 5.0
+        },
+        "B0": {
+          "phase": 0,
+          "nextSwitch": 43.0,
+          "spent": 5.0
+        }
+      }
+    },
+    {
+      "simTime": 38.0,
+      "junctions": {
+        "A0": {
+          "phase": 0,
+          "nextSwitch": 43.0,
+          "spent": 6.0
+        },
+        "B0": {
+          "phase": 0,
+          "nextSwitch": 43.0,
+          "spent": 6.0
+        }
+      }
+    },
+    {
+      "simTime": 39.0,
+      "junctions": {
+        "A0": {
+          "phase": 0,
+          "nextSwitch": 43.0,
+          "spent": 7.0
+        },
+        "B0": {
+          "phase": 0,
+          "nextSwitch": 43.0,
+          "spent": 7.0
+        }
+      }
+    },
+    {
+      "simTime": 40.0,
+      "junctions": {
+        "A0": {
+          "phase": 0,
+          "nextSwitch": 43.0,
+          "spent": 8.0
+        },
+        "B0": {
+          "phase": 0,
+          "nextSwitch": 43.0,
+          "spent": 8.0
+        }
+      }
+    },
+    {
+      "simTime": 41.0,
+      "junctions": {
+        "A0": {
+          "phase": 0,
+          "nextSwitch": 43.0,
+          "spent": 9.0
+        },
+        "B0": {
+          "phase": 0,
+          "nextSwitch": 43.0,
+          "spent": 9.0
+        }
+      }
+    },
+    {
+      "simTime": 42.0,
+      "junctions": {
+        "A0": {
+          "phase": 0,
+          "nextSwitch": 43.0,
+          "spent": 10.0
+        },
+        "B0": {
+          "phase": 0,
+          "nextSwitch": 43.0,
+          "spent": 10.0
+        }
+      }
+    },
+    {
+      "simTime": 43.0,
+      "junctions": {
+        "A0": {
+          "phase": 0,
+          "nextSwitch": 43.0,
+          "spent": 11.0
+        },
+        "B0": {
+          "phase": 0,
+          "nextSwitch": 43.0,
+          "spent": 11.0
+        }
+      }
+    },
+    {
+      "simTime": 44.0,
+      "junctions": {
+        "A0": {
+          "phase": 1,
+          "nextSwitch": 46.0,
+          "spent": 1.0
+        },
+        "B0": {
+          "phase": 1,
+          "nextSwitch": 46.0,
+          "spent": 1.0
+        }
+      }
+    },
+    {
+      "simTime": 45.0,
+      "junctions": {
+        "A0": {
+          "phase": 1,
+          "nextSwitch": 46.0,
+          "spent": 2.0
+        },
+        "B0": {
+          "phase": 1,
+          "nextSwitch": 46.0,
+          "spent": 2.0
+        }
+      }
+    },
+    {
+      "simTime": 46.0,
+      "junctions": {
+        "A0": {
+          "phase": 1,
+          "nextSwitch": 46.0,
+          "spent": 3.0
+        },
+        "B0": {
+          "phase": 1,
+          "nextSwitch": 46.0,
+          "spent": 3.0
+        }
+      }
+    },
+    {
+      "simTime": 47.0,
+      "junctions": {
+        "A0": {
+          "phase": 2,
+          "nextSwitch": 48.0,
+          "spent": 1.0
+        },
+        "B0": {
+          "phase": 2,
+          "nextSwitch": 48.0,
+          "spent": 1.0
+        }
+      }
+    },
+    {
+      "simTime": 48.0,
+      "junctions": {
+        "A0": {
+          "phase": 2,
+          "nextSwitch": 48.0,
+          "spent": 2.0
+        },
+        "B0": {
+          "phase": 2,
+          "nextSwitch": 48.0,
+          "spent": 2.0
+        }
+      }
+    },
+    {
+      "simTime": 49.0,
+      "junctions": {
+        "A0": {
+          "phase": 3,
+          "nextSwitch": 59.0,
+          "spent": 1.0
+        },
+        "B0": {
+          "phase": 3,
+          "nextSwitch": 59.0,
+          "spent": 1.0
+        }
+      }
+    },
+    {
+      "simTime": 50.0,
+      "junctions": {
+        "A0": {
+          "phase": 3,
+          "nextSwitch": 59.0,
+          "spent": 2.0
+        },
+        "B0": {
+          "phase": 3,
+          "nextSwitch": 59.0,
+          "spent": 2.0
+        }
+      }
+    },
+    {
+      "simTime": 51.0,
+      "junctions": {
+        "A0": {
+          "phase": 3,
+          "nextSwitch": 59.0,
+          "spent": 3.0
+        },
+        "B0": {
+          "phase": 3,
+          "nextSwitch": 59.0,
+          "spent": 3.0
+        }
+      }
+    },
+    {
+      "simTime": 52.0,
+      "junctions": {
+        "A0": {
+          "phase": 3,
+          "nextSwitch": 59.0,
+          "spent": 4.0
+        },
+        "B0": {
+          "phase": 3,
+          "nextSwitch": 59.0,
+          "spent": 4.0
+        }
+      }
+    },
+    {
+      "simTime": 53.0,
+      "junctions": {
+        "A0": {
+          "phase": 3,
+          "nextSwitch": 59.0,
+          "spent": 5.0
+        },
+        "B0": {
+          "phase": 3,
+          "nextSwitch": 59.0,
+          "spent": 5.0
+        }
+      }
+    },
+    {
+      "simTime": 54.0,
+      "junctions": {
+        "A0": {
+          "phase": 3,
+          "nextSwitch": 59.0,
+          "spent": 6.0
+        },
+        "B0": {
+          "phase": 3,
+          "nextSwitch": 59.0,
+          "spent": 6.0
+        }
+      }
+    },
+    {
+      "simTime": 55.0,
+      "junctions": {
+        "A0": {
+          "phase": 3,
+          "nextSwitch": 59.0,
+          "spent": 7.0
+        },
+        "B0": {
+          "phase": 3,
+          "nextSwitch": 59.0,
+          "spent": 7.0
+        }
+      }
+    }
+  ]
+}
