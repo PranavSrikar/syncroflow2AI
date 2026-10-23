@@ -15,7 +15,7 @@ SYNCHROFLOW is a scientifically trustworthy local traffic-control research platf
 | Frontend wiring repair | `frontend-functionality-repaired` / `8116bb8` |
 | Phase 5 research | `phase5-evaluated-prototype` / `975ce235217a260590bd4ca261ec3871289880e2` |
 | This handoff | Documentation commit after the verified UI; obtain exact hash with `git log -1` |
-| GitHub | No remote existed when this handoff was prepared. Confirm actual push status using the procedure below; a local commit is not a cloud backup. |
+| GitHub | [PranavSrikar/syncroflow2AI](https://github.com/PranavSrikar/syncroflow2AI); default `phase6b-ux-refinement`; local branches/tags pushed, older `main` preserved |
 
 Original workspace: `C:\Users\prana\Documents\TrafficRegulationResearch\syncroflow2AI-main`. Recovery copies: sibling `synchroflow-known-good-recovery`. Paths can change after restoration; rebuild camera absolute paths. Do not assume services survive closing the editor, restarting Windows or a long pause.
 
@@ -176,6 +176,10 @@ Remaining work, in priority order:
 No new feature implementation is requested by this handoff. Resume with audit and a fresh checkpoint, not a risky rewrite.
 
 ## 9. Git, artifacts and recovery
+
+Publication completed on 23 October 2026 to the repository above. The [recovery release](https://github.com/PranavSrikar/syncroflow2AI/releases/tag/project-pause-handoff) contains source/history archives, Phase 5 research/perception artifacts and Phase 6B test/screenshot evidence. Download **GITHUB_RECOVERY.json** first for the latest documentation source, Git bundle and archive hashes. Earlier PAUSE_RECOVERY.json describes the initial `19b7a18` handoff and deliberately remains unchanged. Final documentation checkpoint: `project-pause-archived`.
+
+The repository is public. Remote refs, asset sizes and GitHub SHA-256 digests were checked; a fresh clone selected the current branch automatically. These preservation checks are not a new application regression run or research-policy qualification. At pause, SUMO/cameras were stopped via their APIs and owned servers on 3001/8001 were shut down. Start the launcher when returning. Dependencies and credentials remain excluded.
 
 ```powershell
 git status -sb

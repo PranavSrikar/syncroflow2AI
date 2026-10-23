@@ -1,5 +1,7 @@
 # Publish the preserved project to GitHub
 
+**Completed 23 October 2026:** https://github.com/PranavSrikar/syncroflow2AI, default branch `phase6b-ux-refinement`. Local branches/tags were pushed without force and older main preserved. Reproducibility archives are attached to the project-pause-handoff release. Instructions below document the original publication procedure, not a pending sign-in request. Use GITHUB_RECOVERY.json from the release for the final archive inventory.
+
 Prepared after the indefinite-pause handoff. No GitHub remote/authentication was available at preparation time. Do not interpret these instructions or a local checkpoint as a completed push.
 
 ## Source and history

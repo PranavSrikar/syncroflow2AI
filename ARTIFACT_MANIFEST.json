@@ -8,24 +8,28 @@
       "sha256": "90621a5d04612ec7f20fa51ce75f653284ed426baba41823977e87e3bd0af2f1",
       "localRelativePath": ".checkpoints/phase5-artifacts-20261023T031002271576Z.zip",
       "includedInGit": false,
-      "uploadedToRemote": false,
+      "uploadedToRemote": true,
       "embeddedManifests": [
         ".checkpoints/perception/ASSET_MANIFEST.json",
         "CHECKPOINT_MANIFEST.json"
       ],
-      "contents": "Phase5 raw research, model checkpoints, perception assets and environment evidence"
+      "contents": "Phase5 raw research, model checkpoints, perception assets and environment evidence",
+      "downloadUrl": "https://github.com/PranavSrikar/syncroflow2AI/releases/download/project-pause-handoff/phase5-artifacts-20261023T031002271576Z.zip",
+      "githubSha256": "sha256:90621a5d04612ec7f20fa51ce75f653284ed426baba41823977e87e3bd0af2f1"
     },
     {
-      "filename": "source-20261023T151227875709Z.zip",
-      "bytes": 3094518,
-      "sha256": "522112f62130f58b3d7ddeec42df53561e8440c09af428bf0c87f479b2592fb4",
-      "localRelativePath": ".checkpoints/source-20261023T151227875709Z.zip",
+      "filename": "source-20261023T171359771861Z.zip",
+      "bytes": 3108493,
+      "sha256": "f8a64033937660c04414654b3ad24f497b7034b9a83ca34fc315475abf210540",
+      "localRelativePath": ".checkpoints/source-20261023T171359771861Z.zip",
       "includedInGit": false,
-      "uploadedToRemote": false,
+      "uploadedToRemote": true,
       "embeddedManifests": [
         "CHECKPOINT_MANIFEST.json"
       ],
-      "contents": "Phase6B verified source"
+      "contents": "Initial pause handoff source including Phase6B code and documentation",
+      "downloadUrl": "https://github.com/PranavSrikar/syncroflow2AI/releases/download/project-pause-handoff/source-20261023T171359771861Z.zip",
+      "githubSha256": "sha256:f8a64033937660c04414654b3ad24f497b7034b9a83ca34fc315475abf210540"
     },
     {
       "filename": "phase6b-evidence.zip",
@@ -33,9 +37,11 @@
       "sha256": "fdd0f94f95166f9c1522f93fbe1833e4b43caccc994d1f6af742cb23e39cd70f",
       "localRelativePath": ".checkpoints/phase6b-evidence.zip",
       "includedInGit": false,
-      "uploadedToRemote": false,
+      "uploadedToRemote": true,
       "embeddedManifests": [],
-      "contents": "Phase6B screenshots, logs and test evidence"
+      "contents": "Phase6B screenshots, logs and test evidence",
+      "downloadUrl": "https://github.com/PranavSrikar/syncroflow2AI/releases/download/project-pause-handoff/phase6b-evidence.zip",
+      "githubSha256": "sha256:fdd0f94f95166f9c1522f93fbe1833e4b43caccc994d1f6af742cb23e39cd70f"
     }
   ],
   "perception": {
@@ -78,6 +84,6 @@
     }
   },
   "restore": "Verify SHA-256 and embedded manifests; extract into a new workspace, regenerate camera paths. Never activate unqualified MAPPO weights.",
-  "remoteStatus": "No upload recorded at preparation time; verify GitHub release assets independently.",
+  "remoteStatus": "Uploaded to https://github.com/PranavSrikar/syncroflow2AI/releases/tag/project-pause-handoff; sizes and GitHub SHA-256 digests verified. See GITHUB_RECOVERY.json release asset for latest documentation/source/history snapshot.",
   "credentials": "Actual .env files, dependencies and caches excluded. Demo token in backend settings is a public placeholder, not production authentication."
 }

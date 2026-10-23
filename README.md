@@ -4,6 +4,12 @@ A local traffic-management research platform with a React command center, FastAP
 
 **Start here when returning: [PROJECT_HANDOFF.md](PROJECT_HANDOFF.md).** It is the single entry point for humans and coding agents: architecture, setup, artifacts, tests, safety constraints, recovery and remaining work.
 
+## Repository and preserved assets
+
+[GitHub repository](https://github.com/PranavSrikar/syncroflow2AI) · default branch **phase6b-ux-refinement** · [recovery release](https://github.com/PranavSrikar/syncroflow2AI/releases/tag/project-pause-handoff).
+
+Local development branches and checkpoint tags are pushed; older `main` is preserved. Optional camera/research assets and evidence are release attachments rather than source files. The release's `GITHUB_RECOVERY.json` identifies the final source/history archives. Start with PROJECT_HANDOFF.md when returning.
+
 ## Current state
 
 Phase 6B is implemented and verified at **`phase6b-verified-ux`**, commit `8216ca8`. Subsequent handoff documentation is on branch `phase6b-ux-refinement`. Phase 5 research and earlier checkpoints remain preserved in Git.
