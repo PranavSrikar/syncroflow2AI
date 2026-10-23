@@ -1,0 +1,83 @@
+{
+  "preparedDate": "2026-10-23",
+  "purpose": "Portable archive inventory for indefinite pause. Source/history are in Git; these optional reproducibility archives require separate transfer.",
+  "archives": [
+    {
+      "filename": "phase5-artifacts-20261023T031002271576Z.zip",
+      "bytes": 93595276,
+      "sha256": "90621a5d04612ec7f20fa51ce75f653284ed426baba41823977e87e3bd0af2f1",
+      "localRelativePath": ".checkpoints/phase5-artifacts-20261023T031002271576Z.zip",
+      "includedInGit": false,
+      "uploadedToRemote": false,
+      "embeddedManifests": [
+        ".checkpoints/perception/ASSET_MANIFEST.json",
+        "CHECKPOINT_MANIFEST.json"
+      ],
+      "contents": "Phase5 raw research, model checkpoints, perception assets and environment evidence"
+    },
+    {
+      "filename": "source-20261023T151227875709Z.zip",
+      "bytes": 3094518,
+      "sha256": "522112f62130f58b3d7ddeec42df53561e8440c09af428bf0c87f479b2592fb4",
+      "localRelativePath": ".checkpoints/source-20261023T151227875709Z.zip",
+      "includedInGit": false,
+      "uploadedToRemote": false,
+      "embeddedManifests": [
+        "CHECKPOINT_MANIFEST.json"
+      ],
+      "contents": "Phase6B verified source"
+    },
+    {
+      "filename": "phase6b-evidence.zip",
+      "bytes": 1979394,
+      "sha256": "fdd0f94f95166f9c1522f93fbe1833e4b43caccc994d1f6af742cb23e39cd70f",
+      "localRelativePath": ".checkpoints/phase6b-evidence.zip",
+      "includedInGit": false,
+      "uploadedToRemote": false,
+      "embeddedManifests": [],
+      "contents": "Phase6B screenshots, logs and test evidence"
+    }
+  ],
+  "perception": {
+    "assets": {
+      "yolo11n.pt": {
+        "sha256": "0ebbc80d4a7680d14987a577cd21342b65ecfd94632bd9a8da63ae6417644ee1",
+        "bytes": 5613764
+      },
+      "road.mp4": {
+        "sha256": "ac81100d9310bd4e9c02bc0b13b6492781d009742ced347766b2601be3c44ad4",
+        "bytes": 35345757
+      },
+      "road-inference.jsonl": {
+        "sha256": "8eda92a0384cf8229717622c540212fdd6d195810c8c5a5719fd56474d39187b",
+        "bytes": 106036
+      },
+      "weather-check.json": {
+        "sha256": "afb0234af6e5c69cbe50dad8f0467aee570a120593c2dfbfed6c70a43d0a162d",
+        "bytes": 95
+      }
+    },
+    "sources": {
+      "yolo11n.pt": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolo11n.pt",
+      "road.mp4": "https://media.roboflow.com/supervision/video-examples/vehicles.mp4"
+    },
+    "versions": {
+      "torch": "2.14.1+cpu",
+      "torchvision": "0.29.1",
+      "ultralytics": "8.3.221",
+      "opencv-python": "4.11.0.86",
+      "lap": "0.5.12",
+      "numpy": "1.26.4"
+    },
+    "verification": {
+      "frames": 60,
+      "trackedObservations": 260,
+      "uniqueTrackIds": 13,
+      "calibrated": false,
+      "fieldAccuracyVerified": false
+    }
+  },
+  "restore": "Verify SHA-256 and embedded manifests; extract into a new workspace, regenerate camera paths. Never activate unqualified MAPPO weights.",
+  "remoteStatus": "No upload recorded at preparation time; verify GitHub release assets independently.",
+  "credentials": "Actual .env files, dependencies and caches excluded. Demo token in backend settings is a public placeholder, not production authentication."
+}

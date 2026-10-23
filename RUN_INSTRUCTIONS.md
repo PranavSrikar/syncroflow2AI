@@ -1,3 +1,5 @@
+> Current entry point: [PROJECT_HANDOFF.md](PROJECT_HANDOFF.md) and [README.md](README.md). The phase-specific notes below are retained historical instructions; use the handoff for current code, safety constraints, setup and tests.
+
 # Phase 5 demonstration
 
 Start from the project folder with `.\backend\.venv\Scripts\python.exe scripts/run_dev.py`, open http://127.0.0.1:3001, choose Hybrid/network, then Start. Keep both MAPPO policy environment variables unset: the new candidate failed qualification. Supervised MPC/Max-Pressure remains operational. Existing occupied ports are preserved.

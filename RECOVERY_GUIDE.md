@@ -1,3 +1,5 @@
+> Current entry point: [PROJECT_HANDOFF.md](PROJECT_HANDOFF.md), recovery section. Phase 6B is preserved at `phase6b-verified-ux`; the subsequent pause handoff has its own checkpoint. [ARTIFACT_MANIFEST.json](ARTIFACT_MANIFEST.json) identifies separately archived assets. The notes below are historical; statements about Git being absent or the latest phase being Phase 5 are superseded.
+
 # Phase 5 recovery checkpoint
 
 Current pointer: `.checkpoints/PHASE5_RECOVERY.json`. Phase5 source, raw research data, all checkpoints, camera assets and Git history are archived with verified manifests and separate same-machine copies. The Phase4 pointer and every previous archive remain preserved. Branch: `phase5-diagnostics`; final tag: `phase5-evaluated-prototype`. Nothing pushed; these copies are not off-device backups.
