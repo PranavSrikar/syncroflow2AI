@@ -1,0 +1,33 @@
+ M scripts/smoke_frontend.mjs
+ M src/App.tsx
+ M src/components/live/LiveAnalytics.tsx
+ M src/components/live/LiveCommandCenter.tsx
+ M src/components/live/LiveNetworkMap.tsx
+ M src/components/live/LiveSafety.tsx
+ M src/components/live/LiveStatusHeader.tsx
+ M src/components/navigation/Sidebar.tsx
+ M src/components/v2i/V2IHardwareHub.tsx
+ M src/components/views/ComparisonLabView.tsx
+ M src/components/views/MathematicalModelExplorer.tsx
+ M src/components/views/OverviewCommandCenter.tsx
+ M src/components/views/SumoLiveView.tsx
+ M src/components/views/TrafficInputsPanel.tsx
+ M src/main.tsx
+ M tests/browser/frontend-audit.spec.ts
+ M tests/browser/sumo.spec.ts
+ M tests/frontend-repairs.test.ts
+?? DIGITAL_TWIN_REFINEMENT_REPORT.md
+?? FINAL_UI_UX_READINESS_REPORT.md
+?? FRONTEND_INTEGRATION_VERIFICATION.md
+?? FRONTEND_UX_AUDIT.md
+?? PAGE_BY_PAGE_IMPROVEMENTS.md
+?? RESPONSIVE_TEST_RESULTS.md
+?? UI_DESIGN_SYSTEM.md
+?? src/components/live/ControllerIntelligence.tsx
+?? src/components/live/ResearchEvidence.tsx
+?? src/components/live/SystemHealth.tsx
+?? src/refinement.css
+?? src/services/trafficPresentation.ts
+?? tests/browser/phase6b.spec.ts
+
+CHANGED_FILES_PHASE6B.txt (this inventory)

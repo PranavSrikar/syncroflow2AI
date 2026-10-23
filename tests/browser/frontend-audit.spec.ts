@@ -54,6 +54,7 @@ test('synthetic controls change authoritative engine state and preserve scenario
   await expect.poll(async () => (await state()).time).toBeGreaterThan(before);
   await page.getByRole('button', { name: 'Inject Ambulance', exact: true }).click();
   expect((await state()).signals.isPreemptActive).toBe(true);
+  page.once('dialog', dialog => dialog.accept());
   await page.getByTitle('Reset Simulation', { exact: true }).click();
   await page.locator('aside nav button').filter({ hasText: 'Scenario Laboratory' }).click();
   await page.getByPlaceholder('Search 25 scenarios...').fill('Monsoon');
@@ -66,6 +67,7 @@ test('synthetic controls change authoritative engine state and preserve scenario
   const count = (await state()).signals.pedestrianSignals.north.waitingCount;
   await page.getByRole('button', { name: 'Press Pedestrian Pushbutton (NORTH)' }).click();
   expect((await state()).signals.pedestrianSignals.north.waitingCount).toBe(count + 1);
+  page.once('dialog', dialog => dialog.accept());
   await page.locator('aside').getByTitle('Reset Synthetic Demonstration Clock', { exact: true }).click();
   await expect(page.getByText('REGISTERED (ACTUATED)', { exact: true })).toHaveCount(0);
 });
@@ -143,9 +145,9 @@ test('command errors are shown and disconnected websocket disables live controls
   expect((await (await request.get(`${api}/sumo/status`)).json()).connected).toBe(false);
   await page.unroute('**/api/v1/sumo/start?**');
   await page.getByRole('button', { name: 'start', exact: true }).click();
-  await expect(page.getByText(/Simulation: running/)).toBeVisible();
+  await expect(page.getByTestId('simulation-state')).toHaveAttribute('data-status', 'running');
   await page.getByRole('button', { name: 'stop', exact: true }).click();
-  await expect(page.getByText(/Simulation: stopped/)).toBeVisible();
+  await expect(page.getByTestId('simulation-state')).toHaveAttribute('data-status', 'stopped');
   await page.getByRole('button', { name: 'start', exact: true }).click();
   await expect.poll(async () => (await (await request.get(`${api}/sumo/status`)).json()).running).toBe(true);
   await page.getByRole('button', { name: 'stop', exact: true }).click();

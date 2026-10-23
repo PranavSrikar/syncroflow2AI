@@ -1,58 +1,73 @@
 import React, { useState } from 'react';
 import { useLiveTraffic } from '../../services/liveTraffic';
-import { LiveNetworkMap, signalColor } from './LiveNetworkMap';
+import { approachPermission, policySummary } from '../../services/trafficPresentation';
+import { LiveNetworkMap } from './LiveNetworkMap';
 import { Badge, Metric, Panel } from './primitives';
-import type { Snapshot } from '../views/SumoLiveView';
+
 export function LiveCommandCenter({ scope }: { scope: string }) {
   const { state, online, error } = useLiveTraffic();
   const [selection, setSelection] = useState('auto');
   const junctions = Object.keys(state?.junctions ?? {});
-  const availableJunctions = junctions.length ? junctions : Object.keys(state?.telemetry?.trafficLights ?? {});
-  const selected = selection === 'auto' && availableJunctions.length === 1 ? availableJunctions[0] : selection !== 'network' && availableJunctions.includes(selection) ? selection : null;
+  const choices = junctions.length ? junctions : Object.keys(state?.telemetry?.trafficLights ?? {});
+  const selected = selection === 'auto' && choices.length === 1 ? choices[0] : choices.includes(selection) ? selection : null;
   const local = selected ? state?.junctions?.[selected] : null;
   const raw = local?.telemetry ?? state?.telemetry ?? null;
   const available = online && !!raw && !!state?.connected;
-  const allRows = local ? Object.values(raw?.approaches ?? {}) : junctions.length ? Object.values(state!.junctions!).flatMap(j=>Object.values(j.telemetry.approaches)) : Object.values(raw?.approaches ?? {});
-  const count=allRows.reduce((n,r)=>n+r.vehicles,0), queue=allRows.reduce((n,r)=>n+r.queued,0);
-  const wait=count ? allRows.reduce((n,r)=>n+r.vehicles*r.avgWaitTimeSec,0)/count : null;
+  const rows = local ? Object.values(raw?.approaches ?? {}) : junctions.length ? Object.values(state!.junctions!).flatMap(j=>Object.values(j.telemetry.approaches)) : Object.values(raw?.approaches ?? {});
+  const count=rows.reduce((n,r)=>n+r.vehicles,0), queue=rows.reduce((n,r)=>n+r.queued,0);
+  const wait=count ? rows.reduce((n,r)=>n+r.vehicles*r.avgWaitTimeSec,0)/count : null;
   const diagnostics = (local?.controllerDiagnostics ?? (junctions.length ? state?.junctions?.[junctions[0]]?.controllerDiagnostics : state?.controllerDiagnostics)) as Record<string, any> | null;
-  const supervisor = local?.safetySupervisor ?? state?.safetySupervisor;
+  const supervisor = (local?.safetySupervisor ?? state?.safetySupervisor) as {status?:string; lastDecision?:{accepted?:boolean;phaseIndex?:number;reason?:string};decisions?:{simTime:number;accepted:boolean;reason:string;phaseIndex?:number}[]} | undefined;
   const serviceAge = local?.serviceAge ?? state?.serviceAge;
-  const policy = diagnostics?.policy;
-  const policyText = policy === 'constrained_mpc' ? 'Constrained MPC selected a feasible timing candidate.' : policy === 'max_pressure_fallback' ? 'Max-Pressure fallback is active; the MPC candidate was unavailable.' : policy === 'emergency_priority' ? 'Emergency priority is requesting supervised timing.' : policy === 'phase_expiry_pending' ? 'The approved phase is due to expire; its scheduled transition is retained.' : policy ? 'Pressure-based extension within the approved cyclic program.' : 'No adaptive decision trace yet. Start an adaptive controller to inspect decisions.';
-  const lights=Object.entries(raw?.trafficLights ?? {});
-  const emergency=state?.emergencyPriority?.activeVehicleId;
+  const emergency = local?.emergencyPriority.activeVehicleId ?? state?.emergencyPriority?.activeVehicleId;
+  const lastDecision = supervisor?.decisions?.at(-1);
+  const lights = Object.entries(raw?.trafficLights ?? {});
+  const primary = selected ?? junctions[0] ?? lights[0]?.[0];
+  const light = raw?.trafficLights[primary];
+  const crossings = raw?.pedestrianSignals ?? [];
+  const spillbacks = Object.entries(raw?.downstream ?? {}).filter(([,r])=>r.spillbackIndicator);
   return <div className="sf-command-experience">
     <div className="sf-kpi-grid" aria-busy={!state && !error} aria-label="Live SUMO metrics">
-      <Metric label="Approach vehicles" value={available ? count : '—'} unit="veh" hint={selected ? `Selected junction ${selected}` : 'All monitored junction approaches'} />
+      <Metric label="Approach vehicles" value={available ? count : '—'} unit="veh" hint={selected ? `Approaches at ${selected}` : 'All monitored approaches'} />
       <Metric label="Vehicles in queue" value={available ? queue : '—'} unit="veh" hint="Halted approach vehicles" />
-      <Metric label="Current mean wait" value={available && wait !== null ? wait.toFixed(1) : '—'} unit="s" hint="Vehicle-weighted; current approaches" />
-      <Metric label="Run throughput" value={available && state?.metrics?.throughputVehiclesPerHour != null ? state.metrics.throughputVehiclesPerHour.toFixed(0) : '—'} unit="veh/h" hint="Completed arrivals / elapsed run time" />
+      <Metric label="Current mean wait" value={available && wait!==null ? wait.toFixed(1) : '—'} unit="s" hint="Current vehicles, weighted mean" />
+      <Metric label="Run throughput" value={available && state?.metrics?.throughputVehiclesPerHour!=null ? state.metrics.throughputVehiclesPerHour.toFixed(0) : '—'} unit="veh/h" hint="Network arrivals / elapsed time" />
     </div>
     {scope !== 'analytics' && <div className="sf-command-grid">
-      <Panel title="Live digital twin" eyebrow="SPATIAL OBSERVATIONS" className="sf-twin-panel">
-        <div className="sf-map-toolbar"><Badge>SUMO / TraCI measurements</Badge><label>View <select aria-label="Digital twin junction" value={selected ?? 'network'} onChange={e=>setSelection(e.target.value)}><option value="network">Entire network</option>{(junctions.length ? junctions : Object.keys(raw?.trafficLights ?? {})).map(id=><option key={id} value={id}>{id}</option>)}</select></label></div>
-        <LiveNetworkMap raw={raw} online={online} junction={selected ?? (selection !== 'network' && lights.some(([id])=>id===selection) ? selection : 'network')} />
-        <div className="sf-phase-strip">{lights.length ? lights.map(([id,signal])=><div key={id}><span className="sf-eyebrow">{id} · PHASE {signal.phaseIndex}</span><div className="sf-signal-dots">{[...signal.signalState].map((s,index)=><i key={index} style={{background:signalColor(s)}} title={`Link ${index}: ${s}`} />)}</div><span>{online ? `Scheduled switch in ${Math.max(0,signal.nextSwitch-raw!.simTime).toFixed(0)} s` : 'Timing stale'}</span></div>) : <p>Signals appear after Start. Green = priority, pale green = yielding, amber = clearance, red = stop.</p>}</div>
-        <p className="sf-caption">Positions update at observed simulation steps. Signal countdown is the current SUMO schedule and may change under adaptive control.</p>
+      <Panel title="Live digital twin" className="sf-twin-panel">
+        <div className="sf-map-toolbar"><Badge tone={online?'good':'warn'}>{online?selected?`Selected junction ${selected}`:'SUMO observations':'Waiting / stale'}</Badge><label>Junction <select aria-label="Digital twin junction" value={selected ?? 'network'} onChange={e=>setSelection(e.target.value)}><option value="network">Entire network</option>{choices.map(id=><option key={id} value={id}>{id}</option>)}</select></label></div>
+        <LiveNetworkMap raw={raw} online={online} junction={selected ?? 'network'} />
       </Panel>
-      <div className="sf-insights">
-        <Panel title="Why this signal?" eyebrow="CONTROLLER INTELLIGENCE">
-          <div className="sf-inline-badges"><Badge>{state?.controller ?? 'Not selected'}</Badge><Badge tone={diagnostics?.fallback ? 'warn' : 'neutral'}>{policy === 'constrained_mpc' ? 'MPC action' : diagnostics?.fallback ? 'Fallback' : 'Observed inputs'}</Badge></div>
-          {!online && <p className="sf-warning">Connection lost. The following is the last received observation.</p>}
-          <p className="sf-decision-summary">{policyText}</p>
-          {junctions.length && !selected ? <p className="sf-caption">Decision summary: primary junction {junctions[0]}. Select a junction to inspect its inputs.</p> : null}
-          <dl className="sf-facts"><div><dt>Forecast influence</dt><dd>{diagnostics?.arrivalForecastSource === 'seasonal_shrinkage_baseline' ? 'Historical arrival estimate' : diagnostics?.arrivalForecastSource === 'recent_observations' ? 'Observed arrival rates' : 'Not reported'}</dd></div><div><dt>Pedestrian / emergency</dt><dd>{emergency ? 'Emergency request active' : raw?.pedestrianSignals.length ? 'Protected crossing programme' : 'No crossing in selected network'}</dd></div><div><dt>Independent supervisor</dt><dd>{supervisor?.status?.startsWith('enforcing') ? 'Enforcing timing constraints' : supervisor?.status ?? 'Unavailable'}</dd></div></dl>
-          {diagnostics?.fallback && <p className="sf-warning">Fallback reason: {diagnostics.fallback}</p>}
-          {serviceAge && <div className="sf-service-age"><span className="sf-eyebrow">PHASE SERVICE AGE · LIMIT {serviceAge.maximumRedSec} S</span>{Object.entries(serviceAge.phaseAgeSec).map(([p,age])=><div key={p}><span>Phase {p}</span><meter min={0} max={serviceAge.maximumRedSec} value={age} aria-label={`Phase ${p} service age`} /><b>{age.toFixed(0)} s</b></div>)}<p className="sf-caption">Time since phase was last observed green, not vehicle delay.</p></div>}
-          <details><summary>Verified controller telemetry</summary><dl className="sf-facts"><div><dt>Reported policy</dt><dd>{policy ?? 'No decision yet'}</dd></div><div><dt>Pressure by phase (PCU)</dt><dd>{Object.entries(diagnostics?.phasePressurePcu ?? {}).map(([id,n])=>`${id}: ${Number(n).toFixed(1)}`).join(' · ') || 'Not reported'}</dd></div><div><dt>Receiving supply (heuristic)</dt><dd>{Object.entries(diagnostics?.receivingSupply ?? {}).map(([id,n])=>`${id}: ${Number(n).toFixed(2)}`).join(' · ') || 'Not reported'}</dd></div></dl><p className="sf-caption">Observed inputs and reported policy are a summary, not a reconstructed causal proof. Raw supervisor decisions remain in technical telemetry below.</p></details>
-          <Badge tone="warn">MAPPO: Experimental — Not Qualified</Badge>
-        </Panel>
-        <Panel title="Approach conditions" eyebrow={selected ? `JUNCTION ${selected}` : 'PRIMARY JUNCTION'}>
-          {raw ? Object.entries(raw.approaches).map(([direction,row])=><div key={direction} className="sf-approach-row"><span>{direction}<small>{row.vehicles} vehicles · {row.avgWaitTimeSec.toFixed(1)} s wait</small></span><div className="sf-queue-bar"><i style={{width:`${row.vehicles ? Math.min(100,row.queued/row.vehicles*100) : 0}%`}} /></div><strong data-testid={`queue-${direction}`}>{row.queued}<small>queued</small></strong></div>) : <p className="sf-caption">Approach counts will appear when SUMO is connected.</p>}
-          {Object.entries(raw?.downstream ?? {}).filter(([,r])=>r.spillbackIndicator).map(([d,r])=><p className="sf-warning" key={d}>{d} receiver: {r.occupancyPercent.toFixed(1)}% occupied. Spillback heuristic triggered.</p>)}
-        </Panel>
-      </div>
+      <aside className="sf-insights" aria-label="Signal intelligence and safety">
+        <section className="sf-signal-card">
+          <div className="sf-insight-heading"><h2>Current signal</h2><Badge>{primary ? `${primary} · P${light?.phaseIndex ?? '—'}` : 'No active phase'}</Badge></div>
+          <div className="sf-permissions">{['north','south','east','west'].map(direction=>{
+            const p=raw ? approachPermission(raw,direction) : {label:'Unavailable',states:'',tone:'neutral'};
+            return <div key={direction} className={`sf-permission sf-permission-${p.tone}`} title={`${direction}: ${p.label}. Actual link states: ${p.states || 'unavailable'}. Mixed permissions do not grant every movement.`}><span>{direction[0].toUpperCase()}</span><small>{available?p.label:'Unavailable'}</small></div>;
+          })}</div>
+          <p className="sf-switch-time">{light && online ? `Scheduled switch in ${Math.max(0,light.nextSwitch-raw!.simTime).toFixed(0)} s` : 'Timing unavailable'}<small>Adaptive timing may change</small></p>
+        </section>
+        <section className="sf-decision-card">
+          <div className="sf-insight-heading"><h2>Why this signal?</h2><span className="sf-policy-label">{diagnostics?.policy==='constrained_mpc'?'MPC':diagnostics?.fallback?'Fallback':'Reported policy'}</span></div>
+          <p className="sf-decision-summary">{policySummary(diagnostics?.policy)}</p>
+          <p className="sf-trace-verdict" data-has-trace={!!lastDecision}>{lastDecision ? `${lastDecision.accepted?'Accepted':'Rejected'} by supervisor at ${lastDecision.simTime}s${lastDecision.phaseIndex!==undefined ? ` · phase ${lastDecision.phaseIndex}` : ''}` : 'No supervisor action trace yet.'}</p>
+          <details className="sf-decision-details"><summary>Inputs & decision trace</summary>
+            <p>Reported policy: {diagnostics?.policy ?? 'not reported'}</p>
+            <p>Last supervisor reason: {lastDecision?.reason ?? supervisor?.lastDecision?.reason ?? 'not reported'}. This trace can precede the current phase.</p>
+            <p>Arrival source: {diagnostics?.arrivalForecastSource ?? 'not reported'}. Fallback: {diagnostics?.fallback ?? 'none reported'}.</p>
+            <p>Pressure by phase (PCU): {Object.entries(diagnostics?.phasePressurePcu ?? {}).map(([id,n])=>`${id}: ${Number(n).toFixed(1)}`).join(' · ') || 'not reported'}.</p>
+            <p>Receiving supply (heuristic): {Object.entries(diagnostics?.receivingSupply ?? {}).map(([id,n])=>`${id}: ${Number(n).toFixed(2)}`).join(' · ') || 'not reported'}.</p>
+            {serviceAge && <p>Observed service ages: {Object.entries(serviceAge.phaseAgeSec).map(([p,age])=>`phase ${p}: ${age.toFixed(0)}s`).join(' · ')}. Gate: {serviceAge.maximumRedSec}s. These are phase service ages, not individual waits or proof that fairness changed this action.</p>}
+            <p>Inputs are an observation summary. Only the reported policy and supervisor trace establish a recorded decision; no causal explanation is reconstructed.</p>
+          </details>
+        </section>
+        <section className="sf-conditions-card"><div className="sf-insight-heading"><h2>Approach queues</h2><small>{primary ?? 'Awaiting SUMO'} · vehicles</small></div>
+          {raw ? Object.entries(raw.approaches).map(([direction,row])=><div key={direction} className="sf-approach-row"><span>{direction}<small>{row.avgWaitTimeSec.toFixed(1)} s current wait</small></span><div className="sf-queue-bar"><i style={{width:`${row.vehicles ? Math.min(100,row.queued/row.vehicles*100):0}%`}} /></div><strong data-testid={`queue-${direction}`}>{row.queued}</strong></div>) : <p className="sf-caption">Queues appear after Start.</p>}
+        </section>
+        <section className="sf-events-card"><div className="sf-insight-heading"><h2>Safety events</h2><span className="sf-safety-dot" data-active={!!emergency || spillbacks.length>0} /></div>
+          <p>{!online?'Backend unavailable; last state may be stale.':emergency?`Priority vehicle: ${emergency}`:spillbacks.length?`${spillbacks.map(([d])=>d).join(', ')} receiving occupancy ≥80%.`:crossings.some(c=>c.occupants.length)?'Pedestrians occupying protected crossings.':state?.connected?'No active priority or spillback event.':'Start SUMO to observe safety events.'}</p>
+        </section>
+      </aside>
     </div>}
   </div>;
 }

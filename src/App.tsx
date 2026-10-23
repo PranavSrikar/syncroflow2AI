@@ -9,6 +9,7 @@ import { trafficProvider } from './services/trafficProvider.ts';
 import { useLiveTraffic } from './services/liveTraffic';
 import { LiveUtilities } from './components/views/LiveUtilities';
 import { LiveStatusHeader } from './components/live/LiveStatusHeader';
+import { ResearchEvidence } from './components/live/ResearchEvidence';
 import { Sidebar, NavTab } from './components/navigation/Sidebar.tsx';
 import { OverviewCommandCenter } from './components/views/OverviewCommandCenter.tsx';
 import { SumoLiveView } from './components/views/SumoLiveView.tsx';
@@ -46,7 +47,7 @@ export default function App() {
 
   // React state synchronized from provider & engine
   const [simState, setSimState] = useState<SimulationState>(engineRef.current.getState());
-  const [showAnalyticsOverlay, setShowAnalyticsOverlay] = useState(true);
+  const [showAnalyticsOverlay, setShowAnalyticsOverlay] = useState(false);
 
   // Subscribe to provider state updates
   useEffect(() => {
@@ -102,6 +103,7 @@ export default function App() {
   }, []);
 
   const handleReset = useCallback(() => {
+    if (!window.confirm('Reset synthetic demonstration? Current browser run metrics and vehicles will be cleared.')) return;
     engineRef.current.reset();
     trafficProvider.notifySubscribers(engineRef.current.getState());
   }, []);
@@ -188,12 +190,13 @@ export default function App() {
         <main className="flex-1 overflow-hidden flex flex-col">
           <div className="sf-workspace-toolbar">
             <button className="sf-mode-switch" onClick={() => setSumoMode(!sumoMode)}>{sumoMode ? 'Switch to synthetic demonstration' : 'Switch to SUMO telemetry'}</button>
-            <p className={sumoMode ? 'text-cyan-300' : 'text-amber-300'}>{sumoMode ? 'SUMO observations · supervised control · research use' : 'SYNTHETIC BROWSER DEMONSTRATION: these actions and metrics do not control SUMO or use a trained MAPPO policy.'}</p>
+            <p className={sumoMode ? 'text-cyan-300' : 'text-amber-300'}>{sumoMode ? <><span className="sf-live-source">LIVE SUMO</span><span className="sf-experimental">MAPPO: Experimental — Not Qualified</span></> : 'SYNTHETIC BROWSER DEMONSTRATION: these actions and metrics do not control SUMO or use a trained MAPPO policy.'}</p>
           </div>
           {sumoMode && !['comparison','v2i_hardware','config_api','benchmark_export'].includes(activeTab) && <SumoLiveView scope={activeTab} />}
           {sumoMode && activeTab === 'config_api' && <LiveUtilities kind="config" />}
           {sumoMode && activeTab === 'benchmark_export' && <LiveUtilities kind="export" />}
-          {sumoMode && ['comparison','v2i_hardware'].includes(activeTab) && <section className="p-6 space-y-4"><h1 className="text-2xl">{activeTab === 'comparison' ? 'Controller benchmark laboratory' : activeTab === 'math_models' ? 'Mathematical model explorer' : 'V2I and sensor architecture'}</h1><p>{activeTab === 'comparison' ? 'There is no live benchmark execution API. Published offline Phase5 results are in PHASE5_EXPERIMENT_RESULTS.md; the browser benchmark uses a separate synthetic engine.' : activeTab === 'math_models' ? 'Educational model equations are available in the browser demonstration. They are not live optimizer diagnostics; those appear in live Analytics.' : 'No physical V2I, DSRC, LiDAR or roadside hardware is connected. Protocol diagrams and mock sensor displays are demonstrations.'}</p><button className="bg-cyan-900 p-2" onClick={() => setSumoMode(false)}>Open browser demonstration</button></section>}
+          {sumoMode && activeTab === 'comparison' && <ResearchEvidence openDemo={()=>setSumoMode(false)} />}
+          {sumoMode && ['v2i_hardware'].includes(activeTab) && <section className="sf-live-page sf-research-page p-6 space-y-4"><h1 className="text-2xl">{activeTab === 'comparison' ? 'Controller benchmark laboratory' : activeTab === 'math_models' ? 'Mathematical model explorer' : 'V2I and sensor architecture'}</h1><p>{activeTab === 'comparison' ? 'There is no live benchmark execution API. Published offline Phase5 results are in PHASE5_EXPERIMENT_RESULTS.md; the browser benchmark uses a separate synthetic engine.' : activeTab === 'math_models' ? 'Educational model equations are available in the browser demonstration. They are not live optimizer diagnostics; those appear in live Analytics.' : 'No physical V2I, DSRC, LiDAR or roadside hardware is connected. Protocol diagrams and mock sensor displays are demonstrations.'}</p><button className="bg-cyan-900 p-2" onClick={() => setSumoMode(false)}>Open browser demonstration</button></section>}
           {!sumoMode && legacyRemote && <p role="status" className="p-3 bg-amber-950">Legacy remote synthetic-provider diagnostics selected. Other demo controls are read-only; choose Local Deterministic Engine in Provider API to resume browser interaction. SUMO uses the separate live workspace.</p>}
           <div className="contents" inert={!sumoMode && legacyRemote && activeTab !== 'config_api' ? true : undefined}>
           {activeTab === 'dashboard' && !sumoMode && (

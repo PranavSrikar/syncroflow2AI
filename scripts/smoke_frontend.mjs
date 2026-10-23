@@ -18,9 +18,9 @@ try{
   await page.getByLabel('SUMO controller').selectOption('hybrid');
   owned=true;
   await page.getByRole('button',{name:'start',exact:true}).click();
-  await expect(page.getByText(/Simulation: running/)).toBeVisible();
+  await expect(page.getByTestId('simulation-state')).toHaveAttribute('data-status', 'running');
   await page.getByRole('button',{name:'pause',exact:true}).click();
-  await expect(page.getByText(/Simulation: paused/)).toBeVisible();
+  await expect(page.getByTestId('simulation-state')).toHaveAttribute('data-status', 'paused');
   for(let i=0;i<30;i++)await json('/sumo/step','POST');
   const state=await json('/sumo/status');
   await expect(page.getByRole('img',{name:'Live SUMO digital twin',exact:true})).toHaveAttribute('data-sim-time',String(state.telemetry.simTime));
@@ -28,11 +28,11 @@ try{
   await fs.mkdir('.checkpoints/phase6',{recursive:true});
   await page.screenshot({path:'.checkpoints/phase6/production-desktop.png'});
   await page.getByRole('button',{name:'stop',exact:true}).click();
-  await expect(page.getByText(/Simulation: stopped/)).toBeVisible();
+  await expect(page.getByTestId('simulation-state')).toHaveAttribute('data-status', 'stopped');
   await page.getByRole('button',{name:'start',exact:true}).click();
-  await expect(page.getByText(/Simulation: running/)).toBeVisible();
+  await expect(page.getByTestId('simulation-state')).toHaveAttribute('data-status', 'running');
   await page.getByRole('button',{name:'stop',exact:true}).click();
-  await expect(page.getByText(/Simulation: stopped/)).toBeVisible();
+  await expect(page.getByTestId('simulation-state')).toHaveAttribute('data-status', 'stopped');
   expect(errors).toEqual([]);expect(failures).toEqual([]);
   const result={url,passed:true,errors,failures,navigation:await page.evaluate(()=>(performance.getEntriesByType('navigation')[0]).toJSON()),observedSimTime:state.telemetry.simTime,snapshotBytes:Buffer.byteLength(JSON.stringify(state)),qualifiedMAPPO:state.mappoStatus.operationalPolicyEnabled};
   await fs.writeFile('.checkpoints/phase6/production-smoke.json',JSON.stringify(result,null,2));

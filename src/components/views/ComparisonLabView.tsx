@@ -46,8 +46,8 @@ export const ComparisonLabView: React.FC = () => {
     { id: 'actuated', name: 'Semi-Actuated (Gap-Out)', isExecutableLocally: true, description: 'Sensor-actuated phase hold while dilemma zone loops detect vehicles.' },
     { id: 'queue_adaptive', name: 'Queue-Based Dynamic Adaptive', isExecutableLocally: true, description: 'Dynamic green allocation proportional to inbound queue count.' },
     { id: 'max_pressure', name: 'Max-Pressure-style browser heuristic', isExecutableLocally: true, description: 'Selects movement phases with maximum upstream minus downstream queue differential.' },
-    { id: 'mpc_only', name: 'Constrained MPC (15-step Receding Horizon)', isExecutableLocally: true, description: 'Receding-horizon trajectory candidate evaluation minimizing queue and delay cost.' },
-    { id: 'mappo_assisted_mpc', name: 'MAPPO-Assisted MPC (Advisory RL)', isExecutableLocally: true, description: 'Rule-based browser advisory; no trained neural checkpoint.' },
+    { id: 'mpc_only', name: 'Browser MPC-style heuristic', isExecutableLocally: true, description: 'Receding-horizon trajectory candidate evaluation minimizing queue and delay cost.' },
+    { id: 'mappo_assisted_mpc', name: 'Browser advisory heuristic (MAPPO label)', isExecutableLocally: true, description: 'Rule-based browser advisory; no trained neural checkpoint.' },
     { id: 'synchroflow_hybrid', name: 'SynchroFlow Full Hybrid System', isExecutableLocally: true, description: 'Browser hybrid heuristic and model interlocks; no physical V2I or trained MAPPO.' },
   ];
 
@@ -155,6 +155,7 @@ export const ComparisonLabView: React.FC = () => {
         </div>
       </div>
 
+      {results.length>0 && <section className="sf-benchmark-chart"><h2>Mean current wait by controller</h2><p className="sf-caption">Measured browser-engine outcomes; seconds; single run; no variability or statistical superiority established</p>{results.map(r=><div key={r.controller}><span>{r.controllerName}</span><i><b style={{width:`${Math.max(0,r.measuredAvgDelay)/Math.max(1,...results.map(x=>x.measuredAvgDelay))*100}%`}} /></i><strong>{r.measuredAvgDelay.toFixed(1)} s</strong></div>)}</section>}
       {/* Benchmark Experiment Configuration Parameters */}
       <div className="bg-slate-950/80 border border-slate-800 rounded-xl p-4 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
         <div>

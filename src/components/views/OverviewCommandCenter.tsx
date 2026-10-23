@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { TrafficScene } from '../3d/TrafficScene.tsx';
 import { ViewportHUD } from '../dashboard/ViewportHUD.tsx';
 import { BottomPanels } from '../dashboard/BottomPanels.tsx';
@@ -38,10 +38,13 @@ export const OverviewCommandCenter: React.FC<OverviewCommandCenterProps> = ({
   onInjectAmbulance,
   onInjectFireEngine,
 }) => {
+  const [showHud, setShowHud] = useState(false);
   return (
-    <div className="flex-1 flex flex-col lg:flex-row h-full overflow-hidden">
+    <div className="sf-synthetic-layout flex-1 flex flex-col lg:flex-row h-full overflow-hidden">
       {/* Left Viewport: 3D Digital Twin Centerpiece */}
-      <div className="flex-1 h-full min-h-[460px] relative bg-slate-950 border-r border-slate-800/80 overflow-hidden min-w-0">
+      <div className="sf-synthetic-primary flex-1 h-full bg-slate-950 overflow-hidden min-w-0">
+        <div className="sf-synthetic-scene">
+        <div className="sf-synthetic-toolbar">{!showHud && (['aerial','street','top_down'] as CameraViewPreset[]).map(p=><button key={p} aria-pressed={simState.cameraPreset===p} onClick={()=>onCameraChange(p)}>{p==='top_down'?'TOP DOWN':p.toUpperCase()}</button>)}<button onClick={()=>setShowHud(!showHud)}>{showHud?'Collapse overlays':'Demonstration overlays'}</button></div>
         <TrafficScene
           vehicles={simState.vehicles}
           signals={simState.signals}
@@ -51,7 +54,7 @@ export const OverviewCommandCenter: React.FC<OverviewCommandCenterProps> = ({
         />
 
         {/* Viewport HUD Overlays */}
-        <ViewportHUD
+        {showHud && <ViewportHUD
           signals={simState.signals}
           telemetry={simState.telemetry}
           metrics={simState.metrics}
@@ -60,10 +63,11 @@ export const OverviewCommandCenter: React.FC<OverviewCommandCenterProps> = ({
           showAnalyticsOverlay={showAnalyticsOverlay}
           onToggleAnalyticsOverlay={onToggleAnalyticsOverlay}
           onInjectEmergency={onInjectAmbulance}
-        />
+        />}
+        </div>
 
         {/* Bottom Simulation Dock */}
-        <div className="absolute bottom-3 left-0 right-0 z-20 pointer-events-none flex justify-center px-4">
+        <div className="sf-synthetic-controls flex justify-center">
           <SimulationDock
             isRunning={simState.isRunning}
             timeScale={simState.timeScale}
@@ -80,7 +84,7 @@ export const OverviewCommandCenter: React.FC<OverviewCommandCenterProps> = ({
       </div>
 
       {/* Right Column: Telemetry Tables, Real-Time Analytics & IoT Sensor Radar */}
-      <div className="w-full lg:w-[460px] xl:w-[500px] h-full overflow-y-auto bg-slate-950 p-3.5 shrink-0 border-l border-slate-800/80">
+      <div className="sf-synthetic-telemetry w-full h-full overflow-y-auto bg-slate-950 p-3.5 shrink-0 border-l border-slate-800/80">
         <BottomPanels
           sensorNodes={simState.sensorNodes}
           alerts={simState.recentAlerts}

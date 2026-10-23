@@ -2,8 +2,15 @@ import assert from 'node:assert/strict';
 import { TrafficSimulationEngine } from '../src/simulation/engine';
 import { ALL_25_SCENARIOS } from '../src/simulation/scenarios';
 import { TrafficProviderService } from '../src/services/trafficProvider';
+import { approachPermission, policySummary, TrafficObservation } from '../src/services/trafficPresentation';
 
 async function main() {
+  assert.doesNotMatch(policySummary('unknown_backend_policy'), /extension|selected a feasible/i);
+  assert.match(policySummary('max_pressure_fallback'), /fallback/);
+  const observation = { approaches: { north: { edgeId: 'N_in' } }, trafficLights: { center: { signalState:'GrG', controlledLinks: [[['N_in_0','S_out_0','via']], [['N_in_1','W_out_0','via']], [['N_in2_0','S_out_1','via']]] } } } as unknown as TrafficObservation;
+  assert.equal(approachPermission(observation,'north').label,'Partial green');
+  assert.equal(approachPermission(observation,'south').label,'Not reported');
+  console.log('PASS unknown policies do not invent decisions; mixed permissions remain partial; missing states unavailable');
   const engine = new TrafficSimulationEngine();
   const original = ALL_25_SCENARIOS[0].arrivalRates.north;
   const custom = structuredClone(ALL_25_SCENARIOS[0]); custom.arrivalRates.north = 2350;

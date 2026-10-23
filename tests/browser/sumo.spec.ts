@@ -5,6 +5,8 @@ test.beforeEach(async ({ request }) => { expect((await request.post(`${api}/sumo
 test.afterEach(async ({ request }) => { await request.post(`${api}/sumo/stop`); await request.post(`${api}/perception/stop`); });
 
 test('dashboard receives real SUMO telemetry and controls lifecycle', async ({ page, request }) => {
+  // Successful MPC rendering path: explicit test budget, production unchanged.
+  await page.route('**/api/v1/sumo/start?**', route => route.continue({url:route.request().url()+'&mpc_budget_ms=1000'}));
   const errors: string[] = [];
   await page.route('https://fonts.googleapis.com/**', route => route.abort());
   await page.route('https://fonts.gstatic.com/**', route => route.abort());
@@ -13,10 +15,11 @@ test('dashboard receives real SUMO telemetry and controls lifecycle', async ({ p
   await expect(page.getByRole('heading', { name: 'Live traffic command center' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'start', exact: true })).toBeEnabled();
   await page.locator('[data-nav=perception]').click();
-  await expect(page.getByRole('heading', { name: 'Camera observations and arrival forecasts' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Camera observations' })).toBeVisible();
   await page.getByLabel('Observation source').selectOption('camera');
   await expect(page.getByText(/No fresh camera observations/)).toBeVisible();
   await page.getByLabel('Observation source').selectOption('sumo');
+  await page.locator('[data-nav=prediction]').click();
   const previous = new Date(Date.now() - 86400000).toISOString();
   expect((await request.post(`${api}/forecast/history`, { data: {
     csv: `timestamp,approach,arrivals_pcu,interval_sec\n${previous},north,12,60`, example_data: true,
@@ -29,10 +32,10 @@ test('dashboard receives real SUMO telemetry and controls lifecycle', async ({ p
   await page.locator('[data-nav=dashboard]').click();
   await page.getByText('Detailed telemetry & safety diagnostics', { exact: true }).click();
   await page.getByRole('button', { name: 'start', exact: true }).click();
-  await expect(page.getByText(/Simulation: running/)).toBeVisible();
+  await expect(page.getByTestId('simulation-state')).toHaveAttribute('data-status', 'running');
   await expect(page.getByRole('cell', { name: 'north', exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'pause', exact: true }).click();
-  await expect(page.getByText(/Simulation: paused/)).toBeVisible();
+  await expect(page.getByTestId('simulation-state')).toHaveAttribute('data-status', 'paused');
   const before = await (await request.get(`${api}/sumo/telemetry`)).json();
   await page.getByRole('button', { name: 'step', exact: true }).click();
   await expect.poll(async () => (await (await request.get(`${api}/sumo/telemetry`)).json()).simTime).toBe(before.simTime + 1);
@@ -41,7 +44,7 @@ test('dashboard receives real SUMO telemetry and controls lifecycle', async ({ p
   const north = page.getByRole('row').filter({ has: page.getByRole('cell', { name: 'north', exact: true }) });
   await expect(north.locator('td').nth(1)).toHaveText(String(raw.approaches.north.vehicles));
   await page.getByRole('button', { name: 'stop', exact: true }).click();
-  await expect(page.getByText(/Simulation: stopped/)).toBeVisible();
+  await expect(page.getByTestId('simulation-state')).toHaveAttribute('data-status', 'stopped');
   await page.getByLabel('SUMO network').selectOption('pedestrian');
   await page.getByLabel('SUMO controller').selectOption('max_pressure');
   await page.getByRole('button', { name: 'start', exact: true }).click();
@@ -49,16 +52,18 @@ test('dashboard receives real SUMO telemetry and controls lifecycle', async ({ p
   await expect(page.getByText(/Permission monitor center/)).toBeVisible();
   await expect(page.getByText('enforcing_pedestrian_and_vehicle_timing', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'stop', exact: true }).click();
-  await expect(page.getByText(/Simulation: stopped/)).toBeVisible();
+  await expect(page.getByTestId('simulation-state')).toHaveAttribute('data-status', 'stopped');
   await page.getByLabel('SUMO network').selectOption('vehicle');
   await page.getByLabel('SUMO controller').selectOption('mpc');
   await page.getByRole('button', { name: 'start', exact: true }).click();
   await expect(page.getByLabel('Header telemetry')).toContainText('Controller: mpc');
   await page.getByRole('button', { name: 'pause', exact: true }).click();
+  await expect(page.getByTestId('simulation-state')).toHaveAttribute('data-status', 'paused');
   for (let i = 0; i < 12; i++) {
     const response = await request.post(`${api}/sumo/step`);
     expect(response.ok()).toBeTruthy();
   }
+  await page.getByText('Controller diagnostics and MPC queue projections', { exact: true }).click();
   await expect(page.locator('pre').filter({ hasText: 'constrained_mpc' })).toBeVisible();
   await page.getByRole('button', { name: 'Inject emergency north', exact: true }).click();
   for (let i = 0; i < 2; i++) {
@@ -68,7 +73,7 @@ test('dashboard receives real SUMO telemetry and controls lifecycle', async ({ p
   const emergency = await (await request.get(`${api}/sumo/emergencies/status`)).json();
   expect(emergency.requests[0].source).toBe('sumo_injection');
   await page.getByRole('button', { name: 'stop', exact: true }).click();
-  await expect(page.getByText(/Simulation: stopped/)).toBeVisible();
+  await expect(page.getByTestId('simulation-state')).toHaveAttribute('data-status', 'stopped');
   expect(errors).toEqual([]);
   const stopped = await (await request.get(`${api}/sumo/emergencies/status`)).json();
   expect(stopped.activeVehicleId).toBeNull();
@@ -104,6 +109,7 @@ test('hybrid corridor renders actual multi-junction controller state', async ({ 
   await expect(page.getByRole('heading', { name: 'Junction A0 control state' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Junction B0 control state' })).toBeVisible();
   await page.getByRole('button', { name: 'pause', exact: true }).click();
+  await expect(page.getByTestId('simulation-state')).toHaveAttribute('data-status', 'paused');
   for (let i = 0; i < 12; i++) expect((await request.post(`${api}/sumo/step`)).ok()).toBeTruthy();
   const actual = await (await request.get(`${api}/sumo/status`)).json();
   const a = page.getByRole('article', { name: 'Junction telemetry A0' });
@@ -116,7 +122,7 @@ test('hybrid corridor renders actual multi-junction controller state', async ({ 
   for (let i = 0; i < 2; i++) expect((await request.post(`${api}/sumo/step`)).ok()).toBeTruthy();
   await expect(page.getByText(/synchroflow_emergency_B0_1.*north.*priority 3/)).toBeVisible();
   await page.getByRole('button', { name: 'stop', exact: true }).click();
-  await expect(page.getByText(/Simulation: stopped/)).toBeVisible();
+  await expect(page.getByTestId('simulation-state')).toHaveAttribute('data-status', 'stopped');
 });
 
 test('release demos show measured spillback and follow external API selection', async ({ page, request }) => {
@@ -136,7 +142,7 @@ test('release demos show measured spillback and follow external API selection', 
     expect((await request.post(`${api}/sumo/stop`)).ok()).toBeTruthy();
     expect((await request.post(`${api}/sumo/start?scenario=unequal&controller=hybrid&paused=true&seed=95`)).ok()).toBeTruthy();
     await expect(page.getByLabel('SUMO network')).toHaveValue('unequal');
-    await expect(page.getByText(/Simulation: paused/)).toBeVisible();
+    await expect(page.getByTestId('simulation-state')).toHaveAttribute('data-status', 'paused');
   } finally {
     await request.post(`${api}/sumo/stop`);
   }

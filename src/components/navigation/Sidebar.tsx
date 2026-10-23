@@ -175,6 +175,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
     },
   ];
 
+  const byId = new Map(navCategories.flatMap(group=>group.items).map(item=>[item.id,item]));
+  const organized: NavCategory[] = [
+    { category: 'Monitor', items: ['dashboard','network'].map(id=>byId.get(id as NavTab)!) },
+    { category: 'Intelligence', items: ['analytics','prediction','math_models'].map(id=>byId.get(id as NavTab)!) },
+    { category: 'Safety & perception', items: ['perception','pedestrian','incidents','health_security'].map(id=>byId.get(id as NavTab)!) },
+    { category: 'Research lab', items: ['scenarios','comparison','v2i_hardware'].map(id=>byId.get(id as NavTab)!) },
+    { category: 'System & data', items: ['config_api','benchmark_export'].map(id=>byId.get(id as NavTab)!) },
+  ];
   return (
     <aside className="sf-sidebar w-64 bg-slate-950/95 border-r border-slate-800/80 flex flex-col shrink-0 z-30 select-none">
       {/* Brand Header */}
@@ -205,14 +213,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Navigation Links Grouped by Category */}
       <nav className="flex-1 p-3 space-y-4 overflow-y-auto">
-        {navCategories.map((group) => (
+        {organized.map((group) => (
           <div key={group.category} className="space-y-1">
             <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider px-2 py-0.5">
               {group.category}
             </div>
             {group.items.map((item) => {
               const isActive = activeTab === item.id;
-              const liveLabels: Partial<Record<NavTab,string>> = { dashboard: 'Overview / Live Digital Twin', analytics: 'Traffic Analytics', prediction: 'Traffic Predictions', math_models: 'Controller Intelligence', perception: 'Camera & Sensor Monitoring', pedestrian: 'Pedestrian Protection', incidents: 'Emergency Management', health_security: 'System Health & Safety', config_api: 'System Settings' };
+              const liveLabels: Partial<Record<NavTab,string>> = { dashboard: 'Live Traffic Command', analytics: 'Traffic Analytics', prediction: 'Traffic Predictions', math_models: 'Controller Intelligence', perception: 'Camera & Sensor Monitoring', pedestrian: 'Pedestrian Protection', incidents: 'Emergency Management', health_security: 'System Health & Safety', config_api: 'System Settings' };
               const label = liveMode ? liveLabels[item.id] ?? item.label : item.label;
               return (
                 <button

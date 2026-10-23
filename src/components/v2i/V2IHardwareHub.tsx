@@ -28,6 +28,7 @@ export const V2IHardwareHub: React.FC<V2IHardwareHubProps> = ({ sensors, signals
 
   return (
     <div className="p-6 space-y-6 max-w-7xl mx-auto text-slate-200 select-none">
+      <p className="sf-warning">Educational hardware demonstration. Device specifications, latency, security labels and protocol messages are illustrative; no radio, roadside unit or edge device is connected or measured.</p>
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-800">
         <div>
@@ -45,7 +46,7 @@ export const V2IHardwareHub: React.FC<V2IHardwareHubProps> = ({ sensors, signals
 
         <div className="flex items-center gap-2 font-mono text-xs text-emerald-400 bg-emerald-950/40 border border-emerald-500/30 px-3 py-1.5 rounded-xl">
           <span className="w-2 h-2 rounded-full bg-emerald-400" />
-          <span>RSU SC-INT-74: ONLINE (12ms)</span>
+          <span>ILLUSTRATIVE HARDWARE - NOT CONNECTED</span>
         </div>
       </div>
 
@@ -112,7 +113,7 @@ export const V2IHardwareHub: React.FC<V2IHardwareHubProps> = ({ sensors, signals
           <div className="text-xs space-y-1.5 pt-2 border-t border-slate-900 font-mono text-[11px]">
             <div className="flex justify-between text-slate-400">
               <span>Inference Time:</span>
-              <span className="text-cyan-400">12ms avg</span>
+              <span className="text-cyan-400">12ms (illustrative)</span>
             </div>
             <div className="flex justify-between text-slate-400">
               <span>Fail-Safe Mode:</span>
@@ -201,7 +202,7 @@ export const V2IHardwareHub: React.FC<V2IHardwareHubProps> = ({ sensors, signals
                 standard: 'SAE J2735_202007',
                 intersectionId: 'SC-INT-74',
                 timestamp: new Date().toISOString(),
-                status: 'operational',
+                status: 'synthetic_example',
                 currentPhase: signals.currentPhaseIndex + 1,
                 phaseName: signals.phaseName,
                 remainingGreenSeconds: Math.round(signals.approachSignals.north.remainingGreen || 0),
