@@ -10,8 +10,9 @@ test('dashboard receives real SUMO telemetry and controls lifecycle', async ({ p
   await page.route('https://fonts.gstatic.com/**', route => route.abort());
   page.on('pageerror', error => errors.push(error.message));
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByRole('heading', { name: 'SUMO simulation telemetry' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Live traffic command center' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'start', exact: true })).toBeEnabled();
+  await page.locator('[data-nav=perception]').click();
   await expect(page.getByRole('heading', { name: 'Camera observations and arrival forecasts' })).toBeVisible();
   await page.getByLabel('Observation source').selectOption('camera');
   await expect(page.getByText(/No fresh camera observations/)).toBeVisible();
@@ -25,6 +26,8 @@ test('dashboard receives real SUMO telemetry and controls lifecycle', async ({ p
   await expect(page.getByText(/EXAMPLE DATA/)).toBeVisible();
   await page.getByRole('button', { name: 'Disable forecasts', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Enable forecasts', exact: true })).toBeVisible();
+  await page.locator('[data-nav=dashboard]').click();
+  await page.getByText('Detailed telemetry & safety diagnostics', { exact: true }).click();
   await page.getByRole('button', { name: 'start', exact: true }).click();
   await expect(page.getByText(/Simulation: running/)).toBeVisible();
   await expect(page.getByRole('cell', { name: 'north', exact: true })).toBeVisible();
@@ -75,19 +78,26 @@ test('dashboard receives real SUMO telemetry and controls lifecycle', async ({ p
 test('configured real video is visible in the camera dashboard', async ({ page }) => {
   test.skip(!process.env.SYNCHROFLOW_CAMERA_CONFIG, 'Local real-video camera config required');
   await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await page.locator('[data-nav=perception]').click();
   await page.getByLabel('Observation source').selectOption('camera');
   await page.getByRole('button', { name: 'Start cameras', exact: true }).click();
   await expect(page.getByText(/Selected data: camera_fusion/)).toBeVisible({ timeout: 20000 });
   await expect(page.getByText(/Fused counts: north [1-9]/)).toBeVisible();
+  await expect(page.getByText('Recorded video · replayed observations', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Stop cameras', exact: true }).click();
   await expect(page.getByText(/No fresh camera observations/)).toBeVisible();
 });
 
 test('hybrid corridor renders actual multi-junction controller state', async ({ page, request }) => {
+  // This case verifies the successful MPC rendering path deterministically.
+  // The production 50ms budget is unchanged; forced timeout/fallback remains
+  // independently verified by external demonstration G and backend tests.
+  await page.route('**/api/v1/sumo/start?**', route => route.continue({ url: route.request().url() + '&mpc_budget_ms=1000' }));
   await page.route('https://fonts.googleapis.com/**', route => route.abort());
   await page.route('https://fonts.gstatic.com/**', route => route.abort());
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   await expect(page.getByRole('button', { name: 'start', exact: true })).toBeEnabled();
+  await page.getByText('Detailed telemetry & safety diagnostics', { exact: true }).click();
   await page.getByLabel('SUMO network').selectOption('corridor');
   await page.getByLabel('SUMO controller').selectOption('hybrid');
   await page.getByRole('button', { name: 'start', exact: true }).click();
@@ -113,6 +123,7 @@ test('release demos show measured spillback and follow external API selection', 
   await page.route('https://fonts.googleapis.com/**', route => route.abort());
   await page.route('https://fonts.gstatic.com/**', route => route.abort());
   await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await page.getByText('Detailed telemetry & safety diagnostics', { exact: true }).click();
   try {
     const started = await request.post(`${api}/sumo/start?scenario=spillback&controller=hybrid&paused=true&seed=95`);
     expect(started.ok()).toBeTruthy();

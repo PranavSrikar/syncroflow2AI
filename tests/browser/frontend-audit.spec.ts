@@ -72,12 +72,16 @@ test('synthetic controls change authoritative engine state and preserve scenario
 
 test('history upload, manual weather, forecast settings and live export use real API state', async ({ page, request }) => {
   await page.goto('/');
+  await page.locator('[data-nav=prediction]').click();
   await page.getByText('Historical CSV and weather configuration', { exact: true }).click();
   await page.getByLabel('Historical arrival CSV', { exact: true }).fill(`timestamp,approach,arrivals_pcu,interval_sec\n${new Date(Date.now()-86400000).toISOString()},north,18,60`);
   await page.getByLabel('CSV is demonstration data').check();
   await page.getByRole('button', { name: 'Upload history CSV', exact: true }).click();
   await page.getByRole('button', { name: 'Enable forecasts', exact: true }).click();
   await expect(page.getByText(/north: next arrival rate 0.300 PCU/)).toBeVisible();
+  await page.getByLabel('Prediction horizon', { exact: true }).selectOption('120');
+  await expect(page.getByText(/horizon 120 s/)).toBeVisible();
+  await expect(page.getByRole('img', { name: 'north forecast uncertainty', exact: true })).toBeVisible();
   await page.getByLabel('Weather provider', { exact: true }).selectOption('manual');
   await page.getByRole('button', { name: 'Apply weather configuration', exact: true }).click();
   await page.getByLabel('Manual rainfall mm/h').fill('12');

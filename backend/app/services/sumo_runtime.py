@@ -254,6 +254,20 @@ class SumoRuntime:
                     'events': [dict(junctionId=a, **r) for a, e in self.network.emergencies.items() for r in e.snapshot()['events']]}
             elif self.coordinator:
                 result['mappoStatus'].update(self.coordinator.snapshot())
+            # Read-only visibility into existing fairness gates; never changes
+            # supervisor state or manufactures an explanation for an action.
+            def service_age(controller, raw):
+                if controller is None or raw is None:
+                    return None
+                supervisor = controller.supervisor
+                return {'phaseAgeSec': {str(p): max(0.0, raw['simTime'] - t)
+                                         for p, t in supervisor.last_served.items()},
+                        'maximumRedSec': supervisor.MAX_RED,
+                        'definition': 'Time since phase last observed green; not individual vehicle delay'}
+            result['serviceAge'] = service_age(self.controller, self.telemetry)
+            if network:
+                for agent, row in result['junctions'].items():
+                    row['serviceAge'] = service_age(self.network.controllers.get(agent), row['telemetry'])
             return result
 
     def mappo_status(self):

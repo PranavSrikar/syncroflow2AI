@@ -1,7 +1,9 @@
 import React from 'react';
+import type { Snapshot } from './SumoLiveView';
 
 export type JunctionState = {
-  telemetry: { simTime: number; approaches: Record<string, { vehicles: number; queued: number; avgWaitTimeSec: number }>; trafficLights: Record<string, { phaseIndex: number; signalState: string }> };
+  telemetry: NonNullable<Snapshot['telemetry']>;
+  serviceAge?: Snapshot['serviceAge'];
   safetySupervisor: { status: string; acceptedActions?: number; rejectedActions?: number; lastDecision?: unknown; decisions?: unknown[] };
   controllerDiagnostics: { policy?: string; phasePressurePcu?: Record<string, number>; movementPressure?: unknown[]; fallback?: string | null; recommendedRemainingSec?: number; coordinationHint?: number | null; arrivalForecastSource?: string } | null;
   forecasts: { available: boolean; fallback: string | null };

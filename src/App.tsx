@@ -8,6 +8,7 @@ import { TrafficSimulationEngine, SimulationState } from './simulation/engine.ts
 import { trafficProvider } from './services/trafficProvider.ts';
 import { useLiveTraffic } from './services/liveTraffic';
 import { LiveUtilities } from './components/views/LiveUtilities';
+import { LiveStatusHeader } from './components/live/LiveStatusHeader';
 import { Sidebar, NavTab } from './components/navigation/Sidebar.tsx';
 import { OverviewCommandCenter } from './components/views/OverviewCommandCenter.tsx';
 import { SumoLiveView } from './components/views/SumoLiveView.tsx';
@@ -180,95 +181,19 @@ export default function App() {
       />
 
       {/* Main Workspace */}
-      <div className="flex-1 flex flex-col h-full overflow-hidden relative">
-        {/* Top Header Bar */}
-        <header className="h-14 border-b border-slate-800/80 bg-slate-950/95 px-6 flex items-center justify-between gap-8 shrink-0 select-none z-20">
-          {/* Zone 1: Location & Junction Node */}
-          <div className="flex items-center gap-3 whitespace-nowrap shrink-0">
-            <span className="text-sm font-bold tracking-tight text-slate-100">
-              {sumoMode ? 'SUMO research network' : 'Synthetic Oak Street'}
-            </span>
-            <span className="text-[11px] font-mono text-cyan-400 bg-cyan-950/40 px-2 py-0.5 rounded border border-cyan-500/30">
-              {sumoMode ? 'SUMO / TraCI' : 'DEMO SC-INT-74'}
-            </span>
-            <span className="hidden sm:inline-flex items-center gap-1.5 text-[10px] font-mono text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-500/30">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-              {sumoMode ? 'SUMO telemetry mode' : 'Synthetic demo mode'}
-            </span>
-          </div>
-
-          {/* Zone 2: Fast Navigation Shortcuts */}
-          <nav className="hidden lg:flex items-center gap-5 text-xs font-medium text-slate-400">
-            <button
-              onClick={() => setActiveTab('dashboard')}
-              className={`hover:text-cyan-400 transition-colors whitespace-nowrap ${
-                activeTab === 'dashboard' ? 'text-cyan-400 font-semibold' : ''
-              }`}
-            >
-              Command View
-            </button>
-            <button
-              onClick={() => setActiveTab('scenarios')}
-              className={`hover:text-cyan-400 transition-colors whitespace-nowrap ${
-                activeTab === 'scenarios' ? 'text-cyan-400 font-semibold' : ''
-              }`}
-            >
-              Scenario Lab (25)
-            </button>
-            <button
-              onClick={() => setActiveTab('comparison')}
-              className={`hover:text-cyan-400 transition-colors whitespace-nowrap ${
-                activeTab === 'comparison' ? 'text-cyan-400 font-semibold' : ''
-              }`}
-            >
-              Benchmarks
-            </button>
-            <button
-              onClick={() => setActiveTab('analytics')}
-              className={`hover:text-cyan-400 transition-colors whitespace-nowrap ${
-                activeTab === 'analytics' ? 'text-cyan-400 font-semibold' : ''
-              }`}
-            >
-              Analytics
-            </button>
-            <button
-              onClick={() => setActiveTab('config_api')}
-              className={`hover:text-cyan-400 transition-colors whitespace-nowrap ${
-                activeTab === 'config_api' ? 'text-cyan-400 font-semibold' : ''
-              }`}
-            >
-              Provider API
-            </button>
-          </nav>
-
-          {/* Zone 3: Live Telemetry & Priority Preempt Action */}
-          <div className="flex items-center gap-3 shrink-0">
-            <div className="hidden sm:flex text-xs font-mono text-slate-400" aria-label="Header telemetry">
-              {sumoMode ? `Backend: ${live.online ? 'connected' : 'disconnected'} | Controller: ${live.online ? live.state?.controller ?? 'unavailable' : 'unavailable'}` : `DEMO index: ${simState.metrics.performanceIndex}/100 | Current mean wait: ${simState.metrics.avgWaitTime}s`}
-            </div>
-
-            <button
-              disabled={sumoMode || legacyRemote}
-              title={sumoMode ? 'Use the SUMO telemetry emergency controls below' : 'Inject emergency into synthetic demo'}
-              onClick={() => handleInjectAmbulance('north')}
-              className="px-3 py-1.5 bg-rose-600/90 hover:bg-rose-500 text-white text-xs font-medium rounded-lg flex items-center gap-1.5 shadow-sm transition-colors whitespace-nowrap disabled:opacity-40 disabled:cursor-not-allowed"
-            >
-              <Siren className="w-3.5 h-3.5" />
-              <span>Priority Preempt</span>
-            </button>
-          </div>
-        </header>
+      <div className="flex-1 min-w-0 flex flex-col h-full overflow-hidden relative">
+        <LiveStatusHeader synthetic={!sumoMode} />
 
         {/* Dynamic View Router for All 14 Modules */}
         <main className="flex-1 overflow-hidden flex flex-col">
-          <div className="p-2 border-b border-slate-800 space-y-2">
-            <button className="px-4 py-2 bg-slate-800 rounded" onClick={() => setSumoMode(!sumoMode)}>{sumoMode ? 'Switch to synthetic demonstration' : 'Switch to SUMO telemetry'}</button>
-            <p className={sumoMode ? 'text-cyan-300' : 'text-amber-300'}>{sumoMode ? 'LIVE SUMO workspace: controls and measurements use FastAPI/TraCI.' : 'SYNTHETIC BROWSER DEMONSTRATION: these actions and metrics do not control SUMO or use a trained MAPPO policy.'}</p>
+          <div className="sf-workspace-toolbar">
+            <button className="sf-mode-switch" onClick={() => setSumoMode(!sumoMode)}>{sumoMode ? 'Switch to synthetic demonstration' : 'Switch to SUMO telemetry'}</button>
+            <p className={sumoMode ? 'text-cyan-300' : 'text-amber-300'}>{sumoMode ? 'SUMO observations · supervised control · research use' : 'SYNTHETIC BROWSER DEMONSTRATION: these actions and metrics do not control SUMO or use a trained MAPPO policy.'}</p>
           </div>
-          {sumoMode && !['comparison','math_models','v2i_hardware','config_api','benchmark_export'].includes(activeTab) && <SumoLiveView scope={activeTab} />}
+          {sumoMode && !['comparison','v2i_hardware','config_api','benchmark_export'].includes(activeTab) && <SumoLiveView scope={activeTab} />}
           {sumoMode && activeTab === 'config_api' && <LiveUtilities kind="config" />}
           {sumoMode && activeTab === 'benchmark_export' && <LiveUtilities kind="export" />}
-          {sumoMode && ['comparison','math_models','v2i_hardware'].includes(activeTab) && <section className="p-6 space-y-4"><h1 className="text-2xl">{activeTab === 'comparison' ? 'Controller benchmark laboratory' : activeTab === 'math_models' ? 'Mathematical model explorer' : 'V2I and sensor architecture'}</h1><p>{activeTab === 'comparison' ? 'There is no live benchmark execution API. Published offline Phase5 results are in PHASE5_EXPERIMENT_RESULTS.md; the browser benchmark uses a separate synthetic engine.' : activeTab === 'math_models' ? 'Educational model equations are available in the browser demonstration. They are not live optimizer diagnostics; those appear in live Analytics.' : 'No physical V2I, DSRC, LiDAR or roadside hardware is connected. Protocol diagrams and mock sensor displays are demonstrations.'}</p><button className="bg-cyan-900 p-2" onClick={() => setSumoMode(false)}>Open browser demonstration</button></section>}
+          {sumoMode && ['comparison','v2i_hardware'].includes(activeTab) && <section className="p-6 space-y-4"><h1 className="text-2xl">{activeTab === 'comparison' ? 'Controller benchmark laboratory' : activeTab === 'math_models' ? 'Mathematical model explorer' : 'V2I and sensor architecture'}</h1><p>{activeTab === 'comparison' ? 'There is no live benchmark execution API. Published offline Phase5 results are in PHASE5_EXPERIMENT_RESULTS.md; the browser benchmark uses a separate synthetic engine.' : activeTab === 'math_models' ? 'Educational model equations are available in the browser demonstration. They are not live optimizer diagnostics; those appear in live Analytics.' : 'No physical V2I, DSRC, LiDAR or roadside hardware is connected. Protocol diagrams and mock sensor displays are demonstrations.'}</p><button className="bg-cyan-900 p-2" onClick={() => setSumoMode(false)}>Open browser demonstration</button></section>}
           {!sumoMode && legacyRemote && <p role="status" className="p-3 bg-amber-950">Legacy remote synthetic-provider diagnostics selected. Other demo controls are read-only; choose Local Deterministic Engine in Provider API to resume browser interaction. SUMO uses the separate live workspace.</p>}
           <div className="contents" inert={!sumoMode && legacyRemote && activeTab !== 'config_api' ? true : undefined}>
           {activeTab === 'dashboard' && !sumoMode && (

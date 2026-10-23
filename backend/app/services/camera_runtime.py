@@ -71,6 +71,9 @@ class CameraRuntime:
             fresh = [frame for key, (frame, received) in self.frames.items()
                      if monotonic()-received <= 3 and self.status[key]['state'] == 'running']
             cameras = {key: {**value, 'fresh': any(f['cameraId'] == key for f in fresh),
+                            'sourceKind': 'live_camera' if self.configs[key].live else 'recorded_video',
+                            'observationAgeSec': max(0, monotonic()-self.frames[key][1]) if key in self.frames else None,
+                            'timestampBasis': 'Unix seconds' if self.configs[key].live else 'recorded-video seconds',
                             'lastFrame': self.frames[key][0] if key in self.frames else None}
                        for key, value in self.status.items()}
             result = dict(available=bool(fresh), cameras=cameras,

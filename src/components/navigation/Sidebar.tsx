@@ -70,7 +70,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   const navCategories: NavCategory[] = [
     {
-      category: 'Core Command',
+      category: 'Monitor traffic',
       items: [
         {
           id: 'dashboard',
@@ -93,7 +93,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       ],
     },
     {
-      category: 'Analytics & Intelligence',
+      category: 'Understand & analyze',
       items: [
         {
           id: 'analytics',
@@ -122,7 +122,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       ],
     },
     {
-      category: 'Infrastructure & Safety',
+      category: 'Safety & observations',
       items: [
         {
           id: 'v2i_hardware',
@@ -157,7 +157,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       ],
     },
     {
-      category: 'System & Data',
+      category: 'System & data',
       items: [
         {
           id: 'config_api',
@@ -176,7 +176,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   ];
 
   return (
-    <aside className="w-64 bg-slate-950/95 border-r border-slate-800/80 flex flex-col shrink-0 z-30 select-none">
+    <aside className="sf-sidebar w-64 bg-slate-950/95 border-r border-slate-800/80 flex flex-col shrink-0 z-30 select-none">
       {/* Brand Header */}
       <div className="p-4 border-b border-slate-800/80 flex items-center justify-between">
         <div className="flex items-center gap-2.5">
@@ -212,9 +212,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </div>
             {group.items.map((item) => {
               const isActive = activeTab === item.id;
+              const liveLabels: Partial<Record<NavTab,string>> = { dashboard: 'Overview / Live Digital Twin', analytics: 'Traffic Analytics', prediction: 'Traffic Predictions', math_models: 'Controller Intelligence', perception: 'Camera & Sensor Monitoring', pedestrian: 'Pedestrian Protection', incidents: 'Emergency Management', health_security: 'System Health & Safety', config_api: 'System Settings' };
+              const label = liveMode ? liveLabels[item.id] ?? item.label : item.label;
               return (
                 <button
                   key={item.id}
+                  data-nav={item.id}
+                  aria-current={isActive ? 'page' : undefined}
+                  title={label + ' — ' + item.desc}
                   onClick={() => onTabChange(item.id)}
                   className={`w-full text-left p-2 rounded-lg transition-all flex items-start gap-2.5 ${
                     isActive
@@ -226,7 +231,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     {item.icon}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-xs font-medium truncate">{item.label}</div>
+                    <div className="text-xs font-medium truncate">{label}</div>
                     <div className="text-[10px] text-slate-400 truncate leading-tight">
                       {item.desc}
                     </div>

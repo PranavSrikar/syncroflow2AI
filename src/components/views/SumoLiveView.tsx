@@ -3,8 +3,13 @@ import { useLiveTraffic, backendApi } from '../../services/liveTraffic';
 import { TrafficInputsPanel } from './TrafficInputsPanel';
 import { HybridTelemetryPanel, JunctionState } from './HybridTelemetryPanel';
 import { LiveQueueChart } from './LiveQueueChart';
+import { LiveCommandCenter } from '../live/LiveCommandCenter';
+import { LiveAnalytics } from '../live/LiveAnalytics';
+import { LiveSafety } from '../live/LiveSafety';
 
 export type Snapshot = {
+  sequence?: number;
+  serviceAge?: { phaseAgeSec: Record<string, number>; maximumRedSec: number; definition: string } | null;
   connected: boolean; running: boolean; controller: string; error: string | null;
   scenario: string;
   seed?: number; junctions?: Record<string, JunctionState>; hybridPipeline?: string[];
@@ -18,11 +23,13 @@ export type Snapshot = {
   };
   safetySupervisor: { status: string; reason: string };
   telemetry: null | {
+    networkGeometry?: { source: string; coordinateSystem: string; lanes: Record<string, { shape: number[][]; width: number; edgeId: string }>; junctions: Record<string, { shape: number[][]; position: number[] }> };
+    vehicleDetails?: Record<string, { id: string; position: number[]; angle: number; vehicleClass: string; typeId: string; vehicleLength: number; vehicleWidth: number; speedMps: number; laneId: string }>;
     simTime: number;
-    approaches: Record<string, { vehicles: number; queued: number; meanSpeedMps: number; avgWaitTimeSec: number }>;
-    trafficLights: Record<string, { phaseIndex: number; signalState: string; nextSwitch: number }>;
+    approaches: Record<string, { edgeId?: string; vehicles: number; queued: number; meanSpeedMps: number; avgWaitTimeSec: number }>;
+    trafficLights: Record<string, { phaseIndex: number; signalState: string; nextSwitch: number; controlledLinks?: string[][][] }>;
     pedestrianSignals: { signalIndex: number; outgoingLane: string; state: string; occupants: string[]; waitingPersons: string[]; clearanceRequirementSec: number | null }[];
-    pedestrians: Record<string, { roadId: string; waitingTimeSec: number }>;
+    pedestrians: Record<string, { roadId: string; waitingTimeSec: number; position?: number[] }>;
     downstream: Record<string, { occupancyPercent: number; spillbackIndicator: boolean }>;
     stateEstimates: Record<string, { arrivalRatePerSec: number | null; observedDischargePerSec: number | null; rateWindowSec: number }>;
     permissionAnalysis: Record<string, { compatibleUnderSumoRules: boolean; incompatiblePermissions: unknown[]; yieldingInteractions: unknown[] }>;
@@ -34,6 +41,7 @@ export function SumoLiveView({ scope = 'dashboard' }: { scope?: string }) {
   const { state, online, error: connectionError, refresh } = useLiveTraffic();
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
+  const [notice, setNotice] = useState('');
   const [scenario, setScenario] = useState('vehicle');
   const [controller, setController] = useState('hybrid');
   const [seed, setSeed] = useState(23423);
@@ -50,8 +58,8 @@ export function SumoLiveView({ scope = 'dashboard' }: { scope?: string }) {
       const response = await fetch(api + '/' + action + (action === 'start' ? '?scenario=' + scenario + '&controller=' + controller + '&seed=' + seed : ''), { method: 'POST', signal: AbortSignal.timeout(10000) });
       const body = await response.json();
       if (!response.ok) throw new Error(body.detail || 'Command failed');
-      await refresh(); setError('');
-    } catch (err) { setError(String(err)); } finally { setBusy(false); }
+      await refresh(); setError(''); setNotice(`${action === 'start' ? 'Start / resume' : action} confirmed by backend.`);
+    } catch (err) { setNotice(''); setError(String(err)); } finally { setBusy(false); }
   };
   const injectEmergency = async (approach: string) => {
     setBusy(true);
@@ -62,33 +70,38 @@ export function SumoLiveView({ scope = 'dashboard' }: { scope?: string }) {
       });
       const body = await response.json();
       if (!response.ok) throw new Error(body.detail || 'Emergency request failed');
-      await refresh(); setError('');
+      await refresh(); setError(''); setNotice(`Emergency injection accepted for ${approach}; waiting for observed vehicle departure.`);
     } catch (err) { setError(String(err)); } finally { setBusy(false); }
   };
-  return <section className="flex-1 overflow-auto p-6 space-y-5">
-    <h1 className="text-2xl font-semibold">SUMO simulation telemetry</h1>
-    <p className="text-cyan-300">Live workspace: {scope}</p>
-    <p className="text-slate-400">Source: SUMO / TraCI simulated measurements. Optional camera observations and historical forecasts appear below; learned operational policy remains disabled.</p>
-    {show('perception', 'prediction') && <TrafficInputsPanel />}
+  const titles: Record<string, string> = { dashboard: 'Live traffic command center', math_models: 'Controller intelligence', analytics: 'Traffic analytics', prediction: 'Demand & weather forecasts', network: 'Network coordination', scenarios: 'Scenario laboratory', incidents: 'Emergency management', pedestrian: 'Pedestrian protection', perception: 'Camera & sensor monitoring', health_security: 'System health & safety' };
+  return <section data-scope={scope} className="sf-live-page flex-1 overflow-auto p-6 space-y-5">
+    <div className="sf-page-heading"><div><span className="sf-eyebrow">{scope === 'dashboard' ? 'MONITOR / OVERVIEW' : 'OPERATIONS / ' + scope.replace('_',' ').toUpperCase()}</span><h1>{titles[scope] ?? 'SUMO simulation telemetry'}</h1><p>SUMO simulation telemetry · authoritative observations, independently supervised actions.</p></div><span className={`sf-badge ${online ? 'sf-good' : 'sf-warn'}`}>{online ? 'WebSocket connected' : 'Waiting for backend'}</span></div>
+    {['dashboard','network','analytics','health_security','scenarios','math_models'].includes(scope) && <LiveCommandCenter scope={scope} />}
+    {scope === 'analytics' && <LiveAnalytics />}
+    {['pedestrian','incidents'].includes(scope) && <LiveSafety pedestrian={scope === 'pedestrian'} />}
+    {['perception', 'prediction'].includes(scope) && <TrafficInputsPanel />}
     {scope === 'pedestrian' && <p>Choose the pedestrian network to observe protected WALK and clearance. This backend has no manual pedestrian-call endpoint; people originate in the scenario.</p>}
     {scope === 'network' && <p>Choose the two-junction corridor to view A0/B0 coordination. No live three-node offset editor is implemented.</p>}
-    <label>Network: <select aria-label="SUMO network" className="bg-slate-800 p-2" value={scenario} disabled={state?.connected || busy} onChange={event => setScenario(event.target.value)}><option value="vehicle">Original vehicle junction</option><option value="pedestrian">Experimental pedestrian junction</option><option value="corridor">Two-junction research corridor</option><option value="unequal">Demo: unequal north demand</option><option value="spillback">Demo: blocked south exit</option></select></label>
+    <div className="sf-operation-dock" aria-label="Simulation operations"><div className="sf-dock-title"><span className="sf-eyebrow">SIMULATION OPERATIONS</span><span>Stop before changing network or controller.</span></div><div className="sf-dock-controls">    <label>Network: <select aria-label="SUMO network" className="bg-slate-800 p-2" value={scenario} disabled={state?.connected || busy} onChange={event => setScenario(event.target.value)}><option value="vehicle">Original vehicle junction</option><option value="pedestrian">Experimental pedestrian junction</option><option value="corridor">Two-junction research corridor</option><option value="unequal">Demo: unequal north demand</option><option value="spillback">Demo: blocked south exit</option></select></label>
     <label className="ml-4">Controller: <select aria-label="SUMO controller" className="bg-slate-800 p-2" value={controller} disabled={state?.connected || busy} onChange={event => setController(event.target.value)}><option value="sumo_fixed_time">SUMO fixed-time baseline</option><option value="max_pressure">Max-Pressure with protected pedestrian service</option><option value="mpc">Constrained MPC with protected pedestrian service</option><option value="hybrid">Hybrid MPC / Max-Pressure fallback (MAPPO disabled unless qualified)</option></select></label>
     <label>Simulation seed: <input aria-label="SUMO seed" type="number" min="0" max="2147483647" className="bg-slate-800 p-2" value={seed} disabled={state?.connected || busy} onChange={e => setSeed(Number(e.target.value))} /></label>
     <div className="flex gap-3">{['start', 'pause', 'step', 'stop'].map(action =>
       <button key={action} disabled={busy || !online || (action === 'start' && !!state?.connected && !!state.running) || (action === 'pause' && !state?.running) || (action === 'step' && (!state?.connected || !!state.running)) || (action === 'stop' && !state?.connected)} onClick={() => command(action)} className="rounded bg-cyan-900 px-4 py-2 disabled:opacity-40">{action}</button>)}</div>
+</div><p className="sf-caption">Start resumes a paused run. Reset and real-time speed adjustment are unavailable in this backend; Stop then Start creates a fresh run.</p>    {(error || connectionError || state?.error) && <p role="alert" className="text-red-400">{error || connectionError || state?.error}</p>}
+    {notice && <p role="status" className="sf-action-notice">{notice}</p>}
+</div>
     <p>Stream: {online ? 'connected' : 'disconnected; data may be stale'} | Simulation: {!online ? 'unknown (backend unavailable)' : state?.connected ? state.running ? 'running' : 'paused' : 'stopped'} | Time: {state?.telemetry?.simTime ?? 'unavailable'} s</p>
     <p>Controller: {state?.controller ?? 'unavailable'} | Independent safety supervisor: {online ? state?.safetySupervisor.status ?? 'unavailable' : 'unavailable (stale)'}</p>
     <p className="text-amber-300">{state?.safetySupervisor.reason}</p>
-    {show('network','analytics','health_security') && <>
+    <details className="sf-technical" open={scope !== 'dashboard'}><summary>Detailed telemetry & safety diagnostics</summary>
+    {show('network','analytics','health_security','math_models') && <>
     <LiveQueueChart />
     <HybridTelemetryPanel junctions={state?.junctions ?? {}} metrics={state?.metrics} connected={state?.connected ?? false} pipeline={state?.hybridPipeline} seed={state?.seed} />
     </>}
     {state?.scenario === 'corridor' && <p>Approach table below: primary junction A0. Both junctions are shown above. The supplied corridor has no pedestrian crossings; pedestrian protection is verified on the separate pedestrian scenario.</p>}
-    {show('analytics','health_security','scenarios') && <>
+    {show('analytics','health_security','scenarios','math_models') && <>
     {state?.controllerDiagnostics != null && <details open className="bg-slate-900 p-3 rounded"><summary>Controller diagnostics and MPC queue projections</summary><pre className="text-xs overflow-auto max-h-64 mt-3">{JSON.stringify(state.controllerDiagnostics, null, 2)}</pre></details>}
     </>}
-    {(error || connectionError || state?.error) && <p role="alert" className="text-red-400">{error || connectionError || state?.error}</p>}
     {show('analytics','network','scenarios') && <>
     <table className="w-full text-left"><thead><tr>{['Approach', 'Vehicles', 'Queue (halted)', 'Speed m/s', 'Current wait s'].map(x => <th key={x} className="p-3">{x}</th>)}</tr></thead>
       <tbody>{Object.entries(state?.telemetry?.approaches ?? {}).map(([direction, row]) => <tr key={direction} className="border-t border-slate-800"><td className="p-3">{direction}</td><td>{row.vehicles}</td><td>{row.queued}</td><td>{row.meanSpeedMps.toFixed(2)}</td><td>{row.avgWaitTimeSec.toFixed(2)}</td></tr>)}</tbody></table>
@@ -111,7 +124,7 @@ export function SumoLiveView({ scope = 'dashboard' }: { scope?: string }) {
     {(state?.emergencyPriority?.requests ?? []).map(request => <p key={request.vehicleId}>{request.vehicleId} | {request.approach} | priority {request.priority} | {request.state} | ETA {request.etaSec?.toFixed(1) ?? 'unavailable'} s</p>)}
     <details><summary>Emergency audit events</summary>{(state?.emergencyPriority?.events ?? []).slice(-20).map((event, index) => <p key={index}>{event.simTime}s: {event.vehicleId ?? 'controller'} — {event.event}</p>)}</details>
     </>}
-    {show('network','analytics','health_security') && <>
+    {show('network','analytics','health_security','math_models') && <>
     <h2 className="text-lg">MAPPO research status</h2>
     <p>PyTorch: {state?.mappoStatus?.torchAvailable ? 'available' : 'unavailable'}. Operational learned policy: {state?.mappoStatus?.operationalPolicyEnabled ? 'enabled' : 'disabled'}.</p>
     <p>{state?.mappoStatus?.reason ?? 'Status unavailable'}</p>
@@ -119,5 +132,6 @@ export function SumoLiveView({ scope = 'dashboard' }: { scope?: string }) {
     {state?.mappoStatus?.smokeTrainingReport && <p>Smoke training: {state.mappoStatus.smokeTrainingReport.trainedDecisionSteps} decision steps; {state.mappoStatus.smokeTrainingReport.status}.</p>}
     </>}
     <p className="text-slate-400">Adaptive modes use a supervised cyclic program with protected pedestrian service. Emergency priority preserves required service and clearance stages. MPC uses a 60-second queue model, optional historical arrival forecasts, and Max-Pressure fallback. Phase5 policies failed qualification; no general performance superiority or road certification is established.</p>
+    </details>
   </section>;
 }

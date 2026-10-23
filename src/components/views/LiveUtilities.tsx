@@ -17,7 +17,7 @@ export function LiveUtilities({ kind }: { kind: 'config' | 'export' }) {
       limitations: 'Current/last-run snapshot, not a completed-trip benchmark or field measurement', snapshot: state }, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'synchroflow-sumo-snapshot.json'; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
-  return <section className="p-6 space-y-4 overflow-auto">
+  return <section className="sf-live-page sf-utilities-page p-6 space-y-4 overflow-auto">
     <h1 className="text-2xl">{kind === 'config' ? 'Live backend connection' : 'Export SUMO telemetry'}</h1>
     <p>REST API: {backendApi}</p><p>SUMO WebSocket: {backendSocket}</p>
     <p>Connection: {online ? 'live telemetry received' : 'disconnected or stale'}. Simulation: {online ? state?.connected ? state.running ? 'running' : 'paused' : 'stopped' : 'unknown'}.</p>

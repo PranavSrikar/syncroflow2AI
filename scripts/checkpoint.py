@@ -13,7 +13,7 @@ import os
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_DIRS = ("src", "backend", "tests", "public", "scripts", "research")
 EXCLUDED = {".venv", "venv", "node_modules", "__pycache__", ".pytest_cache", "dist", "test-results", "playwright-report"}
-EXTENSIONS = {".py", ".ts", ".tsx", ".css", ".xml", ".sumocfg", ".md", ".json", ".toml", ".txt", ".csv", ".png", ".jpg", ".svg", ".html", ".ps1"}
+EXTENSIONS = {".py", ".ts", ".tsx", ".mjs", ".css", ".xml", ".sumocfg", ".md", ".json", ".toml", ".txt", ".csv", ".png", ".jpg", ".svg", ".html", ".ps1"}
 
 
 def checkpoint():

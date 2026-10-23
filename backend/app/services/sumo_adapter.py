@@ -24,6 +24,7 @@ class SumoAdapter:
             / "junction.sumocfg"
         )
         self.connected = False
+        self._geometry = None
 
     def start(self, seed=23423):
         if self.connected:
@@ -32,6 +33,7 @@ class SumoAdapter:
         if not self.config_path.is_file():
             raise FileNotFoundError(self.config_path)
 
+        self._geometry = None
         traci.start([
             "sumo",
             "-c",
@@ -52,11 +54,25 @@ class SumoAdapter:
         if not self.connected:
             raise RuntimeError("SUMO is not connected")
 
+        if self._geometry is None:
+            # Read-only map metadata, cached for this SUMO connection. Positions
+            # below remain the actual current TraCI positions at each step.
+            self._geometry = {
+                'source': 'sumo_traci_lane_shapes', 'coordinateSystem': 'SUMO Cartesian metres',
+                'lanes': {lane: {'shape': list(traci.lane.getShape(lane)),
+                                  'width': traci.lane.getWidth(lane),
+                                  'edgeId': traci.lane.getEdgeID(lane)}
+                          for lane in traci.lane.getIDList()},
+                'junctions': {node: {'shape': list(traci.junction.getShape(node)),
+                                    'position': traci.junction.getPosition(node)}
+                              for node in traci.trafficlight.getIDList()},
+            }
+
         approaches = {}
-        
+
         traffic_lights = {}
-        
-        
+
+
         vehicle_details = {}
 
         for vehicle_id in traci.vehicle.getIDList():
@@ -84,11 +100,11 @@ class SumoAdapter:
 
 
 
-        
+
         for light_id in traci.trafficlight.getIDList():
             if self.light_ids is not None and light_id not in self.light_ids:
                 continue
-            
+
             current_program = traci.trafficlight.getProgram(light_id)
             programs = traci.trafficlight.getAllProgramLogics(light_id)
 
@@ -122,7 +138,7 @@ class SumoAdapter:
 
 
         for direction, edge in self.APPROACHES.items():
-            
+
             vehicle_ids = traci.edge.getLastStepVehicleIDs(edge)
 
             waiting_times = [
@@ -143,7 +159,7 @@ class SumoAdapter:
                 "vehicleIds": list(vehicle_ids),
                 "avgWaitTimeSec": average_wait,
             }
-        
+
         downstream = {}
         for direction in self.APPROACHES:
             edge = self.departures[direction]
@@ -160,6 +176,7 @@ class SumoAdapter:
             }
         return {
             "source": "sumo_traci",
+            "networkGeometry": self._geometry,
             "simTime": traci.simulation.getTime(),
             "approaches": approaches,
             "trafficLights": traffic_lights,
