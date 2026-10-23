@@ -1,0 +1,20 @@
+# Phase 5 diagnostic protocol
+
+Baseline: Phase4 final verification tag, commit ffc63d2. Prior studies and held-out seeds remain frozen. No production/controller/supervisor source changes are planned during diagnosis. Operational MAPPO remains disabled.
+
+Diagnostic seeds5101/5102/5103, loads0.75/1.0/1.75,600 simulated seconds, six hint variants: none, frozen Phase4 model41, untrained same initialization seed41, constant release, constant hold, seeded uniform random. Random action generator uses traffic seed+500000. These are diagnostic comparisons, not fresh qualification tests, and must not later be described as untouched held-out tests. Cold-start, no warm-up exclusion; completed-trip timeLoss is right-censored. Compare matched inserted demand, throughput, queues, waiting, service age, spills, supervisor rejections/faults and fallback exposure. Existing recorder retains tripinfo and timing metrics.
+
+At each executed MPC recommendation, evaluate a shadow no-hint recommendation at the identical state before the actual hinted calculation. Shadow calls only evaluate plans; they do not write to TraCI. Restore controller diagnostics/hint before the real call. Count recommendation differences among pairs that both solve successfully. Capture full trace and actor observations. Instrumentation overhead contaminates latency and may affect timeout exposure; do not claim production timing from these runs. Only the ordinary independent supervisor actuates signals.
+
+A separate320s/64-decision rollout at seed5199 measures actor and weighted critic gradient norms on the frozen candidate without updating weights. Compare joint gradient clipping suppression and critic targets. This diagnoses a mechanism; it does not prove that optimizer changes improve traffic outcomes.
+
+Run existing backend/frontend/browser/startup and eight external demonstrations independently. Preserve a development checkpoint before any learning changes. Decide whether further training is justified after observing diagnostics. If justified, preregister separate new training/selection/final seeds and controlled optimizer ablation before training. Do not tune on Phase4 held-out seeds. If diagnostics do not support a bounded improvement experiment, retain the working demo and report unperformed research honestly.
+
+
+## Optimizer experiment amendment (before new training)
+
+The fresh5199 rollout measured actor norm0.0800 versus weighted critic44.6692. Restoring the exact optimizer and running four epochs on identical data gave actor parameter movement0.02355 with joint clipping versus0.04722 with independent clipping, with different directions; neither changed the sampled final-state greedy actions. This supports a limited optimizer experiment, not a claim of improved traffic.
+
+Train fresh model seeds61/71/81,16?64 decisions each, with independent actor/critic clipping0.5. All other architecture, reward, observation, learning-rate, safety and MPC parameters remain unchanged. The experimental learner exists only in a new offline script; production MAPPO remains unchanged. Source hash and optimizer variant accompany every run. No claim of a causal optimizer benefit against the differently initialized Phase4 cohort is permitted. Checkpoints remain unvalidated.
+
+Selection seeds6201/6202/6203 at demand1.0,300s; three final candidates plus MPC. Freeze lowest mean completed-trip timeLoss (model-seed tie break) before testing. Final seeds6301/6302/6303,scales0.75/1.0/1.75,600s,compare fixed-time,Max-Pressure,MPC,hint-free hybrid and frozen candidate. Same qualification thresholds as Phase4 apply in every load stratum; no relaxation. Add separate offline single-junction asymmetric,blocked-exit,pedestrian and pedestrian+emergency challenges at seeds6401/6402/6403. Applying a two-agent-trained shared actor to a single junction uses its local8-input actor directly (duplicating input only for the unused critic); this is a topology-transfer diagnostic, not validated same-topology coverage. Missing or failed coverage prevents activation. No final seeds will be used for tuning or selecting another model.
