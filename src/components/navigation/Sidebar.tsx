@@ -45,6 +45,9 @@ interface SidebarProps {
   controllerName: string;
   isSimulating: boolean;
   onResetSim: () => void;
+  liveMode?: boolean;
+  resetDisabled?: boolean;
+  supervisorStatus?: string;
 }
 
 interface NavCategory {
@@ -63,6 +66,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   controllerName,
   isSimulating,
   onResetSim,
+  liveMode, supervisorStatus, resetDisabled,
 }) => {
   const navCategories: NavCategory[] = [
     {
@@ -107,7 +111,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           id: 'network',
           label: 'Network Coordination',
           icon: <Network className="w-4 h-4" />,
-          desc: '3-node arterial corridor green waves',
+          desc: 'Live A0/B0 or demo corridor',
         },
         {
           id: 'math_models',
@@ -148,7 +152,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           id: 'health_security',
           label: 'Safety Supervisor & RBAC',
           icon: <ShieldCheck className="w-4 h-4" />,
-          desc: 'Conflict interlocks & ISO 26262 telemetry',
+          desc: 'Research safety status; no certification',
         },
       ],
     },
@@ -184,14 +188,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
               SYNCHROFLOW <span className="text-cyan-400 font-mono text-xs">AI</span>
             </div>
             <div className="text-[10px] text-slate-400 font-mono tracking-wide">
-              NODE SC-INT-74
+              {liveMode ? 'SUMO / TraCI' : 'BROWSER DEMONSTRATION'}
             </div>
           </div>
         </div>
 
         <button
+          disabled={resetDisabled}
           onClick={onResetSim}
-          title="Reset Synthetic Demonstration Clock"
+          title={liveMode ? 'Stop and restart SUMO in the live workspace' : 'Reset Synthetic Demonstration Clock'}
           className="p-1.5 text-slate-400 hover:text-cyan-400 hover:bg-slate-900 rounded-md transition-colors"
         >
           <RefreshCw className="w-3.5 h-3.5" />
@@ -235,7 +240,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {/* Intersection Location Spec */}
         <div className="pt-2 px-1">
           <div className="p-3 bg-slate-900/70 border border-slate-800 rounded-lg space-y-1.5 text-[11px]">
-            <div className="text-slate-200 font-medium">Oak Street & 5th Avenue</div>
+            <div className="text-slate-200 font-medium">{liveMode ? 'SUMO research scenario' : 'Synthetic Oak Street'}</div>
             <div className="text-slate-400 text-[10px] flex items-center justify-between">
               <span>Layout</span>
               <span className="font-mono text-cyan-400">4-Arm Dual Ring</span>
@@ -251,19 +256,19 @@ export const Sidebar: React.FC<SidebarProps> = ({
       {/* Footer System Status */}
       <div className="p-3 border-t border-slate-800/80 bg-slate-950 text-[11px] space-y-1.5">
         <div className="flex items-center justify-between text-slate-400 text-[10px]">
-          <span>Safety Supervisor</span>
+          <span>Safety status</span>
           <span className="font-mono text-emerald-400 flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            Active
+            <span className="w-1.5 h-1.5 rounded-full bg-slate-400" />
+            {supervisorStatus ?? 'unavailable'}
           </span>
         </div>
         <div className="flex items-center justify-between text-slate-400 text-[10px]">
-          <span>Inference Frequency</span>
-          <span className="font-mono text-cyan-400">20Hz (Local PRNG)</span>
+          <span>Data source</span>
+          <span className="font-mono text-cyan-400">{liveMode ? 'Backend telemetry stream' : 'Browser simulation ticks'}</span>
         </div>
         <div className="pt-1 border-t border-slate-900 flex items-center justify-between text-[10px] text-slate-400">
           <span>Frontend Architecture</span>
-          <span className="font-mono text-slate-400">Phase 1-4 Hardened</span>
+          <span className="font-mono text-slate-400">Research prototype</span>
         </div>
       </div>
     </aside>

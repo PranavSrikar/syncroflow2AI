@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   TrafficScenario,
   ControllerType,
@@ -51,6 +51,12 @@ export const ScenarioLabView: React.FC<ScenarioLabViewProps> = ({
   const [weather, setWeather] = useState<WeatherMode>(currentScenario.weather);
   const [composition, setComposition] = useState(currentScenario.composition);
   const [inputSeed, setInputSeed] = useState(seed.toString());
+  useEffect(() => {
+    setRates(currentScenario.arrivalRates);
+    setWeather(currentScenario.weather);
+    setComposition(currentScenario.composition);
+  }, [currentScenario]);
+  useEffect(() => { setInputSeed(seed.toString()); }, [seed]);
 
   const categories = ['all', 'standard', 'rush_hour', 'incident', 'weather', 'emergency', 'network', 'failure'];
 
@@ -75,7 +81,7 @@ export const ScenarioLabView: React.FC<ScenarioLabViewProps> = ({
   const handleSeedChange = (e: React.FormEvent) => {
     e.preventDefault();
     const parsed = parseInt(inputSeed, 10);
-    if (!isNaN(parsed) && parsed > 0) {
+    if (!isNaN(parsed) && parsed >= 0) {
       onSetSeed(parsed);
     }
   };
@@ -212,6 +218,7 @@ export const ScenarioLabView: React.FC<ScenarioLabViewProps> = ({
                 <span className="font-mono text-cyan-400 font-bold">{rates[dir]} v/h</span>
               </div>
               <input
+                aria-label={`${dir} inflow vehicles per hour`}
                 type="range"
                 min="0"
                 max="2400"

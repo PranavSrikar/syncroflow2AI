@@ -171,7 +171,7 @@ export const V2IHardwareHub: React.FC<V2IHardwareHubProps> = ({ sensors, signals
               SAE J2735 Telematics Message Inspector
             </h3>
             <p className="text-xs text-slate-400 mt-0.5">
-              Live broadcast data payload transmitted over air to approaching connected vehicles.
+              Illustrative protocol payload from the browser model. No over-air transmission or connected roadside equipment.
             </p>
           </div>
 

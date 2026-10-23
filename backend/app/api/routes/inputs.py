@@ -76,6 +76,13 @@ def forecast_config(request: ForecastSettings):
         raise HTTPException(422, str(exc)) from exc
 
 
+@router.get('/forecast/config')
+def get_forecast_config():
+    """Allow the UI to edit settings without resetting unrelated controls."""
+    with forecast_service.lock:
+        return forecast_service.settings.model_dump()
+
+
 @router.post('/forecast/enabled')
 def forecast_enabled(enabled: bool):
     with forecast_service.lock:

@@ -42,7 +42,7 @@ export const HealthSecurityView: React.FC<HealthSecurityViewProps> = ({ metrics 
 
         <div className="flex items-center gap-2 font-mono text-xs text-emerald-400 bg-emerald-950/40 border border-emerald-500/30 px-3 py-1.5 rounded-xl">
           <span className="w-2 h-2 rounded-full bg-emerald-400" />
-          <span>SUPERVISOR: ACTIVE & VERIFYING</span>
+          <span>BROWSER MODEL INTERLOCKS</span>
         </div>
       </div>
 
@@ -52,7 +52,7 @@ export const HealthSecurityView: React.FC<HealthSecurityViewProps> = ({ metrics 
         <div className="space-y-1">
           <strong className="text-amber-100 font-semibold">Security Architecture & RBAC Status:</strong>
           <p className="text-amber-300/80 leading-relaxed">
-            The role selector below is a <strong>UI demonstration simulator</strong> for research inspection. Real cryptographic authentication (OAuth2 / Mutual TLS / PKI certificate exchange) and immutable audit logging will be enforced by the Stage 2 Python backend. No unauthenticated operational commands can reach physical roadside equipment.
+            The role selector below is a <strong>UI demonstration simulator</strong> for research inspection. Authentication, enforced RBAC and immutable security logging are not implemented. The local API is intended for trusted research use; no roadside equipment is connected.
           </p>
         </div>
       </div>
@@ -125,13 +125,13 @@ export const HealthSecurityView: React.FC<HealthSecurityViewProps> = ({ metrics 
             <div className="text-xl font-bold font-mono text-slate-200">
               &lt; 90s Max Red
             </div>
-            <span className="text-[10px] text-emerald-400">Zero active starvation alerts</span>
+            <span className="text-[10px] text-amber-400">Illustrative threshold; no live starvation monitor</span>
           </div>
 
           <div className="p-3 bg-slate-900/60 rounded-lg border border-slate-800 space-y-1">
             <span className="text-slate-400">Fail-Safe Fallback Readiness:</span>
             <div className="text-xl font-bold font-mono text-cyan-300">
-              Standby Verified
+              Demonstration
             </div>
             <span className="text-[10px] text-slate-500">All-red clearance + loop gap-out</span>
           </div>

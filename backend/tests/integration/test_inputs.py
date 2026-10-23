@@ -10,6 +10,26 @@ from app.services.sumo_runtime import sumo_runtime
 client = TestClient(app)
 
 
+def test_forecast_settings_readback_preserves_unrelated_configuration():
+    previous = forecast_service.settings
+    try:
+        settings = ForecastSettings(enabled=True, timezone='UTC', max_history_age_days=42,
+                                    allow_example_for_mpc=False, weather_provider='disabled')
+        forecast_service.configure(settings)
+        current = client.get('/api/v1/forecast/config')
+        assert current.status_code == 200
+        body = current.json()
+        assert body == settings.model_dump()
+        body.update(weather_provider='manual')
+        assert client.post('/api/v1/forecast/config', json=body).status_code == 200
+        result = client.get('/api/v1/forecast/config').json()
+        assert result['timezone'] == 'UTC' and result['max_history_age_days'] == 42
+        assert result['allow_example_for_mpc'] is False
+        assert result['weather_provider'] == 'manual'
+    finally:
+        forecast_service.configure(previous)
+
+
 def test_input_api_fallback_validation_and_forecast(monkeypatch):
     monkeypatch.delenv('SYNCHROFLOW_CAMERA_CONFIG', raising=False)
     camera_runtime.stop()

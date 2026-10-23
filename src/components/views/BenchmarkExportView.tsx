@@ -11,19 +11,23 @@ interface BenchmarkExportViewProps {
   metrics: SimulationMetrics;
   scenario: TrafficScenario;
   seed: number;
+  weather?: string;
+  controller?: string;
 }
 
 export const BenchmarkExportView: React.FC<BenchmarkExportViewProps> = ({
   metrics,
   scenario,
-  seed,
+  seed, weather, controller,
 }) => {
   const [copied, setCopied] = useState(false);
+  const [error, setError] = useState('');
 
   const reportData = {
     metadata: {
       platform: 'SynchroFlow AI Scientific Research Platform',
-      version: 'Stage 1 Frontend Audit Hardening v2.4',
+      version: 'Frontend functionality repair',
+      source: 'synthetic_browser_engine', controller, qualifiedMAPPO: false,
       generatedTimestamp: new Date().toISOString(),
       reproducibleSeed: seed,
     },
@@ -34,7 +38,7 @@ export const BenchmarkExportView: React.FC<BenchmarkExportViewProps> = ({
       category: scenario.category,
       arrivalRates: scenario.arrivalRates,
       composition: scenario.composition,
-      weather: scenario.weather,
+      weather: weather ?? scenario.weather,
     },
     measuredMetrics: {
       totalVehiclesSpawned: metrics.totalVehiclesSpawned,
@@ -50,18 +54,17 @@ export const BenchmarkExportView: React.FC<BenchmarkExportViewProps> = ({
       safetyInterlocksPrevented: metrics.safetyViolationAttemptsPrevented,
     },
     stage2Requirements: {
-      sumoTraCIBackend: 'Pending Stage 2 Python Integration',
-      cvxpyMpcQP: 'Pending Stage 2 Python Integration',
-      pytorchMappoCheckpoint: 'Pending Stage 2 Python Integration',
+      sumoTraCIBackend: 'Available separately in live SUMO workspace; this export is synthetic',
+      cvxpyMpcQP: 'This browser model does not run the backend MPC',
+      pytorchMappoCheckpoint: 'No qualified operational MAPPO policy',
     },
   };
 
   const jsonStr = JSON.stringify(reportData, null, 2);
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(jsonStr);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const handleCopy = async () => {
+    try { await navigator.clipboard.writeText(jsonStr); setCopied(true); setError(''); setTimeout(() => setCopied(false), 2000); }
+    catch { setCopied(false); setError('Clipboard permission denied. Use Download Benchmark JSON instead.'); }
   };
 
   const handleDownload = () => {
@@ -76,6 +79,7 @@ export const BenchmarkExportView: React.FC<BenchmarkExportViewProps> = ({
 
   return (
     <div className="p-6 space-y-6 max-w-7xl mx-auto text-slate-200 select-none">
+      {error && <p role="alert">{error}</p>}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-800">
         <div>
           <div className="flex items-center gap-2 text-cyan-400 font-mono text-xs uppercase tracking-wider">

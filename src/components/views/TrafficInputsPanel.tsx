@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { backendApi, requestBackend } from '../../services/liveTraffic';
 
 type Inputs = {
   source: string; fallback: string | null;
@@ -11,13 +12,28 @@ type Inputs = {
   forecasts: { enabled: boolean; available: boolean; exampleData: boolean; fallback: string | null; weatherAvailable: boolean; rainfallMmH: number | null; uncertainty: string;
     approaches: Record<string, { confidence: string; steps: { arrivalRatePcuPerSec: number; lowerPcuPerSec: number; upperPcuPerSec: number }[] }> };
 };
-const api = (import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:8000/api/v1').replace(/\/$/, '');
+const api = backendApi;
 
 export function TrafficInputsPanel() {
   const [state, setState] = useState<Inputs | null>(null);
   const [source, setSource] = useState('sumo');
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
+  const [pollError, setPollError] = useState('');
+  const [csv, setCsv] = useState('');
+  const [example, setExample] = useState(false);
+  const [rain, setRain] = useState('0');
+  const [config, setConfig] = useState<Record<string, unknown> | null>(null);
+  const [latitude, setLatitude] = useState('');
+  const [longitude, setLongitude] = useState('');
+  const [provider, setProvider] = useState('manual');
+  useEffect(() => {
+    let disposed = false;
+    requestBackend('/forecast/config').then(value => {
+      if (!disposed) { setConfig(value); setLatitude(value.latitude?.toString() ?? ''); setLongitude(value.longitude?.toString() ?? ''); setProvider(value.weather_provider); }
+    }).catch(err => { if (!disposed) setError(String(err)); });
+    return () => { disposed = true; };
+  }, []);
   useEffect(() => {
     const abort = new AbortController();
     let disposed = false;
@@ -27,8 +43,8 @@ export function TrafficInputsPanel() {
         const response = await fetch(api + '/traffic-state?source=' + source, { signal: abort.signal });
         if (!response.ok) throw new Error('Input telemetry unavailable');
         const body = await response.json();
-        if (!disposed) setState(body);
-      } catch (err) { if (!disposed) { setError(String(err)); setState(null); } }
+        if (!disposed) { setState(body); setPollError(''); }
+      } catch (err) { if (!disposed) { setPollError(String(err)); setState(null); } }
       if (!disposed) timer = setTimeout(poll, 1500);
     };
     void poll();
@@ -37,10 +53,10 @@ export function TrafficInputsPanel() {
   const command = async (path: string, body?: unknown) => {
     setBusy(true);
     try {
-      const response = await fetch(api + path, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: body === undefined ? undefined : JSON.stringify(body) });
+      const response = await fetch(api + path, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: body === undefined ? undefined : JSON.stringify(body), signal: AbortSignal.timeout(12000) });
       const result = await response.json();
       if (!response.ok) throw new Error(typeof result.detail === 'string' ? result.detail : JSON.stringify(result.detail));
-      setError('');
+      setState(await requestBackend('/traffic-state?source=' + source)); setConfig(await requestBackend('/forecast/config')); setError('');
     } catch (err) { setError(String(err)); } finally { setBusy(false); }
   };
   return <div className="bg-slate-900 p-4 rounded space-y-3">
@@ -49,15 +65,30 @@ export function TrafficInputsPanel() {
     <p>Selected data: {state?.source ?? 'unavailable'}. {state?.fallback}</p>
     <p className="text-slate-400">Camera mode displays measurements. Signal control continues to use supervised SUMO state. Configure camera sources on the backend before starting.</p>
     {state?.perception.partialCoverage && <p className="text-amber-300">Partial camera coverage. Unavailable approaches: {state.perception.unavailableApproaches.join(', ')}.</p>}
-    <div className="flex gap-3"><button disabled={busy} onClick={() => command('/perception/start')} className="bg-cyan-900 p-2 rounded">Start cameras</button><button disabled={busy} onClick={() => command('/perception/stop')} className="bg-slate-800 p-2 rounded">Stop cameras</button></div>
+    <div className="flex gap-3"><button disabled={busy || !state} onClick={() => command('/perception/start')} className="bg-cyan-900 p-2 rounded">Start cameras</button><button disabled={busy || !state} onClick={() => command('/perception/stop')} className="bg-slate-800 p-2 rounded">Stop cameras</button></div>
     {Object.entries(state?.perception.cameras ?? {}).map(([id, camera]) => <div key={id}><p>{id}: {camera.state}; {camera.fresh ? 'fresh' : 'unavailable or stale'} {camera.error}</p>
       {Object.entries(camera.lastFrame?.approaches ?? {}).map(([direction, row]) => <p key={direction}>{direction}: {row.vehicles} vehicles, {row.queued} queued, {row.lineCrossings} line crossings, {row.regionUniqueTrackEntries} unique region track entries; visible wait {row.maxObservedWaitSec.toFixed(1)} s; queue length {row.queueLengthM?.toFixed(1) ?? 'uncalibrated'} m; density {row.densityVehiclesPerM2?.toFixed(4) ?? 'uncalibrated'} vehicles/m²; detector confidence {row.confidence?.toFixed(2) ?? 'unavailable'}. {!camera.fresh && 'Last frame only.'}</p>)}</div>)}
     {state?.perception.fused && <><p>Fused counts: {Object.entries(state.perception.fused.approaches).map(([d, r]) => `${d} ${r.vehicles} (${r.queued} queued)`).join('; ')}</p>{state.perception.fused.warnings.map(w => <p key={w}>{w}</p>)}</>}
     <p>Forecasts: {state?.forecasts.enabled ? 'enabled' : 'disabled'}; {state?.forecasts.available ? 'available' : state?.forecasts.fallback ?? 'unavailable'}. {state?.forecasts.exampleData && 'EXAMPLE DATA — blocked for MPC by default.'}</p>
-    <button disabled={busy} className="bg-cyan-900 p-2 rounded" onClick={() => command('/forecast/enabled?enabled=' + !state?.forecasts.enabled)}>{state?.forecasts.enabled ? 'Disable forecasts' : 'Enable forecasts'}</button>
+    <button disabled={busy || !state} className="bg-cyan-900 p-2 rounded" onClick={() => command('/forecast/enabled?enabled=' + !state?.forecasts.enabled)}>{state?.forecasts.enabled ? 'Disable forecasts' : 'Enable forecasts'}</button>
     <p>Weather: {state?.forecasts.weatherAvailable ? `${state.forecasts.rainfallMmH} mm/h` : 'missing; wider uncertainty'}.</p>
-    {Object.entries(state?.forecasts.approaches ?? {}).map(([direction, row]) => <p key={direction}>{direction}: next arrival rate {row.steps[0].arrivalRatePcuPerSec.toFixed(3)} PCU/s; range {row.steps[0].lowerPcuPerSec.toFixed(3)}–{row.steps[0].upperPcuPerSec.toFixed(3)}; confidence {row.confidence}.</p>)}
+    {Object.entries(state?.forecasts.approaches ?? {}).filter(([, row]) => row.steps.length > 0).map(([direction, row]) => <p key={direction}>{direction}: next arrival rate {row.steps[0].arrivalRatePcuPerSec.toFixed(3)} PCU/s; range {row.steps[0].lowerPcuPerSec.toFixed(3)}–{row.steps[0].upperPcuPerSec.toFixed(3)}; confidence {row.confidence}.</p>)}
     <p className="text-slate-400">{state?.forecasts.uncertainty}</p>
+    <details className="space-y-3"><summary>Historical CSV and weather configuration</summary>
+      <p>Upload historical arrivals (timestamp, approach, arrivals_pcu, interval_sec; optional junction_id). Timestamps require a timezone. Test data must be marked as demonstration data; it remains blocked for MPC unless explicitly authorized on the backend.</p>
+      <label>Historical arrival CSV<textarea aria-label="Historical arrival CSV" className="block bg-slate-800 w-full p-2" value={csv} onChange={e => setCsv(e.target.value)} /></label>
+      <label><input aria-label="CSV is demonstration data" type="checkbox" checked={example} onChange={e => setExample(e.target.checked)} /> CSV is demonstration/test data</label>
+      <button className="bg-cyan-900 p-2" disabled={busy || !state || !csv.trim()} onClick={() => command('/forecast/history', { csv, example_data: example })}>Upload history CSV</button>
+      <label>Weather provider <select aria-label="Weather provider" value={provider} onChange={e => setProvider(e.target.value)} className="bg-slate-800 p-2"><option value="disabled">Disabled</option><option value="manual">Manual input</option><option value="open_meteo">Open-Meteo</option></select></label>
+      <label>Latitude <input aria-label="Weather latitude" type="number" value={latitude} onChange={e => setLatitude(e.target.value)} className="bg-slate-800 p-2" /></label>
+      <label>Longitude <input aria-label="Weather longitude" type="number" value={longitude} onChange={e => setLongitude(e.target.value)} className="bg-slate-800 p-2" /></label>
+      <button className="bg-cyan-900 p-2" disabled={busy || !config || !state || (provider === 'open_meteo' && (!latitude || !longitude))} onClick={() => command('/forecast/config', { ...config, enabled: state?.forecasts.enabled, weather_provider: provider, latitude: latitude ? Number(latitude) : null, longitude: longitude ? Number(longitude) : null })}>Apply weather configuration</button>
+      <label>Manual rainfall mm/h <input aria-label="Manual rainfall mm/h" type="number" min="0" max="500" value={rain} onChange={e => setRain(e.target.value)} className="bg-slate-800 p-2" /></label>
+      <button className="bg-cyan-900 p-2" disabled={busy || !state || !Number.isFinite(Number(rain)) || Number(rain) < 0 || Number(rain) > 500} onClick={() => command('/forecast/weather', { timestamp: new Date().toISOString(), rainfall_mm_h: Number(rain), source: 'manual_browser_input' })}>Set manual weather</button>
+      <button className="bg-slate-800 p-2" disabled={busy || !state} onClick={() => command('/forecast/weather/refresh')}>Refresh configured weather provider</button>
+      <p>Manual weather is user input, not a live sensor measurement. Open-Meteo needs coordinates and network access. No calibrated forecast accuracy is established.</p>
+    </details>
+    {pollError && <p role="alert" className="text-red-400">{pollError}</p>}
     {error && <p role="alert" className="text-red-400">{error}</p>}
   </div>;
 }

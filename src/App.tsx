@@ -6,6 +6,8 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { TrafficSimulationEngine, SimulationState } from './simulation/engine.ts';
 import { trafficProvider } from './services/trafficProvider.ts';
+import { useLiveTraffic } from './services/liveTraffic';
+import { LiveUtilities } from './components/views/LiveUtilities';
 import { Sidebar, NavTab } from './components/navigation/Sidebar.tsx';
 import { OverviewCommandCenter } from './components/views/OverviewCommandCenter.tsx';
 import { SumoLiveView } from './components/views/SumoLiveView.tsx';
@@ -34,7 +36,12 @@ import { Siren, Activity, ShieldCheck } from 'lucide-react';
 export default function App() {
   const [activeTab, setActiveTab] = useState<NavTab>('dashboard');
   const [sumoMode, setSumoMode] = useState(true);
+  const live = useLiveTraffic();
+  const [legacyRemote, setLegacyRemote] = useState(false);
+  useEffect(() => { const timer = setInterval(() => setLegacyRemote(trafficProvider.getMode() === 'remote_backend'), 300); return () => clearInterval(timer); }, []);
   const engineRef = useRef<TrafficSimulationEngine>(trafficProvider.getEngine());
+  const demoActiveRef = useRef(false);
+  demoActiveRef.current = !sumoMode && trafficProvider.getMode() === 'local_demo';
 
   // React state synchronized from provider & engine
   const [simState, setSimState] = useState<SimulationState>(engineRef.current.getState());
@@ -43,7 +50,7 @@ export default function App() {
   // Subscribe to provider state updates
   useEffect(() => {
     const unsubscribe = trafficProvider.subscribe((latestState) => {
-      setSimState(latestState);
+      setSimState({ ...latestState });
     });
     return () => unsubscribe();
   }, []);
@@ -59,6 +66,8 @@ export default function App() {
       const dt = Math.min(0.1, (now - lastTime) / 1000);
       lastTime = now;
 
+      if (!demoActiveRef.current) return;
+
       const engine = engineRef.current;
       if (!engine) return;
 
@@ -69,7 +78,7 @@ export default function App() {
 
       // Synchronize state at ~20Hz
       stateThrottle += dt;
-      if (stateThrottle >= 0.05) {
+      if (stateThrottle >= 0.05 && trafficProvider.getMode() === 'local_demo') {
         stateThrottle = 0;
         trafficProvider.notifySubscribers(engine.getState());
       }
@@ -137,7 +146,7 @@ export default function App() {
   }, []);
 
   const handleCustomScenarioApply = useCallback((scenario: TrafficScenario) => {
-    engineRef.current.loadScenario(scenario.id);
+    engineRef.current.loadScenario(scenario);
     trafficProvider.notifySubscribers(engineRef.current.getState());
   }, []);
 
@@ -162,7 +171,10 @@ export default function App() {
       <Sidebar
         activeTab={activeTab}
         onTabChange={setActiveTab}
-        controllerName={sumoMode ? 'SUMO telemetry' : controllerDisplayName}
+        controllerName={sumoMode ? live.online ? live.state?.controller ?? 'unavailable' : 'disconnected' : controllerDisplayName}
+        liveMode={sumoMode}
+        resetDisabled={sumoMode || legacyRemote}
+        supervisorStatus={sumoMode ? live.online ? live.state?.safetySupervisor.status ?? 'unavailable' : 'unavailable (stale)' : 'browser model only'}
         isSimulating={!sumoMode && simState.isRunning}
         onResetSim={handleReset}
       />
@@ -174,10 +186,10 @@ export default function App() {
           {/* Zone 1: Location & Junction Node */}
           <div className="flex items-center gap-3 whitespace-nowrap shrink-0">
             <span className="text-sm font-bold tracking-tight text-slate-100">
-              Oak Street & 5th Avenue
+              {sumoMode ? 'SUMO research network' : 'Synthetic Oak Street'}
             </span>
             <span className="text-[11px] font-mono text-cyan-400 bg-cyan-950/40 px-2 py-0.5 rounded border border-cyan-500/30">
-              NODE SC-INT-74
+              {sumoMode ? 'SUMO / TraCI' : 'DEMO SC-INT-74'}
             </span>
             <span className="hidden sm:inline-flex items-center gap-1.5 text-[10px] font-mono text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-500/30">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
@@ -231,23 +243,15 @@ export default function App() {
 
           {/* Zone 3: Live Telemetry & Priority Preempt Action */}
           <div className="flex items-center gap-3 shrink-0">
-            <div className="hidden sm:flex items-center gap-4 text-xs font-mono text-slate-400">
-              <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                <span>
-                  Index: <strong className="text-emerald-400 font-normal">{simState.metrics.performanceIndex}/100</strong>
-                </span>
-              </span>
-              <span>
-                Mean Delay: <strong className="text-cyan-400 font-normal">{simState.metrics.avgWaitTime}s</strong>
-              </span>
+            <div className="hidden sm:flex text-xs font-mono text-slate-400" aria-label="Header telemetry">
+              {sumoMode ? `Backend: ${live.online ? 'connected' : 'disconnected'} | Controller: ${live.online ? live.state?.controller ?? 'unavailable' : 'unavailable'}` : `DEMO index: ${simState.metrics.performanceIndex}/100 | Current mean wait: ${simState.metrics.avgWaitTime}s`}
             </div>
 
             <button
-              disabled={sumoMode}
+              disabled={sumoMode || legacyRemote}
               title={sumoMode ? 'Use the SUMO telemetry emergency controls below' : 'Inject emergency into synthetic demo'}
               onClick={() => handleInjectAmbulance('north')}
-              className="px-3 py-1.5 bg-rose-600/90 hover:bg-rose-500 text-white text-xs font-medium rounded-lg flex items-center gap-1.5 shadow-sm transition-colors whitespace-nowrap"
+              className="px-3 py-1.5 bg-rose-600/90 hover:bg-rose-500 text-white text-xs font-medium rounded-lg flex items-center gap-1.5 shadow-sm transition-colors whitespace-nowrap disabled:opacity-40 disabled:cursor-not-allowed"
             >
               <Siren className="w-3.5 h-3.5" />
               <span>Priority Preempt</span>
@@ -257,10 +261,16 @@ export default function App() {
 
         {/* Dynamic View Router for All 14 Modules */}
         <main className="flex-1 overflow-hidden flex flex-col">
-          {activeTab !== 'dashboard' && <div className="p-2 bg-amber-950 text-amber-200 text-sm">Synthetic demonstration module: these values and actions do not control SUMO.</div>}
-          {/* Module 1: Overview Digital Twin Command Center (Animation on Left, Tables in Vertical Column on Right) */}
-          {activeTab === 'dashboard' && <div className="p-2 border-b border-slate-800"><button className="px-4 py-2 bg-slate-800 rounded" onClick={() => setSumoMode(!sumoMode)}>{sumoMode ? 'Switch to synthetic demonstration' : 'Switch to SUMO telemetry'}</button></div>}
-          {activeTab === 'dashboard' && sumoMode && <SumoLiveView />}
+          <div className="p-2 border-b border-slate-800 space-y-2">
+            <button className="px-4 py-2 bg-slate-800 rounded" onClick={() => setSumoMode(!sumoMode)}>{sumoMode ? 'Switch to synthetic demonstration' : 'Switch to SUMO telemetry'}</button>
+            <p className={sumoMode ? 'text-cyan-300' : 'text-amber-300'}>{sumoMode ? 'LIVE SUMO workspace: controls and measurements use FastAPI/TraCI.' : 'SYNTHETIC BROWSER DEMONSTRATION: these actions and metrics do not control SUMO or use a trained MAPPO policy.'}</p>
+          </div>
+          {sumoMode && !['comparison','math_models','v2i_hardware','config_api','benchmark_export'].includes(activeTab) && <SumoLiveView scope={activeTab} />}
+          {sumoMode && activeTab === 'config_api' && <LiveUtilities kind="config" />}
+          {sumoMode && activeTab === 'benchmark_export' && <LiveUtilities kind="export" />}
+          {sumoMode && ['comparison','math_models','v2i_hardware'].includes(activeTab) && <section className="p-6 space-y-4"><h1 className="text-2xl">{activeTab === 'comparison' ? 'Controller benchmark laboratory' : activeTab === 'math_models' ? 'Mathematical model explorer' : 'V2I and sensor architecture'}</h1><p>{activeTab === 'comparison' ? 'There is no live benchmark execution API. Published offline Phase5 results are in PHASE5_EXPERIMENT_RESULTS.md; the browser benchmark uses a separate synthetic engine.' : activeTab === 'math_models' ? 'Educational model equations are available in the browser demonstration. They are not live optimizer diagnostics; those appear in live Analytics.' : 'No physical V2I, DSRC, LiDAR or roadside hardware is connected. Protocol diagrams and mock sensor displays are demonstrations.'}</p><button className="bg-cyan-900 p-2" onClick={() => setSumoMode(false)}>Open browser demonstration</button></section>}
+          {!sumoMode && legacyRemote && <p role="status" className="p-3 bg-amber-950">Legacy remote synthetic-provider diagnostics selected. Other demo controls are read-only; choose Local Deterministic Engine in Provider API to resume browser interaction. SUMO uses the separate live workspace.</p>}
+          <div className="contents" inert={!sumoMode && legacyRemote && activeTab !== 'config_api' ? true : undefined}>
           {activeTab === 'dashboard' && !sumoMode && (
             <OverviewCommandCenter
               simState={simState}
@@ -278,7 +288,7 @@ export default function App() {
           )}
 
           {/* Module 2: Scenario Laboratory (All 25 Scenarios & PRNG Seed) */}
-          {activeTab === 'scenarios' && (
+          {!sumoMode && activeTab === 'scenarios' && (
             <div className="flex-1 overflow-y-auto bg-slate-950">
               <ScenarioLabView
                 currentScenario={simState.scenario}
@@ -294,14 +304,14 @@ export default function App() {
           )}
 
           {/* Module 3: Controller Benchmark Lab (7 Canonical Controllers) */}
-          {activeTab === 'comparison' && (
+          {!sumoMode && activeTab === 'comparison' && (
             <div className="flex-1 overflow-y-auto bg-slate-950">
               <ComparisonLabView />
             </div>
           )}
 
           {/* Module 4: Analytics & Explainable AI */}
-          {activeTab === 'analytics' && (
+          {!sumoMode && activeTab === 'analytics' && (
             <div className="flex-1 overflow-y-auto bg-slate-950">
               <AnalyticsView
                 metrics={simState.metrics}
@@ -313,7 +323,7 @@ export default function App() {
           )}
 
           {/* Module 5: Traffic Prediction Center */}
-          {activeTab === 'prediction' && (
+          {!sumoMode && activeTab === 'prediction' && (
             <div className="flex-1 overflow-y-auto bg-slate-950">
               <PredictionCenterView
                 metrics={simState.metrics}
@@ -323,21 +333,21 @@ export default function App() {
           )}
 
           {/* Module 6: Network Coordination */}
-          {activeTab === 'network' && (
+          {!sumoMode && activeTab === 'network' && (
             <div className="flex-1 overflow-y-auto bg-slate-950">
               <NetworkCoordinationView metrics={simState.metrics} />
             </div>
           )}
 
           {/* Module 7: Mathematical Model Explorer */}
-          {activeTab === 'math_models' && (
+          {!sumoMode && activeTab === 'math_models' && (
             <div className="flex-1 overflow-y-auto bg-slate-950">
               <MathematicalModelExplorer />
             </div>
           )}
 
           {/* Module 8: V2I & Sensor Architecture */}
-          {activeTab === 'v2i_hardware' && (
+          {!sumoMode && activeTab === 'v2i_hardware' && (
             <div className="flex-1 overflow-y-auto bg-slate-950">
               <V2IHardwareHub
                 sensors={simState.sensorNodes}
@@ -347,21 +357,21 @@ export default function App() {
           )}
 
           {/* Module 9: Sensor Perception & LiDAR */}
-          {activeTab === 'perception' && (
+          {!sumoMode && activeTab === 'perception' && (
             <div className="flex-1 overflow-y-auto bg-slate-950">
               <PerceptionCameraView sensors={simState.sensorNodes} />
             </div>
           )}
 
           {/* Module 10: Pedestrian Actuation & Crossing Safety */}
-          {activeTab === 'pedestrian' && (
+          {!sumoMode && activeTab === 'pedestrian' && (
             <div className="flex-1 overflow-y-auto bg-slate-950">
               <PedestrianCrossingView signals={simState.signals} />
             </div>
           )}
 
           {/* Module 11: Incident Management & Preemption Hub */}
-          {activeTab === 'incidents' && (
+          {!sumoMode && activeTab === 'incidents' && (
             <div className="flex-1 overflow-y-auto bg-slate-950">
               <IncidentEmergencyView
                 metrics={simState.metrics}
@@ -373,29 +383,32 @@ export default function App() {
           )}
 
           {/* Module 12: Safety Supervisor & Role-Based Access Control */}
-          {activeTab === 'health_security' && (
+          {!sumoMode && activeTab === 'health_security' && (
             <div className="flex-1 overflow-y-auto bg-slate-950">
               <HealthSecurityView metrics={simState.metrics} />
             </div>
           )}
 
           {/* Module 13: Provider & Remote API Config */}
-          {activeTab === 'config_api' && (
+          {!sumoMode && activeTab === 'config_api' && (
             <div className="flex-1 overflow-y-auto bg-slate-950">
               <ConfigApiView />
             </div>
           )}
 
           {/* Module 14: Scientific Data Export */}
-          {activeTab === 'benchmark_export' && (
+          {!sumoMode && activeTab === 'benchmark_export' && (
             <div className="flex-1 overflow-y-auto bg-slate-950">
               <BenchmarkExportView
                 metrics={simState.metrics}
                 scenario={simState.scenario}
                 seed={engineRef.current.getSeed()}
+                weather={simState.weather}
+                controller={simState.controllerType}
               />
             </div>
           )}
+          </div>
         </main>
       </div>
     </div>

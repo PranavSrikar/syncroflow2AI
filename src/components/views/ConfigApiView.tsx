@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Server,
   Radio,
@@ -20,8 +20,10 @@ import { SYNCHROFLOW_PROTOCOL_VERSION } from '../../types/contracts.ts';
 
 export const ConfigApiView: React.FC = () => {
   const [mode, setMode] = useState<'local_demo' | 'remote_backend'>(trafficProvider.getMode());
+  const [remoteSnapshot, setRemoteSnapshot] = useState<unknown>(null);
   const [status, setStatus] = useState(trafficProvider.getConnectionStatus());
   const [testAck, setTestAck] = useState<string | null>(null);
+  useEffect(() => { const timer = setInterval(() => { setStatus(trafficProvider.getConnectionStatus()); setRemoteSnapshot(trafficProvider.getRemoteSnapshot()); }, 500); return () => clearInterval(timer); }, []);
 
   const toggleMode = (newMode: 'local_demo' | 'remote_backend') => {
     setMode(newMode);
@@ -36,7 +38,7 @@ export const ConfigApiView: React.FC = () => {
       action: 'STEP',
       timestamp: Date.now(),
     });
-    setTestAck(`Acknowledgement received: ${res.message} at ${new Date(res.executionTimestamp).toLocaleTimeString()}`);
+    setTestAck(`${res.success ? 'Confirmed acknowledgement' : 'Command rejected'}: ${res.message} at ${new Date(res.executionTimestamp).toLocaleTimeString()}`);
   };
 
   return (
@@ -52,7 +54,7 @@ export const ConfigApiView: React.FC = () => {
             Simulation Data Provider & WebSocket Manager
           </h1>
           <p className="text-xs text-slate-400 mt-1">
-            Seamlessly switch between deterministic local browser execution (Stage 1) and remote Python FastAPI / SUMO TraCI backend (Stage 2).
+            Legacy synthetic-provider diagnostics. This channel is separate from the live SUMO workspace; it must not be used as evidence of SUMO actuation.
           </p>
         </div>
 
@@ -83,7 +85,7 @@ export const ConfigApiView: React.FC = () => {
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold text-slate-100">Stage 1: Local Deterministic Engine</span>
               <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-950 border border-emerald-500/40 text-emerald-400 font-mono">
-                ACTIVE
+                {mode === 'local_demo' ? 'ACTIVE' : 'INACTIVE'}
               </span>
             </div>
             <p className="text-[11px] text-slate-400 mt-2 leading-relaxed">
@@ -103,16 +105,17 @@ export const ConfigApiView: React.FC = () => {
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold text-slate-100">Stage 2: Remote Python FastAPI Backend</span>
               <span className="text-[10px] px-2 py-0.5 rounded bg-slate-900 border border-slate-700 text-slate-400 font-mono">
-                STANDBY
+                {mode === 'remote_backend' ? status.toUpperCase() : 'INACTIVE'}
               </span>
             </div>
             <p className="text-[11px] text-slate-400 mt-2 leading-relaxed">
-              Connects to authoritative external SUMO / TraCI simulation, CVXPY quadratic MPC, and PyTorch MAPPO models via WebSocket & REST at 10Hz.
+              Inspects the legacy backend synthetic state stream and acknowledged command endpoint. It does not control SUMO, load MAPPO weights or solve the live MPC.
             </p>
           </button>
         </div>
       </div>
 
+      {mode === 'remote_backend' && <details><summary>Actual legacy backend synthetic state (not SUMO)</summary><pre className="text-xs overflow-auto max-h-80">{JSON.stringify(remoteSnapshot, null, 2)}</pre></details>}
       {/* Connection State & Endpoints Table */}
       <div className="bg-slate-950/90 border border-slate-800 rounded-xl p-5 space-y-4">
         <div className="flex items-center justify-between">
@@ -127,11 +130,11 @@ export const ConfigApiView: React.FC = () => {
         <div className="space-y-2 text-xs font-mono">
           <div className="p-3 bg-slate-900/60 rounded-lg border border-slate-800 flex items-center justify-between">
             <span className="text-slate-400">WebSocket URL:</span>
-            <span className="text-cyan-300">ws://localhost:8000/api/v1/ws/traffic</span>
+            <span className="text-cyan-300">{((import.meta.env.VITE_BACKEND_API_URL || 'http://127.0.0.1:8001/api/v1').replace(/^http/, 'ws')) + '/ws/traffic'}</span>
           </div>
           <div className="p-3 bg-slate-900/60 rounded-lg border border-slate-800 flex items-center justify-between">
             <span className="text-slate-400">REST API Base:</span>
-            <span className="text-slate-300">http://localhost:8000/api/v1</span>
+            <span className="text-slate-300">{import.meta.env.VITE_BACKEND_API_URL || 'http://127.0.0.1:8001/api/v1'}</span>
           </div>
           <div className="p-3 bg-slate-900/60 rounded-lg border border-slate-800 flex items-center justify-between">
             <span className="text-slate-400">Sequence-Number Validation:</span>

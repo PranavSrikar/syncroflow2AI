@@ -33,7 +33,7 @@ interface BenchmarkResult {
 }
 
 export const ComparisonLabView: React.FC = () => {
-  const [selectedScenarioId, setSelectedScenarioId] = useState<string>('balanced_traffic');
+  const [selectedScenarioId, setSelectedScenarioId] = useState<string>(ALL_25_SCENARIOS[0].id);
   const [selectedSeed, setSelectedSeed] = useState<number>(42);
   const [benchmarkDuration, setBenchmarkDuration] = useState<number>(60); // 60s fast benchmark
   const [isRunningBenchmark, setIsRunningBenchmark] = useState<boolean>(false);
@@ -45,10 +45,10 @@ export const ComparisonLabView: React.FC = () => {
     { id: 'fixed', name: 'Optimized Fixed-Time Pre-timed', isExecutableLocally: true, description: 'Pre-timed 112s NEMA dual-ring cycle with static green splits.' },
     { id: 'actuated', name: 'Semi-Actuated (Gap-Out)', isExecutableLocally: true, description: 'Sensor-actuated phase hold while dilemma zone loops detect vehicles.' },
     { id: 'queue_adaptive', name: 'Queue-Based Dynamic Adaptive', isExecutableLocally: true, description: 'Dynamic green allocation proportional to inbound queue count.' },
-    { id: 'max_pressure', name: 'Max-Pressure (Varaiya Network Stability)', isExecutableLocally: true, description: 'Selects movement phases with maximum upstream minus downstream queue differential.' },
+    { id: 'max_pressure', name: 'Max-Pressure-style browser heuristic', isExecutableLocally: true, description: 'Selects movement phases with maximum upstream minus downstream queue differential.' },
     { id: 'mpc_only', name: 'Constrained MPC (15-step Receding Horizon)', isExecutableLocally: true, description: 'Receding-horizon trajectory candidate evaluation minimizing queue and delay cost.' },
-    { id: 'mappo_assisted_mpc', name: 'MAPPO-Assisted MPC (Advisory RL)', isExecutableLocally: true, description: 'Multi-Agent PPO policy advising MPC green split boundaries.' },
-    { id: 'synchroflow_hybrid', name: 'SynchroFlow Full Hybrid System', isExecutableLocally: true, description: 'Full integrated MPC, MAPPO advisory, independent safety supervisor, and V2I preemption.' },
+    { id: 'mappo_assisted_mpc', name: 'MAPPO-Assisted MPC (Advisory RL)', isExecutableLocally: true, description: 'Rule-based browser advisory; no trained neural checkpoint.' },
+    { id: 'synchroflow_hybrid', name: 'SynchroFlow Full Hybrid System', isExecutableLocally: true, description: 'Browser hybrid heuristic and model interlocks; no physical V2I or trained MAPPO.' },
   ];
 
   const runBenchmark = async () => {
@@ -160,6 +160,7 @@ export const ComparisonLabView: React.FC = () => {
         <div>
           <label className="text-slate-400 font-medium block mb-1">Target Scenario</label>
           <select
+            aria-label="Benchmark scenario"
             value={selectedScenarioId}
             onChange={(e) => setSelectedScenarioId(e.target.value)}
             className="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-slate-200 font-sans focus:outline-none focus:border-cyan-500/50"
@@ -175,9 +176,11 @@ export const ComparisonLabView: React.FC = () => {
         <div>
           <label className="text-slate-400 font-medium block mb-1">Random Seed (PRNG Reproducibility)</label>
           <input
+            aria-label="Benchmark seed"
             type="number"
+            min="0"
             value={selectedSeed}
-            onChange={(e) => setSelectedSeed(parseInt(e.target.value) || 42)}
+            onChange={(e) => { const seed = Number(e.target.value); if (Number.isInteger(seed) && seed >= 0) setSelectedSeed(seed); }}
             className="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-cyan-300 font-mono focus:outline-none focus:border-cyan-500/50"
           />
         </div>
@@ -185,6 +188,7 @@ export const ComparisonLabView: React.FC = () => {
         <div>
           <label className="text-slate-400 font-medium block mb-1">Simulated Duration per Controller</label>
           <select
+            aria-label="Benchmark duration"
             value={benchmarkDuration}
             onChange={(e) => setBenchmarkDuration(parseInt(e.target.value))}
             className="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-slate-200 font-sans focus:outline-none focus:border-cyan-500/50"
@@ -202,7 +206,7 @@ export const ComparisonLabView: React.FC = () => {
         <div>
           <strong className="text-slate-200">Stage 1 Controller Execution Disclosure:</strong>
           <p className="mt-0.5">
-            The results below are measured strictly from deterministic browser simulation execution. MAPPO RL is currently executing with its demonstration advisory policy; official trained PyTorch checkpoints will be benchmarked via the Stage 2 Python backend.
+            The results below are measured strictly from deterministic browser simulation execution. MAPPO-labelled rows use browser heuristics, not neural policy inference. Backend Phase5 policies were evaluated separately and failed qualification. These results cannot establish SUMO performance or learned-policy superiority.
           </p>
         </div>
       </div>

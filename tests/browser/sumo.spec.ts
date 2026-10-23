@@ -1,6 +1,9 @@
 import { test, expect } from '@playwright/test';
 const api = process.env.SYNCHROFLOW_TEST_API || 'http://127.0.0.1:8017/api/v1';
 
+test.beforeEach(async ({ request }) => { expect((await request.post(`${api}/sumo/stop`)).ok()).toBeTruthy(); await request.post(`${api}/forecast/enabled?enabled=false`); });
+test.afterEach(async ({ request }) => { await request.post(`${api}/sumo/stop`); await request.post(`${api}/perception/stop`); });
+
 test('dashboard receives real SUMO telemetry and controls lifecycle', async ({ page, request }) => {
   const errors: string[] = [];
   await page.route('https://fonts.googleapis.com/**', route => route.abort());
@@ -41,13 +44,13 @@ test('dashboard receives real SUMO telemetry and controls lifecycle', async ({ p
   await page.getByRole('button', { name: 'start', exact: true }).click();
   await expect(page.getByText('Crossing :center_c0_0, link 16:', { exact: false })).toBeVisible();
   await expect(page.getByText(/Permission monitor center/)).toBeVisible();
-  await expect(page.getByText(/enforcing_pedestrian_and_vehicle_timing/)).toBeVisible();
+  await expect(page.getByText('enforcing_pedestrian_and_vehicle_timing', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'stop', exact: true }).click();
   await expect(page.getByText(/Simulation: stopped/)).toBeVisible();
   await page.getByLabel('SUMO network').selectOption('vehicle');
   await page.getByLabel('SUMO controller').selectOption('mpc');
   await page.getByRole('button', { name: 'start', exact: true }).click();
-  await expect(page.getByText(/Controller: mpc/)).toBeVisible();
+  await expect(page.getByLabel('Header telemetry')).toContainText('Controller: mpc');
   await page.getByRole('button', { name: 'pause', exact: true }).click();
   for (let i = 0; i < 12; i++) {
     const response = await request.post(`${api}/sumo/step`);

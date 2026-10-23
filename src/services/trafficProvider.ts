@@ -38,6 +38,10 @@ export class TrafficProviderService implements ITrafficProvider {
   private lastSequenceNumber: number = 0;
   private reconnectBackoffMs: number = 1000;
 
+  private pendingAcks = new Map<string, { resolve: (ack: CommandAckResponse) => void; timer: ReturnType<typeof setTimeout> }>();
+  private remoteSnapshot: unknown = null;
+  public getRemoteSnapshot(): unknown { return this.remoteSnapshot; }
+
   private wsUrl: string;
   private restUrl: string;
 
@@ -46,8 +50,8 @@ export class TrafficProviderService implements ITrafficProvider {
 
     // Read environment variables or defaults
     const isVite = typeof import.meta !== 'undefined' && import.meta.env;
-    this.wsUrl = (isVite && import.meta.env.VITE_BACKEND_WS_URL) || 'ws://localhost:8000/api/v1/ws/traffic';
-    this.restUrl = (isVite && import.meta.env.VITE_BACKEND_API_URL) || 'http://localhost:8000/api/v1';
+    this.wsUrl = (isVite && import.meta.env.VITE_BACKEND_WS_URL) || ((isVite && import.meta.env.VITE_BACKEND_API_URL) || 'http://127.0.0.1:8001/api/v1').replace(/^http/, 'ws').replace(/\/$/, '') + '/ws/traffic';
+    this.restUrl = (isVite && import.meta.env.VITE_BACKEND_API_URL) || 'http://127.0.0.1:8001/api/v1';
   }
 
   public getEngine(): TrafficSimulationEngine {
@@ -96,29 +100,23 @@ export class TrafficProviderService implements ITrafficProvider {
     // Remote mode command via REST or WebSocket
     try {
       if (this.ws && this.ws.readyState === WebSocket.OPEN) {
-        const msg: WebSocketMessage = {
-          type: 'COMMAND',
-          sequenceNumber: ++this.lastSequenceNumber,
-          timestamp: Date.now(),
-          data: command,
-        };
-        this.ws.send(JSON.stringify(msg));
-        return {
-          commandId: command.commandId,
-          success: true,
-          message: 'Command dispatched via WebSocket',
-          executionTimestamp: Date.now(),
-        };
+        return await new Promise<CommandAckResponse>(resolve => {
+          const timer = setTimeout(() => { this.pendingAcks.delete(command.commandId); resolve({ commandId: command.commandId, success: false, message: 'Backend acknowledgement timed out', executionTimestamp: Date.now() }); }, 10000);
+          this.pendingAcks.set(command.commandId, { resolve, timer });
+          this.ws!.send(JSON.stringify({ type: 'COMMAND', sequenceNumber: this.lastSequenceNumber, timestamp: Date.now(), data: command }));
+        });
       }
-
-      // REST fallback
-      const resp = await fetch(`${this.restUrl}/control/command`, {
+      const routes: Record<string, string> = { STEP: '/simulation/step', PAUSE: '/simulation/pause', RESUME: '/simulation/start', RESET: '/simulation/reset', SET_SPEED: '/simulation/speed', SET_SEED: '/simulation/seed' };
+      const route = routes[command.action];
+      if (!route) throw new Error('This legacy command requires a connected synthetic-provider WebSocket');
+      const resp = await fetch(`${this.restUrl}${route}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'X-Protocol-Version': SYNCHROFLOW_PROTOCOL_VERSION,
         },
-        body: JSON.stringify(command),
+        body: command.payload ? JSON.stringify(command.payload) : undefined,
+        signal: AbortSignal.timeout(10000),
       });
 
       if (!resp.ok) {
@@ -128,8 +126,7 @@ export class TrafficProviderService implements ITrafficProvider {
       const data = await resp.json();
       return data;
     } catch (err: any) {
-      console.warn('Remote command failed, falling back to local handler:', err.message);
-      return this.handleLocalCommand(command);
+      return { commandId: command.commandId, success: false, message: `Remote command failed: ${err.message}. Local engine was not changed.`, executionTimestamp: Date.now() };
     }
   }
 
@@ -164,6 +161,9 @@ export class TrafficProviderService implements ITrafficProvider {
       case 'INJECT_EMERGENCY':
         engine.injectEmergency(command.payload?.direction as Direction, command.payload?.type);
         break;
+      case 'PEDESTRIAN_CALL':
+        engine.requestPedestrianCall(command.payload?.direction as Direction);
+        break;
       case 'LOAD_SCENARIO':
         engine.loadScenario(command.payload?.scenarioId);
         break;
@@ -182,6 +182,7 @@ export class TrafficProviderService implements ITrafficProvider {
   private initRemoteConnection(): void {
     this.connectionStatus = 'connecting';
     this.cleanupRemoteConnection();
+    this.lastSequenceNumber = 0;
 
     try {
       this.ws = new WebSocket(this.wsUrl);
@@ -200,6 +201,13 @@ export class TrafficProviderService implements ITrafficProvider {
         try {
           const msg: WebSocketMessage = JSON.parse(event.data);
           this.lastMessageTimestamp = Date.now();
+          if (msg.type === 'COMMAND_ACK') {
+            const ack = msg.data as CommandAckResponse;
+            const pending = this.pendingAcks.get(ack.commandId);
+            if (pending) { clearTimeout(pending.timer); pending.resolve(ack); this.pendingAcks.delete(ack.commandId); }
+            this.lastSequenceNumber = msg.sequenceNumber;
+            return;
+          }
 
           // Sequence-number validation
           if (msg.sequenceNumber < this.lastSequenceNumber) {
@@ -209,7 +217,8 @@ export class TrafficProviderService implements ITrafficProvider {
           this.lastSequenceNumber = msg.sequenceNumber;
 
           if (msg.type === 'STATE_UPDATE') {
-            this.notifySubscribers(msg.data);
+            this.connectionStatus = 'connected';
+            this.remoteSnapshot = msg.data;
           }
         } catch (e) {
           console.error('Failed to parse WebSocket message:', e);
@@ -271,6 +280,8 @@ export class TrafficProviderService implements ITrafficProvider {
     if (this.heartbeatIntervalId) clearInterval(this.heartbeatIntervalId);
     if (this.staleCheckIntervalId) clearInterval(this.staleCheckIntervalId);
 
+    for (const [id, pending] of this.pendingAcks) { clearTimeout(pending.timer); pending.resolve({ commandId: id, success: false, message: 'Remote connection closed; command completion is unknown', executionTimestamp: Date.now() }); }
+    this.pendingAcks.clear();
     if (this.ws) {
       this.ws.onopen = null;
       this.ws.onmessage = null;

@@ -160,7 +160,7 @@ export class TrafficSimulationEngine {
     ];
 
     const alerts: AnomalyAlert[] = [
-      { id: 'ALT-1', timestamp: '00:00:00', severity: 'info', title: `Scenario Loaded: ${scenario.name}`, description: scenario.description, location: 'Supervisor Engine' },
+      { id: `ALT-${++this.alertCounter}`, timestamp: '00:00:00', severity: 'info', title: `Scenario Loaded: ${scenario.name}`, description: scenario.description, location: 'Supervisor Engine' },
     ];
 
     return {
@@ -1090,6 +1090,12 @@ export class TrafficSimulationEngine {
     return this.currentSeed;
   }
 
+  public requestPedestrianCall(direction: Direction) {
+    const pedestrian = this.state.signals.pedestrianSignals[direction];
+    if (!pedestrian) throw new Error('Unknown pedestrian approach');
+    pedestrian.hasCallRequest = true; pedestrian.waitingCount += 1;
+  }
+
   public setPlaying(playing: boolean) {
     this.state.isRunning = playing;
   }
@@ -1112,8 +1118,8 @@ export class TrafficSimulationEngine {
     this.state.cameraPreset = preset;
   }
 
-  public loadScenario(scenarioId: string) {
-    const found = ALL_25_SCENARIOS.find((s) => s.id === scenarioId);
+  public loadScenario(scenarioId: string | TrafficScenario) {
+    const found = typeof scenarioId === 'string' ? ALL_25_SCENARIOS.find((s) => s.id === scenarioId) : structuredClone(scenarioId);
     if (found) {
       this.prng.reset(this.currentSeed);
       this.completedTripWaitTimes = [];

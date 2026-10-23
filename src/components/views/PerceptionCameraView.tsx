@@ -26,7 +26,7 @@ export const PerceptionCameraView: React.FC<PerceptionCameraViewProps> = ({ sens
           Optical & Solid-State LiDAR Perception Center
         </h1>
         <p className="text-xs text-slate-400 mt-1">
-          Real-time tracking confidence, bounding-box detection streams, and sensor degradation diagnostics across all 4 corridors.
+          Synthetic sensor model and fixed illustrative bounding boxes. For real recorded-video detection use the live SUMO workspace Sensor Perception page.
         </p>
       </div>
 
@@ -49,7 +49,7 @@ export const PerceptionCameraView: React.FC<PerceptionCameraViewProps> = ({ sens
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent pointer-events-none" />
               <div className="text-center space-y-1">
                 <Eye className="w-6 h-6 text-slate-600 mx-auto" />
-                <div className="text-xs font-mono text-slate-400">YOLOv8 Edge Perception Feed</div>
+                <div className="text-xs font-mono text-slate-400">Mock bounding-box illustration</div>
                 <div className="text-[10px] text-cyan-400 font-mono">Stream: {cam.lastReading} · Latency: {cam.latencyMs}ms</div>
               </div>
 

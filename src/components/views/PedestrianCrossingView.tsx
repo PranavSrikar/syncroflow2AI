@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Users, CheckCircle2, ShieldCheck, Hand, AlertTriangle, Info } from 'lucide-react';
+import { trafficProvider } from '../../services/trafficProvider';
 import { Direction, IntersectionSignalState } from '../../types/traffic.ts';
 
 interface PedestrianCrossingViewProps {
@@ -12,17 +13,9 @@ interface PedestrianCrossingViewProps {
 }
 
 export const PedestrianCrossingView: React.FC<PedestrianCrossingViewProps> = ({ signals }) => {
-  const [activeCallApproaches, setActiveCallApproaches] = useState<Record<Direction, boolean>>({
-    north: false,
-    south: false,
-    east: false,
-    west: false,
-  });
-
   const handlePressCallButton = (dir: Direction) => {
-    setActiveCallApproaches((prev) => ({ ...prev, [dir]: true }));
-    signals.pedestrianSignals[dir].hasCallRequest = true;
-    signals.pedestrianSignals[dir].waitingCount += 1;
+    trafficProvider.getEngine().requestPedestrianCall(dir);
+    trafficProvider.notifySubscribers(trafficProvider.getEngine().getState());
   };
 
   const crosswalks: Direction[] = ['north', 'south', 'east', 'west'];
@@ -85,7 +78,7 @@ export const PedestrianCrossingView: React.FC<PedestrianCrossingViewProps> = ({ 
                 <div className="flex justify-between text-slate-400">
                   <span>Call Request Status:</span>
                   <span className="font-mono text-emerald-400">
-                    {ped.hasCallRequest || activeCallApproaches[dir] ? 'REGISTERED (ACTUATED)' : 'IDLE'}
+                    {ped.hasCallRequest ? 'REGISTERED (ACTUATED)' : 'IDLE'}
                   </span>
                 </div>
               </div>
