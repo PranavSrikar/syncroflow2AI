@@ -26,6 +26,16 @@ def run(seed, seconds, scale, variant):
     if seed not in (5101, 5102, 5103):
         raise ValueError('Only preregistered fresh diagnostic seeds accepted')
     research.OUT = OUT / 'ablations' / variant
+    diagnostic_path=OUT/f'diagnostics/{variant}-d{scale}-s{seed}-t{seconds}.json'
+    if diagnostic_path.exists():
+        saved=json.loads(diagnostic_path.read_text(encoding='utf8'))
+        if saved['result']['provenance']!=research.provenance():
+            raise ValueError('Saved diagnostic uses different architecture/source; start a separate study')
+        print(f'Preserving completed diagnostic: {diagnostic_path.name}',flush=True)
+        return
+    label='mpc' if variant=='none' else 'train-41'
+    if (research.OUT/f'trials/diagnostic-{label}-d{scale}-s{seed}-t{seconds}.json').exists():
+        raise ValueError('Trial exists without influence trace; preserve it and use a new study rather than synthesize an empty trace')
     traces, observations = [], []
     original_recommend = ConstrainedMPC.recommend_remaining
     original_load = research.MAPPO.load
@@ -80,7 +90,7 @@ def run(seed, seconds, scale, variant):
                       changedRemaining=sum(r['changed'] for r in eligible)), traces=traces,
                       observations=observations,
                       limitations='Shadow computation adds overhead. Same-state changes are recommendations, not counterfactual traffic outcomes. Static/random/untrained variants do not represent the trained checkpoint despite shared trial storage label.')
-        research.write(OUT/f'diagnostics/{variant}-d{scale}-s{seed}-t{seconds}.json',report)
+        research.write(diagnostic_path,report)
         print(json.dumps(dict(variant=variant,seed=seed,scale=scale,**report['influence'])),flush=True)
     finally:
         ConstrainedMPC.recommend_remaining = original_recommend

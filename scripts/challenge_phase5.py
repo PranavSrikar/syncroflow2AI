@@ -45,6 +45,7 @@ def run(checkpoint,seed):
                 for _ in range(240):
                     tick=time.perf_counter();runtime.command('step');latencies.append((time.perf_counter()-tick)*1000)
                     raw=runtime.telemetry
+                    assert research.traci.simulation.getCollidingVehiclesNumber()==0,'SUMO reported a collision'
                     assert all(r['compatibleUnderSumoRules'] for r in raw['permissionAnalysis'].values())
                     phases.add(raw['trafficLights'][runtime.controller.tls]['phaseIndex'])
                     ped_seen |= bool(raw['pedestrians'])
