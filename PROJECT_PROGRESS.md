@@ -1,3 +1,9 @@
+# Phase 5 completed research checkpoint
+
+Completed: preservation/regressions, 54 diagnostic ablations, three new training seeds/48 checkpoints, frozen selection, 45 longer held-out benchmarks, three safety runs and 42 scenario challenges. The learned candidate was worse than MPC at all three tested loads; it remains disabled. The working demo and prior studies are preserved. See [readiness](FINAL_DEMO_READINESS_REPORT.md), [results](PHASE5_EXPERIMENT_RESULTS.md) and [qualification](UPDATED_POLICY_QUALIFICATION_REPORT.md). Recovery pointer: `.checkpoints/PHASE5_RECOVERY.json`. Earlier progress follows.
+
+---
+
 # Phase 4 research update
 
 This section supersedes Stage3 research/Git status below; Stage3 demonstration results remain historical evidence. Fixed repeated postponement of an already-due signal expiry: the controlled release probe observed its first phase change at12s rather than46s, without weakening timing or clearance checks. Corrected Poisson rate/mean-gap units; exact legacy overload inputs and completed stress results remain preserved separately. Earlier research weights were invalidated by route/controller fingerprints. Three corrected-architecture/demand MAPPO runs completed,1024 joint decisions each;30 matched final corridor trials and separate held-out safety trials are recorded. **MAPPO remains unqualified and operationally disabled.** Read [MAPPO_TRAINING_REPORT.md](MAPPO_TRAINING_REPORT.md), [CONTROLLER_BENCHMARK_REPORT.md](CONTROLLER_BENCHMARK_REPORT.md), [POLICY_QUALIFICATION_REPORT.md](POLICY_QUALIFICATION_REPORT.md) and [RESEARCH_NEXT_STEPS.md](RESEARCH_NEXT_STEPS.md).

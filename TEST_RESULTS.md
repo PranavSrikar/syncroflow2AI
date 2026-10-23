@@ -1,3 +1,11 @@
+# Phase 5 verification
+
+Latest: **108 backend passed, 0 failures/errors/skips, 165.027s**, one existing warning. Browser initial run: three passed/one camera skipped in 29.9s; configured camera rerun: one passed in 18.2s. Thus all four distinct cases passed. Build, TypeScript, eight frontend groups, eight external demos, startup smoke/cleanup and pip check passed. Actual Ctrl+C closed both owned ports; the interrupted terminal wrapper returned exit1, recorded separately from cleanup success.
+
+All 45 corridor benchmark and 42 challenge trials completed; separate three-seed safety checks passed with zero rejections. Seven performance screens failed; MAPPO stays disabled. [Full results and limitations](PHASE5_EXPERIMENT_RESULTS.md), [readiness](FINAL_DEMO_READINESS_REPORT.md), [qualification](UPDATED_POLICY_QUALIFICATION_REPORT.md). Application/controller/frontend bytes were unchanged; new offline research scripts were exercised by actual experiments. Earlier results follow.
+
+---
+
 # Phase 4 research update
 
 Current consolidated assessment: [FINAL_VERIFICATION_REPORT.md](FINAL_VERIFICATION_REPORT.md). The continuation verified unchanged experiment evidence; no completed training or benchmarks were repeated.

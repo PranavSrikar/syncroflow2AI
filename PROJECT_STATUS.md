@@ -1,3 +1,11 @@
+# Phase 5 final research update
+
+The working demonstration is preserved. MAPPO remains disabled: the new frozen candidate increased delay over MPC by 5.08%, 1.59% and 0.89% at low, medium and high demand. Completed: 54 diagnostic ablations, three training seeds/48 checkpoints, 12 selection trials, 45 held-out benchmark trials, three safety trials and 42 scenario challenges. Backend: 108 passed in 165.027s; all four distinct browser cases and all eight external demos passed. Build, TypeScript, eight frontend groups, startup/cleanup and dependency checks passed.
+
+Read [FINAL_DEMO_READINESS_REPORT.md](FINAL_DEMO_READINESS_REPORT.md), [DEMONSTRATION_GUIDE.md](DEMONSTRATION_GUIDE.md), [MAPPO_DIAGNOSTIC_REPORT.md](MAPPO_DIAGNOSTIC_REPORT.md), [PHASE5_EXPERIMENT_RESULTS.md](PHASE5_EXPERIMENT_RESULTS.md) and [UPDATED_POLICY_QUALIFICATION_REPORT.md](UPDATED_POLICY_QUALIFICATION_REPORT.md). Branch: `phase5-diagnostics`; final tag: `phase5-evaluated-prototype`. Recovery: `.checkpoints/PHASE5_RECOVERY.json`; previous copies and Phase4 results remain preserved. No push. Earlier-stage evidence follows.
+
+---
+
 # Phase 4 research update
 
 Current consolidated assessment: [FINAL_VERIFICATION_REPORT.md](FINAL_VERIFICATION_REPORT.md). The continuation verified unchanged experiment evidence; no completed training or benchmarks were repeated.

@@ -1,3 +1,9 @@
+# Phase 5 completion
+
+The bounded Phase5 diagnostic and independent-clipping experiment is complete. All existing application/safety implementations remain intact; the new policy failed qualification and stays disabled. No further broad training is justified without a new controlled observation/credit-assignment experiment. Read [diagnostics](MAPPO_DIAGNOSTIC_REPORT.md), [results](PHASE5_EXPERIMENT_RESULTS.md), [qualification](UPDATED_POLICY_QUALIFICATION_REPORT.md) and [demonstration guide](DEMONSTRATION_GUIDE.md). Earlier plans follow.
+
+---
+
 # Phase 4 research update
 
 This section supersedes Stage3 research/Git status below; Stage3 demonstration results remain historical evidence. Fixed repeated postponement of an already-due signal expiry: the controlled release probe observed its first phase change at12s rather than46s, without weakening timing or clearance checks. Corrected Poisson rate/mean-gap units; exact legacy overload inputs and completed stress results remain preserved separately. Earlier research weights were invalidated by route/controller fingerprints. Three corrected-architecture/demand MAPPO runs completed,1024 joint decisions each;30 matched final corridor trials and separate held-out safety trials are recorded. **MAPPO remains unqualified and operationally disabled.** Read [MAPPO_TRAINING_REPORT.md](MAPPO_TRAINING_REPORT.md), [CONTROLLER_BENCHMARK_REPORT.md](CONTROLLER_BENCHMARK_REPORT.md), [POLICY_QUALIFICATION_REPORT.md](POLICY_QUALIFICATION_REPORT.md) and [RESEARCH_NEXT_STEPS.md](RESEARCH_NEXT_STEPS.md).

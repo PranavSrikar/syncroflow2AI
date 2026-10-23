@@ -6,6 +6,7 @@ unused centralized critic shape; actor outputs depend solely on local inputs.
 """
 import argparse
 import json
+import hashlib
 import time
 from pathlib import Path
 import numpy as np
@@ -16,15 +17,26 @@ from app.services.sumo_runtime import SumoRuntime
 def run(checkpoint,seed):
     if seed not in (6401,6402,6403): raise ValueError('Unregistered challenge seed')
     model=research.MAPPO.load(checkpoint)
+    checkpoint_hash=hashlib.sha256(Path(checkpoint).read_bytes()).hexdigest()
+    script_hash=hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     out=research.ROOT/'.checkpoints/phase5/challenges';out.mkdir(exist_ok=True)
     for case,scenario,emergency in [('asymmetric','unequal',False),('blocked_exit','spillback',False),
                                     ('pedestrian','pedestrian',False),('pedestrian_emergency','pedestrian',True)]:
         for variant in ('mpc','candidate'):
             path=out/f'{case}-{variant}-{seed}.json'
-            if path.exists(): raise FileExistsError('Preserve previous challenge results; use a new output study')
+            if path.exists():
+                saved=json.loads(path.read_text(encoding='utf8'))
+                if (saved.get('checkpointSha256')!=checkpoint_hash or saved.get('challengeScriptSha256')!=script_hash
+                        or saved.get('architectureFingerprint')!=research.qualification_fingerprint()
+                        or saved.get('seed')!=seed or saved.get('case')!=case or saved.get('variant')!=variant):
+                    raise ValueError('Existing challenge uses different provenance; preserve it and start a separate study')
+                print(json.dumps(dict(case=case,variant=variant,seed=seed,status=saved['status'],cached=True)),flush=True)
+                continue
             runtime=SumoRuntime();calls=[];latencies=[];queues=[];spills=[];waits=[];ages=[];fallback=0
             phases=set();ped_seen=False;clearance=set();injected=None
             result=dict(case=case,variant=variant,seed=seed,seconds=240,checkpoint=str(checkpoint),
+                        checkpointSha256=checkpoint_hash,challengeScriptSha256=script_hash,
+                        architectureFingerprint=research.qualification_fingerprint(),
                         scope='Offline single-junction actor topology transfer; not operational policy activation',
                         operationallyEnabled=False)
             tripfile=out/f'{case}-{variant}-{seed}.xml'

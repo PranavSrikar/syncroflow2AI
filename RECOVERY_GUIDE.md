@@ -1,3 +1,11 @@
+# Phase 5 recovery checkpoint
+
+Current pointer: `.checkpoints/PHASE5_RECOVERY.json`. Phase5 source, raw research data, all checkpoints, camera assets and Git history are archived with verified manifests and separate same-machine copies. The Phase4 pointer and every previous archive remain preserved. Branch: `phase5-diagnostics`; final tag: `phase5-evaluated-prototype`. Nothing pushed; these copies are not off-device backups.
+
+Restore into a new empty folder using the matching source/artifact archives and hashes. Keep the original archives intact. Do not activate unqualified weights. Read [FINAL_DEMO_READINESS_REPORT.md](FINAL_DEMO_READINESS_REPORT.md), [PHASE5_EXPERIMENT_RESULTS.md](PHASE5_EXPERIMENT_RESULTS.md) and [DEMONSTRATION_GUIDE.md](DEMONSTRATION_GUIDE.md). Phase5 completed its bounded experiments; do not restart completed training. Earlier recovery notes follow.
+
+---
+
 # Phase 4 recovery and Git update
 
 Git for Windows2.55.0.windows.5 is installed at `C:/Program Files/Git/cmd/git.exe`. New shells inherit its installed machine PATH; existing shells may need restarting or the absolute path. The original export had no Git history. Local tag `stage3-verified-demo` preserves all167 manifest files byte-for-byte in its initial commit; later commits preserve research changes. No force-push, remote or publication occurred.

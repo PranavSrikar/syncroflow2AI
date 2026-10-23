@@ -1,3 +1,11 @@
+# Phase 5 demonstration
+
+Start from the project folder with `.\backend\.venv\Scripts\python.exe scripts/run_dev.py`, open http://127.0.0.1:3001, choose Hybrid/network, then Start. Keep both MAPPO policy environment variables unset: the new candidate failed qualification. Supervised MPC/Max-Pressure remains operational. Existing occupied ports are preserved.
+
+Read [DEMONSTRATION_GUIDE.md](DEMONSTRATION_GUIDE.md) for the eight repeatable scenarios, camera configuration and expected observations; [FINAL_DEMO_READINESS_REPORT.md](FINAL_DEMO_READINESS_REPORT.md) records startup/shutdown and regression outcomes. Phase5 experiments are complete; raw evidence is in `.checkpoints/phase5`, published results in `research/phase5`, and recovery in `.checkpoints/PHASE5_RECOVERY.json`. Earlier installation/research instructions follow.
+
+---
+
 # Phase 4 research commands
 
 Set `$env:DEBUG='false'` before research commands in PowerShell. The existing demo startup is unchanged: `./backend/.venv/Scripts/python.exe scripts/run_dev.py`. MAPPO remains disabled; do not configure unqualified candidate weights. Git is installed; restart older terminals to refresh PATH, or use `C:/Program Files/Git/cmd/git.exe`.

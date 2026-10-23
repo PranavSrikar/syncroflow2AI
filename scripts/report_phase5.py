@@ -4,6 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 import statistics
+import re
 import sys
 import xml.etree.ElementTree as ET
 
@@ -27,13 +28,42 @@ def main():
     diagnostics=[read(p) for p in sorted((OUT/'diagnostics').glob('*.json'))]
     trials=[read(p) for p in sorted((OUT/'evaluation/trials').glob('test-*.json'))]
     challenges=[read(p) for p in sorted((OUT/'challenges').glob('*.json'))]
-    if len(diagnostics)!=54 or len(trials)!=45 or len(challenges)!=24:
-        raise ValueError(f'Incomplete expected evidence: diagnostics{len(diagnostics)}/54,trials{len(trials)}/45,challenges{len(challenges)}/24')
+    if len(diagnostics)!=54 or len(trials)!=45 or len(challenges)!=42:
+        raise ValueError(f'Incomplete expected evidence: diagnostics{len(diagnostics)}/54,trials{len(trials)}/45,challenges{len(challenges)}/42')
     if any(d['result']['status']!='completed' for d in diagnostics) or any(r['status']!='completed' for r in trials):
         raise ValueError('Failed traffic trial; inspect raw evidence, do not report complete benchmark')
     selection=read(OUT/'evaluation/selection.json');safety=read(OUT/'safety-qualification.json')
+    selection_rows=[read(p) for p in (OUT/'evaluation/trials').glob('selection-*.json')]
+    selection_mpc=mean([r for r in selection_rows if r['mode']=='mpc'],'meanCompletedTimeLossSeconds')
     gradients=read(OUT/'gradient-diagnostic.json')
+    replay=read(OUT/'reproducibility.json')
+    checkpoint_audit=read(OUT/'checkpoint-audit.json')
+    assert len(checkpoint_audit['checkpoints'])==48 and not checkpoint_audit['partial']
+    import numpy as np
+    import torch
+    from app.rl.mappo import MAPPO
+    observations=np.asarray([o for d in diagnostics if d['variant']=='trained' for o in d['observations']],dtype=np.float32)
+    probes=[]
+    for seed in (61,71,81):
+        initial=MAPPO(seed=seed);trained=MAPPO.load(OUT/f'training/train-{seed}/update-0016.pt')
+        with torch.no_grad():
+            before=initial.distribution(torch.tensor(observations)).probs.numpy()
+            after=trained.distribution(torch.tensor(observations)).probs.numpy()
+        probes.append(dict(seed=seed,actorDecisions=int(np.prod(observations.shape[:-1])),
+            initialHoldCount=int((before.argmax(-1)==1).sum()),trainedHoldCount=int((after.argmax(-1)==1).sum()),
+            greedyActionChangeCount=int((before.argmax(-1)!=after.argmax(-1)).sum()),
+            trainedHoldProbabilityRange=[float(after[...,1].min()),float(after[...,1].max())]))
+    write(OUT/'phase5-actor-probe.json',dict(scope='Descriptive comparison on frozen Phase4-actor diagnostic observations; no selection/tuning',rows=probes))
     groups=[];ablations=[]
+    verified_writes=0
+    for d in diagnostics:
+        traces={(t['tls'],t['simTime']):t for t in d['traces']}
+        for agent,supervisor in d['result']['supervisors'].items():
+            for decision in supervisor['decisions']:
+                if decision.get('accepted') and decision.get('reason')=='constrained_mpc':
+                    trace=traces[(agent,decision['simTime'])]
+                    assert trace['withHint']==decision['remainingSec'],'Approved write differs from recorded MPC recommendation'
+                    verified_writes+=1
     equivalence=[]
     trained_actions={}
     for d in diagnostics:
@@ -81,11 +111,22 @@ def main():
                 ('no_safety_fault_or_rejection',c['safetyFaults']==0 and all(s['rejectedActions']==0 for s in c['supervisors'].values()))]:
                 checks.append(dict(name=f'{name}_d{scale}_s{seed}',passed=bool(passed)))
     performance=all(c['passed'] for c in checks)
+    safety_rejections=sum(s['rejectedActions'] for trial in safety.get('closedLoopValidation',{}).get('trials',[])
+                          for s in trial.get('supervisors',{}).values())
+    insertion_blocks=[];equivalent_baselines=0
+    for scale in (.75,1.,1.75):
+        for seed in (6301,6302,6303):
+            block=[r for r in trials if r['seed']==seed and r['demandScale']==scale]
+            counts={r['mode']:r['observedInsertionDemandVehicles'] for r in block}
+            insertion_blocks.append(dict(scale=scale,seed=seed,observedDemandCounts=counts,matched=len(set(counts.values()))==1))
+            a=next(r for r in block if r['mode']=='mpc');b=next(r for r in block if r['mode']=='hybrid')
+            equivalent_baselines+=all(a[k]==b[k] for k in ('meanCompletedTimeLossSeconds','arrivedVehicles','meanNetworkQueue','maxServiceAgeSeconds'))
     candidate_challenges=[r for r in challenges if r['variant']=='candidate']
     challenge_ok=all(r['status']=='completed' and r['safetyFaults']==0 and r['supervisor']['rejectedActions']==0 for r in candidate_challenges)
     # These single-junction transfer challenges do not cover the original
     # two-junction policy with combined protected crossings/emergency demands.
     qualification=dict(safety,performanceValidation=dict(passed=performance,checks=checks),
+        separateSafetySupervisorRejections=safety_rejections,
         candidateSingleJunctionTransferChallengesPassed=challenge_ok,
         candidateCombinedMultiJunctionPedestrianEmergencyValidation=False,
         eligibleForEvaluation=False,usefulnessEstablished=False,operationallyEnabled=False,
@@ -95,9 +136,11 @@ def main():
     write(OUT/'policy-qualification.json',qualification);write(PUB/'policy-qualification.json',qualification)
     coordinator=MAPPOCoordinator(('A0','B0'),selection['selectedCheckpoint'],PUB/'policy-qualification.json')
     assert coordinator.model is None
-    summary=dict(selection=selection,groups=groups,ablations=ablations,meanDelayReductionPercent=improvements,
+    summary=dict(selection=selection,selectionMpcMeanDelay=selection_mpc,groups=groups,ablations=ablations,meanDelayReductionPercent=improvements,
                  gradientDiagnostic=gradients,qualification=qualification,trainedDiagnosticJointActions=trained_actions,
-                 trainedTripEquivalence=equivalence,
+                 trainedTripEquivalence=equivalence,phase5ActorProbes=probes,
+                 retainedApprovedMpcWritesVerified=verified_writes,reproducibility=replay,
+                 observedInsertionDemandMatch=insertion_blocks,mpcHybridEquivalentBlocks=equivalent_baselines,
                  operationalGateRefusesCandidate=True,architectureFingerprint=qualification_fingerprint())
     write(PUB/'results.json',summary)
     write(PUB/'trials.json',trials);write(PUB/'challenge-results.json',challenges)
@@ -106,6 +149,11 @@ def main():
               'meanNetworkQueue','maxNetworkQueue','maxServiceAgeSeconds','spillbackEdgeSeconds',
               'meanControlLatencyMs','fallbackControllerSeconds','unfinishedTrips','safetyFaults']
         w=csv.DictWriter(f,fieldnames=keys,extrasaction='ignore');w.writeheader();w.writerows(trials)
+    with (PUB/'challenge-results.csv').open('w',newline='',encoding='utf8') as f:
+        keys=['case','variant','seed','status','meanCompletedTimeLossSeconds','completedTrips','unfinishedTrips',
+              'meanQueue','maxQueue','maxServiceAgeSeconds','maxObservedWaitingSeconds','spillbackEdgeSeconds',
+              'meanFullStepLatencyMs','p95FullStepLatencyMs','fallbackControllerSeconds','safetyFaults']
+        w=csv.DictWriter(f,fieldnames=keys,extrasaction='ignore');w.writeheader();w.writerows(challenges)
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
@@ -118,6 +166,8 @@ def main():
     fig.suptitle('Phase5 frozen candidate (offline supervised); mean ±sample SD; 600s cold start')
     for ext in ('png','svg'):fig.savefig(plots/f'benchmarks.{ext}',dpi=160)
     plt.close(fig)
+    for svg in plots.glob('*.svg'):
+        svg.write_bytes(re.sub(r'[ \t]+\n','\n',svg.read_text(encoding='utf8')).encode('utf8'))
     fig,axes=plt.subplots(1,3,figsize=(15,5),layout='constrained')
     for ax,scale in zip(axes,(.75,1.,1.75)):
         gs=[g for g in ablations if g['scale']==scale]
@@ -126,10 +176,12 @@ def main():
     fig.suptitle('Diagnostic hint ablations; 600s cold start; shadow solve instrumentation')
     for ext in ('png','svg'):fig.savefig(plots/f'ablations.{ext}',dpi=160)
     plt.close(fig)
+    for svg in plots.glob('*.svg'):
+        svg.write_bytes(re.sub(r'[ \t]+\n','\n',svg.read_text(encoding='utf8')).encode('utf8'))
     backend=ET.parse(OUT/'backend.xml').getroot().find('testsuite').attrib
     demos=read(OUT/'demo-results.json')
     assert demos['complete'] and all(r['status']=='passed' for r in demos['results'])
-    testtext=f"Backend: {backend['tests']} tests, {backend['failures']} failures, {backend['errors']} errors, {backend['skipped']} skipped, {backend['time']}s; one existing Starlette/httpx warning. Frontend build, TypeScript and8/8 unit/demo groups passed. Browser initial run:3 passed/1 camera skipped in29.9s; camera rerun with config:1 passed in18.2s (all four distinct cases passed). External A–H:8/8 passed. Startup smoke/readiness/cleanup on8026/3026 and pip check passed."
+    testtext=f"Backend: {backend['tests']} tests, {backend['failures']} failures, {backend['errors']} errors, {backend['skipped']} skipped, {backend['time']}s; one existing Starlette/httpx warning. Frontend build, TypeScript and8/8 unit/demo groups passed. Browser initial run:3 passed/1 camera skipped in29.9s; camera rerun with config:1 passed in18.2s (all four distinct cases passed). External A–H:8/8 passed. Startup smoke/readiness/cleanup on8026/3026 and pip check passed. Actual PTY Ctrl+C after starting SUMO on8027/3027 closed both owned ports; the interrupted terminal wrapper returned exit1,not a clean-exit0 claim."
     failnames=[c['name'] for c in checks if not c['passed']]
     training=[]
     for seed in (61,71,81):
@@ -148,13 +200,13 @@ The existing demonstration remains runnable in supervised MPC/Max-Pressure mode.
 
 {testtext}
 
-All eight cases exercised real HTTP/WebSocket/SUMO or recorded-video paths. Pedestrian and emergency controls, blocked receiver handling, forecasts and camera/sensor fallback were observed. Raw evidence: `.checkpoints/phase5/backend.xml`, `browser.log`, `browser-camera.log`, `demo-results.json`, `startup-smoke.log` and frontend logs. Runs on the same machine may overlap, so durations are not isolated performance measures.
+All eight cases exercised real HTTP/WebSocket/SUMO or recorded-video paths. Pedestrian and emergency controls, blocked receiver handling, forecasts and camera/sensor fallback were observed. Raw evidence: `.checkpoints/phase5/backend.xml`, `browser.log`, `browser-camera.log`, `demo-results.json`, `startup-smoke.log`, `ctrlc-startup.json` and frontend logs. A real browser screenshot and measured corridor state are retained as dashboard.png/dashboard-check.json. Runs on the same machine may overlap, so durations are not isolated performance measures. The full application suite ran before the offline scripts were finalized; application/frontend/controller bytes remained unchanged,and the new research paths were exercised by the actual experiments.
 
 ## Completion and limitations
 
 Frontend/API/WebSocket/SUMO, state estimation, adaptive controls, independent safety gate, supplied pedestrian/emergency scenarios, camera recording and forecast demonstration paths: verified within supplied cases. MAPPO training, inference-to-MPC and offline ablation infrastructure: verified; useful qualified policy: incomplete/failed screening. Live field camera accuracy, historical forecast accuracy, road deployment, exhaustive weather/safety validation: not performed. No tests are blocked on missing video in the final evidence; the initially skipped camera browser case passed after configuration.
 
-New Phase5 scope:54 diagnostic ablations, three1024-decision independent-clipping training seeds,12 selection trials,45 held-out600s benchmark trials,three240s safety trials and24 single-junction challenge trials. Challenge outcomes and failed screens are in the research/qualification reports.
+New Phase5 scope:54 diagnostic ablations, three1024-decision independent-clipping training seeds,12 selection trials,45 held-out600s benchmark trials,three240s safety trials and42 single-junction challenge trials. Challenge outcomes and failed screens are in the research/qualification reports.
 
 ## Launch and preserve
 
@@ -172,6 +224,10 @@ At each normal MPC call, a no-write shadow solve evaluated the same observed sta
 
 Frozen Phase4 actor joint action counts across all nine diagnostic trials: `{json.dumps(trained_actions)}`. Exact tripinfo attribute equivalence to constant hold: {sum(r['exactTripAttributesIdentical'] for r in equivalence if r['comparison']=='hold')}/9; to untrained seed41 actor: {sum(r['exactTripAttributesIdentical'] for r in equivalence if r['comparison']=='untrained')}/9. Exact equality is checked on sorted completed/unfinished trip attributes,not assumed from mean delay. It does not prove identical full trajectories. Full action histograms and traces remain in raw evidence.
 
+The same hint sequence need not yield identical outcomes under timed solver fallback. The trained medium-load seed5102 trial recorded one fallback controller-second,while its constant-hold counterpart recorded none. Small differences between these constant-hint runs are not evidence of adaptive learned coordination. The single seed41 untrained initialization is a control,not a population estimate over untrained policies.
+
+For{verified_writes} retained accepted MPC supervisor decisions,the applied remaining duration matched the corresponding recorded actual MPC recommendation. Supervisor histories retain100 entries per junction,so this is a retained-history check,not a claim that every write was independently archived in that history. Shadow calls never invoke actuation.
+
 ![Ablations](research/phase5/plots/ablations.png)
 
 ## Learning and observation diagnosis
@@ -182,9 +238,19 @@ Actor inputs omit explicit maximum-red/service age, directional receiver occupan
 
 Seed5199 real64-decision diagnostic: actor gradient norm{gradients['actorGradientNorm']:.6f}; weighted critic{gradients['criticWeightedGradientNorm']:.6f}; joint clip multiplier{gradients['jointClipMultiplier']:.6f}. Mean return{gradients['returnMean']:.3f} versus critic prediction{gradients['predictedValueMean']:.3f}; value MSE{gradients['meanSquaredValueError']:.3f}. Reward scale/critic fit remain concerns. Adam partly cancels uniform gradient scaling, so raw clipping is not by itself proof of actor starvation.
 
-Restored-optimizer four-epoch paired update probe: {json.dumps(gradients['optimizerAblation'],ensure_ascii=False)}
+Restored-optimizer four-epoch paired update probe:
+
+{table(['Clip variant','Actor parameter delta L2','Final critic loss','Final entropy','Changed final-state greedy actions'],[[name,f"{r['actorParameterDeltaL2']:.6f}",f"{r['metrics']['valueLoss']:.3f}",f"{r['metrics']['entropy']:.6f}",r['changedGreedyActions']] for name,r in gradients['optimizerAblation']['variants'].items()])}
+
+Actor update-direction cosine:{gradients['optimizerAblation']['actorDeltaCosine']:.6f}. This is one genuine rollout and four epochs with restored optimizer state; no updated weights were saved or activated by this probe.
 
 This supported one isolated independent-clipping training experiment. It does not establish optimizer superiority: new models use different initial seeds from Phase4, and no matched full-training joint-clipping cohort was run. Changes to reward/features/action space require new controlled training, not tuning on final tests. Training rewards are not qualification evidence. See [PHASE5_EXPERIMENT_RESULTS.md](PHASE5_EXPERIMENT_RESULTS.md).
+
+The new models' greedy actions on the same diagnostic observations were compared with their own initializations:
+
+{table(['Seed','Local actor decisions','Initial holds','Trained holds','Greedy choices changed'],[[r['seed'],r['actorDecisions'],r['initialHoldCount'],r['trainedHoldCount'],r['greedyActionChangeCount']] for r in probes])}
+
+This separates parameter movement from changes to deployed greedy choices. It is descriptive diagnostic evidence,not held-out qualification or a model-selection criterion. Probability ranges are retained in machine results.
 
 ## Evidence-supported next work
 
@@ -198,23 +264,29 @@ Protocol: [PHASE5_EXPERIMENT_PLAN.md](PHASE5_EXPERIMENT_PLAN.md). Diagnostic see
 
 Times include SUMO/control/training/checkpoint I/O, exclude import/model setup and inter-update reporting, and sum concurrent processes rather than calendar elapsed time. All checkpoints/progress logs preserved. Selection seeds6201–6203,demand1.0,300s; selected checkpoint `{selection['selectedCheckpoint']}`, SHA256 `{selection['checkpointSha256']}`. Selection was frozen before final seeds6301–6303 at0.75/1.0/1.75,600s. Safety seeds6501–6503,240s. Challenge seeds6401–6403. No original Phase4 held-out seeds used for tuning or new selection.
 
+Development MPC mean timeLoss:{selection_mpc:.6f}s. Candidate scores: `{json.dumps(selection['scores'])}`. Selection chooses the best candidate,not a claim that it already beats MPC; independent qualification still applies.
+
+All48 saved training checkpoints passed finite weight/optimizer-state checks and loaded through the existing checkpoint format. New seed61/episode61000 first64-decision replay: bit-identical parameters={replay['bitIdenticalParameters']},maximum parameter difference={replay['maxParameterDifference']}. One replay does not prove hardware-independent determinism or immunity to timed solver fallback. Raw audit and reproducibility records are archived.
+
 ## Held-out installed-controller comparison
 
 {bench_table}
 
 Mean candidate delay reduction versus MPC: {changes}. A positive number means lower completed-trip timeLoss; it is not proof of significance or learning causality. Hint-free hybrid is MPC without hints. Native fixed-time uses its original clearance budget, unlike adaptive modes; candidate–MPC comparisons share the same adaptive safety program. Cold-start,censored completed trips,one corridor and n=3 limit generalization. Full metrics include throughput,unfinished trips,waiting,queues,spills,fairness,latency and fallback exposure in [trial JSON](research/phase5/trials.json) and [CSV](research/phase5/trials.csv).
 
+Observed inserted-plus-end-pending demand matched across all five modes in{sum(b['matched'] for b in insertion_blocks)}/9 seed/load blocks; actual counts are retained in results.json. Configured routes,seed,load and horizon matched in every block. Hint-free MPC/hybrid traffic metrics were identical in{equivalent_baselines}/9 blocks; timed fallback can create differences despite identical control code. Pending vehicles are virtual insertion backlog,distinct from unfinished inserted trips. Completed-trip means do not include eventual delay of unfinished or not-yet-inserted vehicles.
+
 ![Benchmarks](research/phase5/plots/benchmarks.png)
 
 ## Asymmetric, blocked-exit and protected-user challenges
 
-{table(['Case','Variant','Seed','Status','Mean completed timeLoss s','Worst service age s'],[[r['case'],r['variant'],r['seed'],r['status'],round(r.get('meanCompletedTimeLossSeconds',0) or 0,3),r.get('maxServiceAgeSeconds','n/a')] for r in challenges])}
+{table(['Case','Variant','Seed','Status','Mean completed timeLoss s','Worst service age s'],[[r['case'],r['variant'],r['seed'],r['status'],round(r['meanCompletedTimeLossSeconds'],3) if r.get('meanCompletedTimeLossSeconds') is not None else 'n/a',r.get('maxServiceAgeSeconds','n/a')] for r in challenges])}
 
-These24 trials use the existing single-junction runtime for MPC and the frozen shared actor. Duplicated local input satisfies the unused two-agent critic shape; each actor remains local. They are candidate-specific topology-transfer tests, not equivalent two-junction combined pedestrian/emergency qualification. Delay/throughput/queues/spillback,full-step latency,waiting/service age,faults and fallback exposure are retained. Full-step timing includes simulation/telemetry and is not comparable to corridor before_step-only latency. Failed assertions/faults remain visible,never relabeled passed.
+These42 trials use the existing single-junction runtime: five installed modes for asymmetric/blocked-exit demand,and protected MPC/candidate pairs for pedestrian and emergency demand. Candidate runs use the frozen shared actor. Duplicated local input satisfies the unused two-agent critic shape; each actor remains local. Single-junction runtime requests a recommendation every second,whereas corridor recommendations are retained for five seconds. They are candidate-specific topology/cadence-transfer tests, not equivalent two-junction combined pedestrian/emergency qualification. Delay/throughput/queues/spillback,full-step latency,waiting/service age,faults and fallback exposure are retained. Full-step timing includes simulation/telemetry and is not comparable to corridor before_step-only latency. Corridor control latency excludes TraCI stepping,telemetry and policy inference (the latter is recorded separately). Fallback exposure counts controller-seconds showing fallback diagnostics,not distinct timeout events. Concurrent workers share the CPU; no hard real-time latency guarantee follows. Failed assertions/faults remain visible,never relabeled passed.
 
 ## Completed, failed, blocked and unperformed
 
-Completed:54 diagnostic runs,three training runs,12 selection,45 final corridor trials,three safety trials,24 challenge attempts and regression evidence. Failed performance screens: {len(failnames)}; failed challenge trials: {sum(r['status']!='completed' for r in challenges)}. Blocked by dependencies: none recorded after camera configuration. Not performed: paired full-training optimizer causal ablation,large-budget convergence,unseen-network multi-junction protected-user qualification,positive qualified-policy operational/browser activation,field/perception/weather accuracy and statistical superiority. No model is activated. Further broad training is deferred until these diagnostics justify a new controlled protocol.
+Completed:54 diagnostic runs,three training runs,12 selection,45 final corridor trials,three safety trials,42 challenge attempts and regression evidence. Failed performance screens: {len(failnames)}; failed challenge trials: {sum(r['status']!='completed' for r in challenges)}. Blocked by dependencies: none recorded after camera configuration. Not performed: paired full-training optimizer causal ablation,large-budget convergence,unseen-network multi-junction protected-user qualification,candidate-specific sensor/controller-fault challenges,positive qualified-policy operational/browser activation,field/perception/weather accuracy and statistical superiority. No model is activated. Further broad training is deferred until these diagnostics justify a new controlled protocol.
 
 {testtext}
 ''')
@@ -222,7 +294,7 @@ Completed:54 diagnostic runs,three training runs,12 selection,45 final corridor 
 
 **Not qualified; MAPPO remains operationally disabled.** Supervised MPC with Max-Pressure fallback is preserved. Actual MAPPOCoordinator refused the selected candidate with the published report. The Phase4 report remains unchanged and its failed policy was not reused as new training weights.
 
-Selected SHA256 `{selection['checkpointSha256']}`; source/controller fingerprint `{qualification_fingerprint()}`. Trained1024 decisions; numerical checks:{safety['numericalChecksPassed']}; separate safety validation:{safety.get('safetyValidationPassed',False)}. Mean delay reductions versus MPC: {changes}.
+Selected SHA256 `{selection['checkpointSha256']}`; source/controller fingerprint `{qualification_fingerprint()}`. Trained1024 decisions; numerical checks:{safety['numericalChecksPassed']}; separate safety validation:{safety.get('safetyValidationPassed',False)}; separate safety supervisor rejections:{safety_rejections}. Mean delay reductions versus MPC: {changes}.
 
 The original gate requires≥2% mean delay reduction in every demand stratum,no paired delay regression>5%,no throughput loss>2%,no increased maximum service age,no faults/rejections,current provenance and independent protected-user evidence. These are conservative research screens,not road certification. No criterion was relaxed.
 
@@ -236,8 +308,8 @@ No policy environment variables were set. No learned actor writes TraCI signals 
 ''')
     write(OUT/'final-verification.json',dict(backend=backend,externalDemos=8,browserDistinctCasesPassed=4,
         initialBrowserSkipped=1,cameraRerunPassed=True,frontendBuild='passed',typescript='passed',frontendGroupsPassed=8,
-        startupSmoke='passed_owned_ports_closed',pipCheck='passed',diagnosticTrials=54,benchmarkTrials=45,
-        challengeTrials=24,challengeFailures=sum(r['status']!='completed' for r in challenges),
+        startupSmoke='passed_owned_ports_closed',ctrlCShutdown=read(OUT/'ctrlc-startup.json'),pipCheck='passed',diagnosticTrials=54,benchmarkTrials=45,
+        challengeTrials=42,challengeFailures=sum(r['status']!='completed' for r in challenges),
         failedPerformanceScreens=failnames,operationallyEnabled=False,architectureFingerprint=qualification_fingerprint()))
     print(json.dumps(dict(meanDelayReductionPercent=improvements,failedPerformanceChecks=failnames,challengePassed=challenge_ok),indent=2))
 
